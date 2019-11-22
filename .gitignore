@@ -1,0 +1,2 @@
+# ignore all datasets; they are too large to push to GitHub
+*.h5
