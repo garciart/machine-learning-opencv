@@ -3,9 +3,11 @@ import os
 import cv2
 from pathlib import Path
 import mrcnn.config
-# import mrcnn.utils
 from mrcnn.model import MaskRCNN
-import mrcnn.visualize
+import numpy as np
+from numpy import array
+from shapely.geometry import asPoint
+from shapely.geometry import Polygon
 
 # Configuration that will be used by the Mask-RCNN library
 
@@ -16,6 +18,19 @@ class MaskRCNNConfig(mrcnn.config.Config):
     GPU_COUNT = 1
     NUM_CLASSES = 1 + 80  # COCO dataset has 80 classes + one background class
     DETECTION_MIN_CONFIDENCE = 0.5
+
+# Filter a list of Mask R-CNN detection results to get only the detected cars / trucks
+
+
+def get_car_boxes(boxes, class_ids):
+    car_boxes = []
+
+    for i, box in enumerate(boxes):
+        # If the detected object isn't a car / truck, skip it
+        if class_ids[i] in [3, 8, 6]:
+            car_boxes.append(box)
+
+    return np.array(car_boxes)
 
 
 # Root directory of the project
@@ -33,29 +48,11 @@ if not os.path.exists(COCO_MODEL_PATH):
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
 
 # Create a Mask-RCNN model in inference mode
-model = MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=MaskRCNNConfig())
+model = MaskRCNN(mode="inference", model_dir=MODEL_DIR,
+                 config=MaskRCNNConfig())
 
 # Load pre-trained model
 model.load_weights(COCO_MODEL_PATH, by_name=True)
-
-# COCO Class names
-# Index of the class in the list is its ID. For example, to get ID of
-# the teddy bear class, use: class_names.index('teddy bear')
-class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
-               'bus', 'train', 'truck', 'boat', 'traffic light',
-               'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird',
-               'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear',
-               'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie',
-               'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball',
-               'kite', 'baseball bat', 'baseball glove', 'skateboard',
-               'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup',
-               'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
-               'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
-               'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed',
-               'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote',
-               'keyboard', 'cell phone', 'microwave', 'oven', 'toaster',
-               'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
-               'teddy bear', 'hair drier', 'toothbrush']
 
 # Directory of images or videos to run detection on
 IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
@@ -89,19 +86,57 @@ for f in FRAME_SOURCE:
         # - r['scores'] are the confidence scores for each detection
         # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
+        # Filter the results to only grab the car / truck bounding boxes
+        car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+
+        print("Cars found in frame of video: ", len(car_boxes))
+
+        poly_pts = ([[240, 1140], [750, 1150], [845, 1400], [150, 1400]],
+                    [[751, 1150], [3200, 1140], [3200, 1350], [846, 1400]])
+
+        for p in poly_pts:
+            # Hold count of cars in zone
+            count = 0
+            # Draw the zone
+            cv2.polylines(frame, np.int32(
+                [np.array(p)]), True, (0, 255, 255), 2)
+            # Draw each box on the frame. Do not use rgb_image with cv2!
+            for box in car_boxes:
+                # Get the box coordinates
+                y1, x1, y2, x2 = box
+                # Only show cars in the zones!
+                if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
+                    # Draw the box
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    # Count car in zone
+                    count += 1
+                    # Delete the car to avoid double counting
+                    np.delete(car_boxes, box)
+
+            print("Total cars in zone {}: {}".format(poly_pts.index(p), count))
+
+        # Resize image if necessary
+        scaling = int(
+            (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+        print('Original image dimensions : ', frame.shape)
+        width = int(frame.shape[1] * scaling / 100)
+        height = int(frame.shape[0] * scaling / 100)
+        dim = (width, height)
+        frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+        print('New image dimensions : ', frame.shape)
+
         # Show the frame of video on the screen
-        mrcnn.visualize.display_instances(
-            rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
+        cv2.imshow('Video', frame)
 
         # Hit any key to quit
-        print("Close the window to continue...")
+        print("Press any key continue...")
         cv2.waitKey(0)
 
     else:
         print("Cannot access image or video!")
 
-    # Clean up everything when finished
-    video_capture.release()
-    cv2.destroyAllWindows()
+# Clean up everything when finished
+video_capture.release()
+cv2.destroyAllWindows()
 
 print("Job complete. Have an excellent day.")

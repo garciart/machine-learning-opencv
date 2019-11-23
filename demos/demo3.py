@@ -12,7 +12,7 @@ class MaskRCNNConfig(mrcnn.config.Config):
     IMAGES_PER_GPU = 1
     GPU_COUNT = 1
     NUM_CLASSES = 1 + 80  # COCO dataset has 80 classes + one background class
-    DETECTION_MIN_CONFIDENCE = 0.4
+    DETECTION_MIN_CONFIDENCE = 0.5
 
 # Filter a list of Mask R-CNN detection results to get only the detected cars / trucks
 def get_car_boxes(boxes, class_ids):
@@ -89,6 +89,15 @@ for f in FRAME_SOURCE:
             y1, x1, y2, x2 = box
             # Draw the box
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+        # Resize image if necessary
+        scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+        print('Original image dimensions : ', frame.shape)
+        width = int(frame.shape[1] * scaling / 100)
+        height = int(frame.shape[0] * scaling / 100)
+        dim = (width, height)
+        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
+        print('New image dimensions : ', frame.shape)
 
         # Show the frame of video on the screen
         cv2.imshow('Video', frame)
