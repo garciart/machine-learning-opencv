@@ -27,12 +27,12 @@ for f in FRAME_SOURCE:
 
         # Resize image if necessary
         scaling = int((768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 1
-        print('Original image dimensions : ', frame.shape)
-        width = int(frame.shape[1] * scaling / 100)
-        height = int(frame.shape[0] * scaling / 100)
+        print('Original image dimensions : ', rgb_image.shape)
+        width = int(rgb_image.shape[1] * scaling / 100)
+        height = int(rgb_image.shape[0] * scaling / 100)
         dim = (width, height)
-        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
-        print('New image dimensions : ', frame.shape)
+        rgb_image = cv2.resize(rgb_image, dim, interpolation = cv2.INTER_AREA)
+        print('New image dimensions : ', rgb_image.shape)
 
         # Show the frame of video on the screen
         cv2.imshow('Video', rgb_image)
