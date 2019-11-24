@@ -1,0 +1,354 @@
+PS C:\Users\Rob\source\repos\FullStackML> python --version
+Python 3.6.8
+PS C:\Users\Rob\source\repos\FullStackML> pip --version
+pip 18.1 from c:\program files\python36\lib\site-packages\pip (python 3.6)
+PS C:\Users\Rob\source\repos\FullStackML> git clone https://github.com/matterport/Mask_RCNN.git
+Cloning into 'Mask_RCNN'...
+remote: Enumerating objects: 956, done.
+Receiving objects:  94% (899/956), 109.89 MiB | 13.49 MiB/sd 956 eceiving objects:  93% (890/956), 109.89 MiB | 13.49 MiB/s
+Receiving objects: 100% (956/956), 111.81 MiB | 13.74 MiB/s, done.
+Resolving deltas: 100% (570/570), done.
+PS C:\Users\Rob\source\repos\FullStackML> cd Mask_RCNN
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> ls
+
+
+    Directory: C:\Users\Rob\source\repos\FullStackML\Mask_RCNN
+
+
+Mode                LastWriteTime         Length Name
+----                -------------         ------ ----
+d-----       11/23/2019     22:03                assets
+d-----       11/23/2019     22:03                mrcnn
+d-----       11/23/2019     22:03                samples
+-a----       11/23/2019     22:03            627 .gitignore
+-a----       11/23/2019     22:03           1118 LICENSE
+-a----       11/23/2019     22:03             60 MANIFEST.in
+-a----       11/23/2019     22:03          14012 README.md
+-a----       11/23/2019     22:03            130 requirements.txt
+-a----       11/23/2019     22:03            102 setup.cfg
+-a----       11/23/2019     22:03           2586 setup.py
+
+
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> cat requirements.txt
+scipy
+Pillow
+cython
+matplotlib
+scikit-image
+tensorflow>=1.3.0
+keras>=2.0.8
+opencv-python
+h5py
+imgaug
+IPython[all]
+Collecting setuptools
+  Downloading https://files.pythonhosted.org/packages/61/a2/82b506a6cdb42cc79a65d5a9e790112cf6b98ee7aba4a53a2b9c9c8047d0/setuptools-42.0.0-py2.py3-none-any.whl (582kB)
+    100% |████████████████████████████████| 583kB 7.3MB/s 
+Installing collected packages: setuptools
+  Found existing installation: setuptools 40.6.2
+    Uninstalling setuptools-40.6.2:
+      Successfully uninstalled setuptools-40.6.2
+Successfully installed setuptools-42.0.0
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install TensorFlow==1.5
+Collecting TensorFlow==1.5
+  Using cached https://files.pythonhosted.org/packages/34/96/11f048eca7b4d6da3084ca49c636b9e720e9dd1483c0c4e9ba3cf5037564/tensorflow-1.5.0-cp36-cp36m-win_amd64.whl
+Collecting protobuf>=3.4.0 (from TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/2d/73/4a14606fa26f186e23015bc974f9010e2bbf1607f372e3bd5e82d2a62f1b/protobuf-3.10.0-cp36-cp36m-win_amd64.whl
+Collecting six>=1.10.0 (from TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/65/26/32b8464df2a97e6dd1b656ed26b2c194606c16fe163c695a992b36c11cdf/six-1.13.0-py2.py3-none-any.whl
+Requirement already satisfied: wheel>=0.26 in c:\program files\python36\lib\site-packages (from TensorFlow==1.5) (0.33.6)
+Collecting tensorflow-tensorboard<1.6.0,>=1.5.0 (from TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/cc/fa/91c06952517b4f1bc075545b062a4112e30cebe558a6b962816cb33efa27/tensorflow_tensorboard-1.5.1-py3-none-any.whl
+Collecting absl-py>=0.1.6 (from TensorFlow==1.5)
+Collecting numpy>=1.12.1 (from TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/b0/ee/5ff445dd43b9820e5494d21240e689d3b7cb52bc93f4f164eba84206cd0d/numpy-1.17.4-cp36-cp36m-win_amd64.whl
+Requirement already satisfied: setuptools in c:\program files\python36\lib\site-packages (from protobuf>=3.4.0->TensorFlow==1.5) (42.0.0)
+Collecting bleach==1.5.0 (from tensorflow-tensorboard<1.6.0,>=1.5.0->TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/33/70/86c5fec937ea4964184d4d6c4f0b9551564f821e1c3575907639036d9b90/bleach-1.5.0-py2.py3-none-any.whl    
+Collecting werkzeug>=0.11.10 (from tensorflow-tensorboard<1.6.0,>=1.5.0->TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/ce/42/3aeda98f96e85fd26180534d36570e4d18108d62ae36f87694b476b83d6f/Werkzeug-0.16.0-py2.py3-none-any.whl 
+Collecting markdown>=2.6.8 (from tensorflow-tensorboard<1.6.0,>=1.5.0->TensorFlow==1.5)
+  Using cached https://files.pythonhosted.org/packages/c0/4e/fd492e91abdc2d2fcb70ef453064d980688762079397f779758e055f6575/Markdown-3.1.1-py2.py3-none-any.whl  
+Installing collected packages: six, protobuf, html5lib, bleach, werkzeug, markdown, numpy, tensorflow-tensorboard, absl-py, TensorFlow
+Successfully installed TensorFlow-1.5.0 absl-py-0.8.1 bleach-1.5.0 html5lib-0.9999999 markdown-3.1.1 numpy-1.17.4 protobuf-3.10.0 six-1.13.0 tensorflow-tensorboard-1.5.1 werkzeug-0.16.0
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install Keras==2.2.5
+Collecting Keras==2.2.5
+  Using cached https://files.pythonhosted.org/packages/f8/ba/2d058dcf1b85b9c212cc58264c98a4a7dd92c989b798823cc5690d062bb2/Keras-2.2.5-py2.py3-none-any.whl
+Collecting keras-applications>=1.0.8 (from Keras==2.2.5)
+  Using cached https://files.pythonhosted.org/packages/71/e3/19762fdfc62877ae9102edf6342d71b28fbfd9dea3d2f96a882ce099b03f/Keras_Applications-1.0.8-py3-none-any.whl
+Requirement already satisfied: numpy>=1.9.1 in c:\program files\python36\lib\site-packages (from Keras==2.2.5) (1.17.4)
+Collecting pyyaml (from Keras==2.2.5)
+  Using cached https://files.pythonhosted.org/packages/76/da/60f8d638d81d64db4ed3c279c22eb3a1eebfcde6130fee678940e603b930/PyYAML-5.1.2-cp36-cp36m-win_amd64.whl
+Collecting keras-preprocessing>=1.1.0 (from Keras==2.2.5)
+  Using cached https://files.pythonhosted.org/packages/28/6a/8c1f62c37212d9fc441a7e26736df51ce6f0e38455816445471f10da4f0a/Keras_Preprocessing-1.1.0-py2.py3-none-any.whl
+Collecting h5py (from Keras==2.2.5)
+  Using cached https://files.pythonhosted.org/packages/0b/fa/bee65d2dbdbd3611702aafd128139c53c90a1285f169ba5467aab252e27a/h5py-2.10.0-cp36-cp36m-win_amd64.whl 
+Collecting scipy>=0.14 (from Keras==2.2.5)
+  Using cached https://files.pythonhosted.org/packages/fc/3c/73b86551889c173627f2b5aafa5df89d19c02056c9a676d1490a01d09c70/scipy-1.3.3-cp36-cp36m-win_amd64.whl 
+Installing collected packages: h5py, keras-applications, pyyaml, keras-preprocessing, scipy, Keras
+Successfully installed Keras-2.2.5 h5py-2.10.0 keras-applications-1.0.8 keras-preprocessing-1.1.0 pyyaml-5.1.2 scipy-1.3.3
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install -r requirements.txt
+Requirement already satisfied: numpy in c:\program files\python36\lib\site-packages (from -r requirements.txt (line 1)) (1.17.4)
+Requirement already satisfied: scipy in c:\program files\python36\lib\site-packages (from -r requirements.txt (line 2)) (1.3.3)
+Collecting Pillow (from -r requirements.txt (line 3))
+  Using cached https://files.pythonhosted.org/packages/2c/ee/289ddb9884665aba9ad10d88c4edf867b87bcb93e3acbeeac41d30d87865/Pillow-6.2.1-cp36-cp36m-win_amd64.whl
+Collecting cython (from -r requirements.txt (line 4))
+  Using cached https://files.pythonhosted.org/packages/ca/5d/7344d00b55f060243cf4f04c2fcee8c245a0af2b0bc236fc6dbb5021dcd6/Cython-0.29.14-cp36-cp36m-win_amd64.whl
+Collecting matplotlib (from -r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/44/fb/132de6a4b803d8ce909a89043b7d3f775f64e0a39398fc98c02e3e144b61/matplotlib-3.1.2-cp36-cp36m-win_amd64.whl (9.1MB)
+    100% |████████████████████████████████| 9.1MB 3.3MB/s 
+Collecting scikit-image (from -r requirements.txt (line 6))
+  Using cached https://files.pythonhosted.org/packages/59/6b/809d393e93f7d51f87cab50994641a7b59f3b3192121490a2ead81a07bce/scikit_image-0.16.2-cp36-cp36m-win_amd64.whl
+Requirement already satisfied: tensorflow>=1.3.0 in c:\program files\python36\lib\site-packages (from -r requirements.txt (line 7)) (1.5.0)
+Requirement already satisfied: keras>=2.0.8 in c:\program files\python36\lib\site-packages (from -r requirements.txt (line 8)) (2.2.5)
+Collecting opencv-python (from -r requirements.txt (line 9))
+  Downloading https://files.pythonhosted.org/packages/fc/3c/f0ac5c2c73df30483e3677b6568ccd19d900a6f78a95bfcf20bbbb468986/opencv_python-4.1.2.30-cp36-cp36m-win_amd64.whl (33.0MB)
+    100% |████████████████████████████████| 33.0MB 440kB/s 
+Requirement already satisfied: h5py in c:\program files\python36\lib\site-packages (from -r requirements.txt (line 10)) (2.10.0)
+Collecting imgaug (from -r requirements.txt (line 11))
+  Using cached https://files.pythonhosted.org/packages/11/df/5a3bba95b4600d5ca7aff072082ef0d9837056dd28cc4e738e7ce88dd8f8/imgaug-0.3.0-py2.py3-none-any.whl
+Collecting IPython[all] (from -r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/81/2e/59cdacea6476a4c21b7c090a91250ffbcd085900f5eb9f4e4d68dd2ee4e3/ipython-7.9.0-py3-none-any.whl
+Collecting python-dateutil>=2.1 (from matplotlib->-r requirements.txt (line 5))
+  Using cached https://files.pythonhosted.org/packages/d4/70/d60450c3dd48ef87586924207ae8907090de0b306af2bce5d134d78615cb/python_dateutil-2.8.1-py2.py3-none-any.whl
+Collecting cycler>=0.10 (from matplotlib->-r requirements.txt (line 5))
+  Using cached https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
+Collecting pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 (from matplotlib->-r requirements.txt (line 5))
+  Using cached https://files.pythonhosted.org/packages/c0/0c/fc2e007d9a992d997f04a80125b0f183da7fb554f1de701bbb70a8e7d479/pyparsing-2.4.5-py2.py3-none-any.whl
+Collecting kiwisolver>=1.0.1 (from matplotlib->-r requirements.txt (line 5))
+  Using cached https://files.pythonhosted.org/packages/64/46/75ab48386cbd56065f5542360562be524ad599911455b6d95520cb118613/kiwisolver-1.1.0-cp36-none-win_amd64.whl
+Collecting imageio>=2.3.0 (from scikit-image->-r requirements.txt (line 6))
+  Using cached https://files.pythonhosted.org/packages/1a/de/f7f985018f462ceeffada7f6e609919fbcc934acd9301929cba14bc2c24a/imageio-2.6.1-py3-none-any.whl
+Collecting PyWavelets>=0.4.0 (from scikit-image->-r requirements.txt (line 6))
+  Using cached https://files.pythonhosted.org/packages/30/9f/60c3b80bcefc7e3cbc76c0925e05159312cae0f3e8bf822cf50ba30b5312/PyWavelets-1.1.1-cp36-cp36m-win_amd64.whl
+Collecting networkx>=2.0 (from scikit-image->-r requirements.txt (line 6))
+  Using cached https://files.pythonhosted.org/packages/41/8f/dd6a8e85946def36e4f2c69c84219af0fa5e832b018c970e92f2ad337e45/networkx-2.4-py3-none-any.whl
+Requirement already satisfied: protobuf>=3.4.0 in c:\program files\python36\lib\site-packages (from tensorflow>=1.3.0->-r requirements.txt (line 7)) (3.10.0)
+Requirement already satisfied: six>=1.10.0 in c:\program files\python36\lib\site-packages (from tensorflow>=1.3.0->-r requirements.txt (line 7)) (1.13.0)      
+Requirement already satisfied: absl-py>=0.1.6 in c:\program files\python36\lib\site-packages (from tensorflow>=1.3.0->-r requirements.txt (line 7)) (0.8.1)
+Requirement already satisfied: tensorflow-tensorboard<1.6.0,>=1.5.0 in c:\program files\python36\lib\site-packages (from tensorflow>=1.3.0->-r requirements.txt (line 7)) (1.5.1)
+Requirement already satisfied: wheel>=0.26 in c:\program files\python36\lib\site-packages (from tensorflow>=1.3.0->-r requirements.txt (line 7)) (0.33.6)
+Requirement already satisfied: keras-applications>=1.0.8 in c:\program files\python36\lib\site-packages (from keras>=2.0.8->-r requirements.txt (line 8)) (1.0.8)
+Requirement already satisfied: keras-preprocessing>=1.1.0 in c:\program files\python36\lib\site-packages (from keras>=2.0.8->-r requirements.txt (line 8)) (1.1.0)
+Requirement already satisfied: pyyaml in c:\program files\python36\lib\site-packages (from keras>=2.0.8->-r requirements.txt (line 8)) (5.1.2)
+Collecting opencv-python-headless (from imgaug->-r requirements.txt (line 11))
+  Downloading https://files.pythonhosted.org/packages/2d/94/c7e0f80e9bfa2090af7aa0afa3596b93f5c26ec579e8b294aa0e2e1c8b00/opencv_python_headless-4.1.2.30-cp36-cp36m-win_amd64.whl (33.0MB)
+    100% |████████████████████████████████| 33.0MB 31kB/s 
+Collecting Shapely (from imgaug->-r requirements.txt (line 11))
+Requirement already satisfied: setuptools>=18.5 in c:\program files\python36\lib\site-packages (from IPython[all]->-r requirements.txt (line 12)) (42.0.0)
+Collecting traitlets>=4.2 (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/ca/ab/872a23e29cec3cf2594af7e857f18b687ad21039c1f9b922fac5b9b142d5/traitlets-4.3.3-py2.py3-none-any.whl
+Collecting pickleshare (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/9a/41/220f49aaea88bc6fa6cba8d05ecf24676326156c23b991e80b3f2fc24c77/pickleshare-0.7.5-py2.py3-none-any.whl
+Collecting jedi>=0.10 (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/55/54/da994f359e4e7da4776a200e76dbc85ba5fc319eefc22e33d55296d95a1d/jedi-0.15.1-py2.py3-none-any.whl
+Collecting decorator (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/8f/b7/f329cfdc75f3d28d12c65980e4469e2fa373f1953f5df6e370e84ea2e875/decorator-4.4.1-py2.py3-none-any.whl
+Collecting colorama; sys_platform == "win32" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/4f/a6/728666f39bfff1719fc94c481890b2106837da9318031f71a8424b662e12/colorama-0.4.1-py2.py3-none-any.whl
+Collecting prompt-toolkit<2.1.0,>=2.0.0 (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/87/61/2dfea88583d5454e3a64f9308a686071d58d59a55db638268a6413e1eb6d/prompt_toolkit-2.0.10-py3-none-any.whl
+Collecting backcall (from IPython[all]->-r requirements.txt (line 12))
+Collecting pygments (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/5c/73/1dfa428150e3ccb0fa3e68db406e5be48698f2a979ccbcec795f28f44048/Pygments-2.4.2-py2.py3-none-any.whl
+Collecting ipywidgets; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/56/a0/dbcf5881bb2f51e8db678211907f16ea0a182b232c591a6d6f276985ca95/ipywidgets-7.5.1-py2.py3-none-any.whl
+Collecting nose>=0.10.1; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/15/d8/dd071918c040f50fa1cf80da16423af51ff8ce4a0f2399b7bf8de45ac3d9/nose-1.3.7-py3-none-any.whl
+Collecting nbconvert; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/79/6c/05a569e9f703d18aacb89b7ad6075b404e8a4afde2c26b73ca77bb644b14/nbconvert-5.6.1-py2.py3-none-any.whl
+Collecting requests; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/51/bd/23c926cd341ea6b7dd0b2a00aba99ae0f828be89d72b2190f27c11d4b7fb/requests-2.22.0-py2.py3-none-any.whl
+Collecting ipykernel; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/e1/92/8fec943b5b81078399f969f00557804d884c96fcd0bc296e81a2ed4fd270/ipykernel-5.1.3-py3-none-any.whl
+Collecting Sphinx>=1.3; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/1d/58/a547b02946af1cf337c701cafcf3267065c1c83d6e701f540961f4907b5d/Sphinx-2.2.1-py3-none-any.whl
+Collecting testpath; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/1b/9e/1a170feaa54f22aeb5a5d16c9015e82234275a3c8ab630b552493f9cb8a9/testpath-0.4.4-py2.py3-none-any.whl
+Collecting notebook; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/f5/69/d2ffaf7efc20ce47469187e3a41e6e03e17b45de5a6559f4e7ab3eace5e1/notebook-6.0.2-py3-none-any.whl
+Collecting qtconsole; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/7c/57/3528b84ffa753e2089908bbf74bb5ae60653eb7a63797b6234e88b847d67/qtconsole-4.6.0-py2.py3-none-any.whl
+Collecting nbformat; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/da/27/9a654d2b6cc1eaa517d1c5a4405166c7f6d72f04f6e7eea41855fe808a46/nbformat-4.4.0-py2.py3-none-any.whl
+Collecting ipyparallel; extra == "all" (from IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/3f/82/aaa7a357845a98d4028f27c799f0d3bb2fe55fc1247c73dc712b4ae2344c/ipyparallel-6.2.4-py2.py3-none-any.whl
+Requirement already satisfied: html5lib==0.9999999 in c:\program files\python36\lib\site-packages (from tensorflow-tensorboard<1.6.0,>=1.5.0->tensorflow>=1.3.0->-r requirements.txt (line 7)) (0.9999999)
+Requirement already satisfied: markdown>=2.6.8 in c:\program files\python36\lib\site-packages (from tensorflow-tensorboard<1.6.0,>=1.5.0->tensorflow>=1.3.0->-r requirements.txt (line 7)) (3.1.1)
+Requirement already satisfied: bleach==1.5.0 in c:\program files\python36\lib\site-packages (from tensorflow-tensorboard<1.6.0,>=1.5.0->tensorflow>=1.3.0->-r requirements.txt (line 7)) (1.5.0)
+Requirement already satisfied: werkzeug>=0.11.10 in c:\program files\python36\lib\site-packages (from tensorflow-tensorboard<1.6.0,>=1.5.0->tensorflow>=1.3.0->-r requirements.txt (line 7)) (0.16.0)
+Collecting ipython-genutils (from traitlets>=4.2->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/fa/bc/9bd3b5c2b4774d5f33b2d544f1460be9df7df2fe42f352135381c347c69a/ipython_genutils-0.2.0-py2.py3-none-any.whl
+Collecting parso>=0.5.0 (from jedi>=0.10->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/a3/bd/bf4e5bd01d79906e5b945a7af033154da49fd2b0d5b5c705a21330323305/parso-0.5.1-py2.py3-none-any.whl
+Collecting wcwidth (from prompt-toolkit<2.1.0,>=2.0.0->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/7e/9f/526a6947247599b084ee5232e4f9190a38f398d7300d866af3ab571a5bfe/wcwidth-0.1.7-py2.py3-none-any.whl
+Collecting widgetsnbextension~=3.5.0 (from ipywidgets; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/6c/7b/7ac231c20d2d33c445eaacf8a433f4e22c60677eb9776c7c5262d7ddee2d/widgetsnbextension-3.5.1-py2.py3-none-any.whl
+Collecting jupyter-core (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/fb/82/86437f661875e30682e99d04c13ba6c216f86f5f6ca6ef212d3ee8b6ca11/jupyter_core-4.6.1-py2.py3-none-any.whl
+Collecting entrypoints>=0.2.2 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/ac/c6/44694103f8c221443ee6b0041f69e2740d89a25641e62fb4f2ee568f2f9c/entrypoints-0.3-py2.py3-none-any.whl
+Collecting pandocfilters>=1.4.1 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+Collecting mistune<2,>=0.8.1 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/09/ec/4b43dae793655b7d8a25f76119624350b4d65eb663459eb9603d7f1f0345/mistune-0.8.4-py2.py3-none-any.whl
+Collecting defusedxml (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/06/74/9b387472866358ebc08732de3da6dc48e44b0aacd2ddaa5cb85ab7e986a2/defusedxml-0.6.0-py2.py3-none-any.whl
+Collecting jinja2>=2.4 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/65/e0/eb35e762802015cab1ccee04e8a277b03f1d8e53da3ec3106882ec42558b/Jinja2-2.10.3-py2.py3-none-any.whl
+Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/b4/40/a9837291310ee1ccc242ceb6ebfd9eb21539649f193a7c8c86ba15b98539/urllib3-1.25.7-py2.py3-none-any.whl
+Collecting idna<2.9,>=2.5 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl
+Collecting certifi>=2017.4.17 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/18/b0/8146a4f8dd402f60744fa380bc73ca47303cccf8b9190fd16a827281eac2/certifi-2019.9.11-py2.py3-none-any.whl
+Collecting chardet<3.1.0,>=3.0.2 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl
+Collecting jupyter-client (from ipykernel; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/13/81/fe0eee1bcf949851a120254b1f530ae1e01bdde2d3ab9710c6ff81525061/jupyter_client-5.3.4-py2.py3-none-any.whl
+Collecting tornado>=4.2 (from ipykernel; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/35/0b/bcd855847d58600627b17c64535567a871731e81f0f75d2065f72fe58671/tornado-6.0.3-cp36-cp36m-win_amd64.whl
+Collecting sphinxcontrib-jsmath (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/c2/42/4c8646762ee83602e3fb3fbe774c2fac12f317deb0b5dbeeedd2d3ba4b77/sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl
+Collecting sphinxcontrib-devhelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/b0/a3/fea98741f0b2f2902fbf6c35c8e91b22cd0dd13387291e81d457f9a93066/sphinxcontrib_devhelp-1.0.1-py2.py3-none-any.whl
+Collecting sphinxcontrib-htmlhelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/e4/35/80a67cc493f4a8a9634ab203a77aaa1b84d79ccb1c02eca72cb084d2c7f7/sphinxcontrib_htmlhelp-1.0.2-py2.py3-none-any.whl
+Collecting snowballstemmer>=1.1 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/7d/4b/cdf1113a0e88b641893b814e9c36f69a6fda28cd88b62c7f0d858cde3166/snowballstemmer-2.0.0-py2.py3-none-any.whl
+Collecting docutils>=0.12 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/22/cd/a6aa959dca619918ccb55023b4cb151949c64d4d5d55b3f4ffd7eee0c6e8/docutils-0.15.2-py3-none-any.whl
+Collecting alabaster<0.8,>=0.7 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/10/ad/00b090d23a222943eb0eda509720a404f531a439e803f6538f35136cae9e/alabaster-0.7.12-py2.py3-none-any.whl
+Collecting sphinxcontrib-qthelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/ce/5b/4747c3ba98b3a3e21a66faa183d8f79b9ded70e74212a7988d236a6eb78a/sphinxcontrib_qthelp-1.0.2-py2.py3-none-any.whl
+Collecting sphinxcontrib-serializinghtml (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/57/b3/3648e48fa5682e61e9839d62de4e23af1795ceb738d68d73bd974257a95c/sphinxcontrib_serializinghtml-1.1.3-py2.py3-none-any.whl
+Collecting babel!=2.0,>=1.3 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/2c/60/f2af68eb046c5de5b1fe6dd4743bf42c074f7141fe7b2737d3061533b093/Babel-2.7.0-py2.py3-none-any.whl
+Collecting packaging (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/cf/94/9672c2d4b126e74c4496c6b3c58a8b51d6419267be9e70660ba23374c875/packaging-19.2-py2.py3-none-any.whl
+Collecting sphinxcontrib-applehelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/13/9a/4428b3114d654cb1cd34d90d5e6fab938d5436f94a571155187ea1dd78b4/sphinxcontrib_applehelp-1.0.1-py2.py3-none-any.whl
+Collecting imagesize (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/fc/b6/aef66b4c52a6ad6ac18cf6ebc5731ed06d8c9ae4d3b2d9951f261150be67/imagesize-1.1.0-py2.py3-none-any.whl
+Collecting prometheus-client (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+Collecting terminado>=0.8.1 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/ff/96/1d9a2c23990aea8f8e0b5c3b6627d03196a73771a17a2d9860bbe9823ab6/terminado-0.8.3-py2.py3-none-any.whl
+Collecting Send2Trash (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/49/46/c3dc27481d1cc57b9385aff41c474ceb7714f7935b1247194adae45db714/Send2Trash-1.5.0-py3-none-any.whl
+Collecting pyzmq>=17 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/06/d4/41247d1c4f167a43b28e2a7285f87bbb919a5f9d9dce4d22adfb81019264/pyzmq-18.1.1-cp36-cp36m-win_amd64.whl
+Collecting jsonschema!=2.5.0,>=2.4 (from nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/c5/8f/51e89ce52a085483359217bc72cdbf6e75ee595d5b1d4b5ade40c7e018b8/jsonschema-3.2.0-py2.py3-none-any.whl
+Collecting pywin32>=1.0; sys_platform == "win32" (from jupyter-core->nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/f7/76/29e8e24a4967eb40fdf2f525aae53a1fd6e606382d957aa403f3f12ea235/pywin32-227-cp36-cp36m-win_amd64.whl
+Collecting MarkupSafe>=0.23 (from jinja2>=2.4->nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/b9/82/833c7714951bff8f502ed054e6fbd8bd00e083d1fd96de6a46905cf23378/MarkupSafe-1.1.1-cp36-cp36m-win_amd64.whl
+Collecting pytz>=2015.7 (from babel!=2.0,>=1.3->Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/e7/f9/f0b53f88060247251bf481fa6ea62cd0d25bf1b11a87888e53ce5b7c8ad2/pytz-2019.3-py2.py3-none-any.whl
+Collecting pywinpty>=0.5; os_name == "nt" (from terminado>=0.8.1->notebook; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/c3/50/b89e80f9b2fd30e7eebf9815ebdeff79cf0955c2f3217f2322eb1e9f58b3/pywinpty-0.5.5-cp36-cp36m-win_amd64.whl
+Collecting pyrsistent>=0.14.0 (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/6c/6f/c1a2e8da80a0029f6b618d7e20e1a6f2a61dd04e2e54225309c2cc4268f7/pyrsistent-0.15.6.tar.gz (107kB)
+    100% |████████████████████████████████| 112kB 8.2MB/s 
+Collecting importlib-metadata; python_version < "3.8" (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/f6/d2/40b3fa882147719744e6aa50ac39cf7a22a913cbcba86a0371176c425a3b/importlib_metadata-0.23-py2.py3-none-any.whl
+Collecting attrs>=17.4.0 (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/a2/db/4313ab3be961f7a763066401fb77f7748373b6094076ae2bda2806988af6/attrs-19.3.0-py2.py3-none-any.whl
+Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/74/3d/1ee25a26411ba0401b43c6376d2316a71addcc72ef8690b101b4ea56d76a/zipp-0.6.0-py2.py3-none-any.whl
+Collecting more-itertools (from zipp>=0.5->importlib-metadata; python_version < "3.8"->jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 12))
+  Using cached https://files.pythonhosted.org/packages/45/dc/3241eef99eb45f1def35cf93af35d1cf9ef4c0991792583b8f33ea41b092/more_itertools-7.2.0-py3-none-any.whl
+Building wheels for collected packages: pyrsistent
+  Running setup.py bdist_wheel for pyrsistent ... done
+  Stored in directory: C:\Users\Rob\AppData\Local\pip\Cache\wheels\83\89\d3\1712b9c33c9b9c0911b188a86aeff2a9a05e113f986cf79d92
+Successfully built pyrsistent
+Installing collected packages: Pillow, cython, python-dateutil, cycler, pyparsing, kiwisolver, matplotlib, imageio, PyWavelets, decorator, networkx, scikit-image, opencv-python, opencv-python-headless, Shapely, imgaug, ipython-genutils, traitlets, pickleshare, parso, jedi, colorama, wcwidth, prompt-toolkit, backcall, pygments, pyrsistent, more-itertools, zipp, importlib-metadata, attrs, jsonschema, pywin32, jupyter-core, nbformat, tornado, pyzmq, jupyter-client, ipykernel, prometheus-client, MarkupSafe, jinja2, pywinpty, terminado, Send2Trash, entrypoints, pandocfilters, testpath, mistune, defusedxml, nbconvert, notebook, widgetsnbextension, ipywidgets, nose, urllib3, idna, certifi, chardet, requests, sphinxcontrib-jsmath, sphinxcontrib-devhelp, sphinxcontrib-htmlhelp, snowballstemmer, docutils, alabaster, sphinxcontrib-qthelp, sphinxcontrib-serializinghtml, pytz, babel, packaging, sphinxcontrib-applehelp, imagesize, Sphinx, qtconsole, ipyparallel, IPython
+Successfully installed IPython-7.9.0 MarkupSafe-1.1.1 Pillow-6.2.1 PyWavelets-1.1.1 Send2Trash-1.5.0 Shapely-1.6.4.post2 Sphinx-2.2.1 alabaster-0.7.12 attrs-19.3.0 babel-2.7.0 backcall-0.1.0 certifi-2019.9.11 chardet-3.0.4 colorama-0.4.1 cycler-0.10.0 cython-0.29.14 decorator-4.4.1 defusedxml-0.6.0 docutils-0.15.2 entrypoints-0.3 idna-2.8 imageio-2.6.1 imagesize-1.1.0 imgaug-0.3.0 importlib-metadata-0.23 ipykernel-5.1.3 ipyparallel-6.2.4 ipython-genutils-0.2.0 ipywidgets-7.5.1 jedi-0.15.1 jinja2-2.10.3 jsonschema-3.2.0 jupyter-client-5.3.4 jupyter-core-4.6.1 kiwisolver-1.1.0 matplotlib-3.1.2 mistune-0.8.4 more-itertools-7.2.0 nbconvert-5.6.1 nbformat-4.4.0 networkx-2.4 nose-1.3.7 notebook-6.0.2 opencv-python-4.1.2.30 opencv-python-headless-4.1.2.30 packaging-19.2 pandocfilters-1.4.2 parso-0.5.1 pickleshare-0.7.5 prometheus-client-0.7.1 prompt-toolkit-2.0.10 pygments-2.4.2 pyparsing-2.4.5 pyrsistent-0.15.6 python-dateutil-2.8.1 pytz-2019.3 pywin32-227 pywinpty-0.5.5 pyzmq-18.1.1 qtconsole-4.6.0 requests-2.22.0 scikit-image-0.16.2 snowballstemmer-2.0.0 sphinxcontrib-applehelp-1.0.1 sphinxcontrib-devhelp-1.0.1 sphinxcontrib-htmlhelp-1.0.2 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-qthelp-1.0.2 sphinxcontrib-serializinghtml-1.1.3 terminado-0.8.3 testpath-0.4.4 tornado-6.0.3 traitlets-4.3.3 urllib3-1.25.7 wcwidth-0.1.7 widgetsnbextension-3.5.1 zipp-0.6.0
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> python setup.py install
+WARNING:root:Fail load requirements file, so using default ones.
+running install
+running bdist_egg
+running egg_info
+creating mask_rcnn.egg-info
+writing mask_rcnn.egg-info\PKG-INFO
+writing dependency_links to mask_rcnn.egg-info\dependency_links.txt
+writing top-level names to mask_rcnn.egg-info\top_level.txt
+writing manifest file 'mask_rcnn.egg-info\SOURCES.txt'
+reading manifest file 'mask_rcnn.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'mask_rcnn.egg-info\SOURCES.txt'
+installing library code to build\bdist.win-amd64\egg
+running install_lib
+running build_py
+creating build
+creating build\lib
+creating build\lib\mrcnn
+copying mrcnn\config.py -> build\lib\mrcnn
+copying mrcnn\model.py -> build\lib\mrcnn
+copying mrcnn\parallel_model.py -> build\lib\mrcnn
+copying mrcnn\utils.py -> build\lib\mrcnn
+copying mrcnn\visualize.py -> build\lib\mrcnn
+copying mrcnn\__init__.py -> build\lib\mrcnn
+creating build\bdist.win-amd64
+creating build\bdist.win-amd64\egg
+creating build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\config.py -> build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\model.py -> build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\parallel_model.py -> build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\utils.py -> build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\visualize.py -> build\bdist.win-amd64\egg\mrcnn
+copying build\lib\mrcnn\__init__.py -> build\bdist.win-amd64\egg\mrcnn
+byte-compiling build\bdist.win-amd64\egg\mrcnn\config.py to config.cpython-36.pyc
+byte-compiling build\bdist.win-amd64\egg\mrcnn\model.py to model.cpython-36.pyc
+byte-compiling build\bdist.win-amd64\egg\mrcnn\parallel_model.py to parallel_model.cpython-36.pyc
+byte-compiling build\bdist.win-amd64\egg\mrcnn\utils.py to utils.cpython-36.pyc
+byte-compiling build\bdist.win-amd64\egg\mrcnn\visualize.py to visualize.cpython-36.pyc
+byte-compiling build\bdist.win-amd64\egg\mrcnn\__init__.py to __init__.cpython-36.pyc
+creating build\bdist.win-amd64\egg\EGG-INFO
+copying mask_rcnn.egg-info\PKG-INFO -> build\bdist.win-amd64\egg\EGG-INFO
+copying mask_rcnn.egg-info\SOURCES.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying mask_rcnn.egg-info\dependency_links.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying mask_rcnn.egg-info\top_level.txt -> build\bdist.win-amd64\egg\EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+creating dist
+creating 'dist\mask_rcnn-2.1-py3.6.egg' and adding 'build\bdist.win-amd64\egg' to it
+removing 'build\bdist.win-amd64\egg' (and everything under it)
+Processing mask_rcnn-2.1-py3.6.egg
+Copying mask_rcnn-2.1-py3.6.egg to c:\program files\python36\lib\site-packages
+Adding mask-rcnn 2.1 to easy-install.pth file
+
+Installed c:\program files\python36\lib\site-packages\mask_rcnn-2.1-py3.6.egg
+Processing dependencies for mask-rcnn==2.1
+Finished processing dependencies for mask-rcnn==2.1
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install mysqlclient
+Collecting mysqlclient
+  Using cached https://files.pythonhosted.org/packages/96/da/6bc460ef7a6df3d417914f17232259a4c869e63a3809d138ae786d7cf639/mysqlclient-1.4.6-cp36-cp36m-win_amd64.whl
+Installing collected packages: mysqlclient
+Successfully installed mysqlclient-1.4.6
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install Shapely
+Requirement already satisfied: Shapely in c:\program files\python36\lib\site-packages (1.6.4.post2)
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> pip install opencv-contrib-python
+Collecting opencv-contrib-python
+  Downloading https://files.pythonhosted.org/packages/bf/2a/954507b9308378cc0de3082bf0716dcfd915fe6f9c1bb786f0c6c2b219d2/opencv_contrib_python-4.1.2.30-cp36-cp36m-win_amd64.whl (39.4MB)
+    100% |████████████████████████████████| 39.4MB 351kB/s 
+Requirement already satisfied: numpy>=1.11.3 in c:\program files\python36\lib\site-packages (from opencv-contrib-python) (1.17.4)
+Installing collected packages: opencv-contrib-python
+Successfully installed opencv-contrib-python-4.1.2.30
+You are using pip version 18.1, however version 19.3.1 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+PS C:\Users\Rob\source\repos\FullStackML\Mask_RCNN> cd ..
+PS C:\Users\Rob\source\repos\FullStackML> 
