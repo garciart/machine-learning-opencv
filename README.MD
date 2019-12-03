@@ -1,2 +1,4 @@
-# Full Stack Machine Learning Application
+# Park!
 <h2>Introduction</h2>
+<p>As an intern at NASA with the Digital Transformation Team, we worked on a lot of cool projects. Some of them involved machine learning, and, yes, this included a parking lot project with Georgia Tech (one of the interns from the previous team was from that school). Due to architecture, security requirements, etc., the actual production system was a bit complex, but here is a simplified version of the application. It includes the full stack; Linux scripting, SQL, Python, PHP HTML/CSS/JavaScript and cool computer vision and machine learning demos, so feel free to use whatever you need or the whole thing if you like!</p>
+<p>While the orginal system ran on three separate Red Hat Linux servers (one for the cron scripts, Python scripts, and back-end Apache HTTP Web Server; one for the front-end Apache HTTP Web Server; and one for the MySQL database), our system will run on a CentOS virtual machine using Nginx HTTP Web Server and a MySQL database.</p>

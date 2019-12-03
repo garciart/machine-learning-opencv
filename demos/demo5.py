@@ -91,15 +91,19 @@ for f in FRAME_SOURCE:
 
         print("Cars found in frame of video: ", len(car_boxes))
 
-        poly_pts = ([[240, 1140], [750, 1150], [845, 1400], [150, 1400]],
-                    [[751, 1150], [3200, 1140], [3200, 1350], [846, 1400]])
+        poly_pts = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
+                    [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
 
-        for p in poly_pts:
+        # BGR colors: Yellow, Cyan, Blue, Green, White, Red, Magenta, Black
+        colors = [[0, 255, 255], [255, 255, 0], [255, 0, 0], [0, 255, 0], [
+            255, 255, 255], [0, 0, 255], [255, 0, 255], [0, 0, 0]]
+
+        for index, p in enumerate(poly_pts, start=0):
             # Hold count of cars in zone
             count = 0
             # Draw the zone
             cv2.polylines(frame, np.int32(
-                [np.array(p)]), True, (0, 255, 255), 2)
+                [np.array(p)]), True, colors[index], 10)
             # Draw each box on the frame. Do not use rgb_image with cv2!
             for box in car_boxes:
                 # Get the box coordinates
@@ -107,7 +111,7 @@ for f in FRAME_SOURCE:
                 # Only show cars in the zones!
                 if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
                     # Draw the box
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), colors[index], 5)
                     # Count car in zone
                     count += 1
                     # Delete the car to avoid double counting

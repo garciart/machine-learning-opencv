@@ -1,10 +1,11 @@
 Windows:
 -- Must use Python 3
 -- Must pip install as administrator.
--- Shapely depends on GEOS. If Shapely fails to install, try the following (thanks Jozef Cechovsky at https://stackoverflow.com/questions/13144158/python-geos-and-shapely-on-windows-64):
-install osgeo4w from https://trac.osgeo.org/osgeo4w/
-add installed folder to path e.g. C:\OSGeo4W64\bin (must contain geos_c.dll)
-restart command line
+-- Shapely depends on GEOS. The following steps will install the required geos libraries:
+1. Install Wheel (if not installed): pip install wheel
+2. Uninstall Shapely (if installed): pip uninstall Shapely
+3. Download the appropriate wheel (based on Python version) into the Park directory from https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
+4. Install the .whl file: pip install Shapely-1.6.4.post2-cp36-cp36m-win_amd64.whl
 -- Watch your directory structure!
 -- Make sure all packages work with TensorFlow 1.5. Do not use TensorFlow 2.0 (e.g., TensorFlow 1.15 and Keras 2.2.5)
 -- Commit without COCo dataset. Use .gitignore

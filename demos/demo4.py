@@ -28,10 +28,14 @@ for f in FRAME_SOURCE:
     # Attempt to capture a frame
     success, frame = video_capture.read()
     if success:
-        poly_pts = ([[240,1140], [750,1150], [845,1400], [150,1400]],
-                    [[751,1150],[3200,1140],[3200,1350],[846,1400]])
-        for p in poly_pts:
-            cv2.polylines(frame, np.int32([np.array(p)]), True, (0,255,255), 2)
+        poly_pts = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
+                    [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
+
+        # BGR colors: Yellow, Cyan, Blue, Green, White, Red, Magenta, Black
+        colors = [[0,255,255],[255,255,0],[255,0,0],[0,255,0],[255,255,255],[0,0,255],[255,0,255],[0,0,0]]
+
+        for index, p in enumerate(poly_pts, start=0):
+            cv2.polylines(frame, np.int32([np.array(p)]), True, colors[index], 10)
 
         # Draw center crosshair
         height, width, channels = frame.shape
