@@ -5,12 +5,12 @@ from pathlib import Path
 import mrcnn.config
 from mrcnn.model import MaskRCNN
 import numpy as np
+import datetime
 from numpy import array
 from shapely.geometry import asPoint
 from shapely.geometry import Polygon
 
 # Configuration that will be used by the Mask-RCNN library
-
 
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
@@ -63,6 +63,12 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
 FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
 
+# Get UTC time before loop
+local_timezone = datetime.datetime.now(
+    datetime.timezone.utc).astimezone().tzinfo
+timestamp = datetime.datetime.now(
+    local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
+
 for f in FRAME_SOURCE:
     # Load the video file we want to run detection on
     video_capture = cv2.VideoCapture(f)
@@ -94,30 +100,46 @@ for f in FRAME_SOURCE:
         poly_pts = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
                     [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
 
-        # BGR colors: Yellow, Cyan, Blue, Green, White, Red, Magenta, Black
-        colors = [[0, 255, 255], [255, 255, 0], [255, 0, 0], [0, 255, 0], [
-            255, 255, 255], [0, 0, 255], [255, 0, 255], [0, 0, 0]]
+        # BGR colors: Blue, Orange, Red, Gray, Cyan, Yellow, Pink, White
+        colors = [[255, 0, 0], [0, 127, 255], [0, 0, 255], [127, 127, 127], [
+            255, 255, 0], [0, 255, 255], [127, 0, 255], [255, 255, 255]]
+
+        # Make an overlay for transparent boxes
+        overlay = frame.copy()
 
         for index, p in enumerate(poly_pts, start=0):
             # Hold count of cars in zone
             count = 0
-            # Draw the zone
-            cv2.polylines(frame, np.int32(
-                [np.array(p)]), True, colors[index], 10)
+            # Draw the filled zones
+            cv2.fillPoly(overlay, np.int32([np.array(p)]), colors[index + 4])
             # Draw each box on the frame. Do not use rgb_image with cv2!
             for box in car_boxes:
                 # Get the box coordinates
                 y1, x1, y2, x2 = box
                 # Only show cars in the zones!
                 if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
-                    # Draw the box
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), colors[index], 5)
+                    # Draw the box and add to overlay
+                    cv2.rectangle(frame, (x1, y1),
+                                  (x2, y2), colors[index], 5)
                     # Count car in zone
                     count += 1
                     # Delete the car to avoid double counting
                     np.delete(car_boxes, box)
 
             print("Total cars in zone {}: {}".format(poly_pts.index(p), count))
+
+        # Set transparency for boxes
+        alpha = 0.4
+        # Add overlay to frame
+        frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
+
+        # Draw center crosshair
+        height, width, channels = frame.shape
+        cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
+                       [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
+        # Add timestamp
+        cv2.putText(frame, timestamp, (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
 
         # Resize image if necessary
         scaling = int(
