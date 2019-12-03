@@ -88,7 +88,7 @@ for f in FRAME_SOURCE:
             print("Car: ", box)
             y1, x1, y2, x2 = box
             # Draw the box
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
 
         # Resize image if necessary
         scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
