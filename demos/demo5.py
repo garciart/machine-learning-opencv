@@ -100,9 +100,9 @@ for f in FRAME_SOURCE:
         poly_pts = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
                     [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
 
-        # BGR colors: Blue, Orange, Red, Gray, Cyan, Yellow, Pink, White
-        colors = [[255, 0, 0], [0, 127, 255], [0, 0, 255], [127, 127, 127], [
-            255, 255, 0], [0, 255, 255], [127, 0, 255], [255, 255, 255]]
+        # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
+        colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127], [
+            0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
 
         # Make an overlay for transparent boxes
         overlay = frame.copy()
