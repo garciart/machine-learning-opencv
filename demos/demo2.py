@@ -1,11 +1,13 @@
 #!python
 import os
-import cv2
 from pathlib import Path
+
+import cv2
+
 import mrcnn.config
-# import mrcnn.utils
-from mrcnn.model import MaskRCNN
+import mrcnn.utils
 import mrcnn.visualize
+from mrcnn.model import MaskRCNN
 
 # Configuration that will be used by the Mask-RCNN library
 
@@ -23,6 +25,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 # Directory to save logs and trained model
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
+print(MODEL_DIR)
 
 # Local path to trained weights file
 COCO_MODEL_PATH = os.path.join(ROOT_DIR, "mask_rcnn_coco.h5")
@@ -66,42 +69,46 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
 FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
 
-for f in FRAME_SOURCE:
-    # Load the video file we want to run detection on
-    video_capture = cv2.VideoCapture(f)
+def main():
+    for f in FRAME_SOURCE:
+        # Load the video file we want to run detection on
+        video_capture = cv2.VideoCapture(f)
 
-    # Attempt to capture a frame
-    success, frame = video_capture.read()
-    if success:
-        # Convert the image from BGR color (which OpenCV uses) to RGB color
-        rgb_image = frame[:, :, ::-1]
+        # Attempt to capture a frame
+        success, frame = video_capture.read()
+        if success:
+            # Convert the image from BGR color (which OpenCV uses) to RGB color
+            rgb_image = frame[:, :, ::-1]
 
-        # Run the image through the Mask R-CNN model to get results.
-        results = model.detect([rgb_image], verbose=0)
+            # Run the image through the Mask R-CNN model to get results.
+            results = model.detect([rgb_image], verbose=0)
 
-        # Mask R-CNN assumes we are running detection on multiple images.
-        # We only passed in one image to detect, so only grab the first result.
-        r = results[0]
+            # Mask R-CNN assumes we are running detection on multiple images.
+            # We only passed in one image to detect, so only grab the first result.
+            r = results[0]
 
-        # The r variable will now have the results of detection:
-        # - r['rois'] are the bounding box of each detected object
-        # - r['class_ids'] are the class id (type) of each detected object
-        # - r['scores'] are the confidence scores for each detection
-        # - r['masks'] are the object masks for each detected object (which gives you the object outline)
+            # The r variable will now have the results of detection:
+            # - r['rois'] are the bounding box of each detected object
+            # - r['class_ids'] are the class id (type) of each detected object
+            # - r['scores'] are the confidence scores for each detection
+            # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
-        # Show the frame of video on the screen
-        mrcnn.visualize.display_instances(
-            rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
+            # Show the frame of video on the screen
+            mrcnn.visualize.display_instances(
+                rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 
-        # Hit any key to quit
-        print("Close the window to continue...")
-        cv2.waitKey(0)
+            # Hit any key to quit
+            print("Close the window to continue...")
+            cv2.waitKey(0)
 
-    else:
-        print("Cannot access image or video!")
+        else:
+            print("Cannot access image or video!")
 
-    # Clean up everything when finished
-    video_capture.release()
-    cv2.destroyAllWindows()
+        # Clean up everything when finished
+        video_capture.release()
+        cv2.destroyAllWindows()
 
-print("Job complete. Have an excellent day.")
+    print("Job complete. Have an excellent day.")
+
+if __name__ == '__main__':
+    main()

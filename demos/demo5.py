@@ -12,6 +12,7 @@ from shapely.geometry import Polygon
 
 # Configuration that will be used by the Mask-RCNN library
 
+
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
     IMAGES_PER_GPU = 1
@@ -69,100 +70,108 @@ local_timezone = datetime.datetime.now(
 timestamp = datetime.datetime.now(
     local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
 
-for f in FRAME_SOURCE:
-    # Load the video file we want to run detection on
-    video_capture = cv2.VideoCapture(f)
 
-    # Attempt to capture a frame
-    success, frame = video_capture.read()
-    if success:
-        # Convert the image from BGR color (which OpenCV uses) to RGB color
-        rgb_image = frame[:, :, ::-1]
+def main():
+    for f in FRAME_SOURCE:
+        # Load the video file we want to run detection on
+        video_capture = cv2.VideoCapture(f)
 
-        # Run the image through the Mask R-CNN model to get results.
-        results = model.detect([rgb_image], verbose=0)
+        # Attempt to capture a frame
+        success, frame = video_capture.read()
+        if success:
+            # Convert the image from BGR color (which OpenCV uses) to RGB color
+            rgb_image = frame[:, :, ::-1]
 
-        # Mask R-CNN assumes we are running detection on multiple images.
-        # We only passed in one image to detect, so only grab the first result.
-        r = results[0]
+            # Run the image through the Mask R-CNN model to get results.
+            results = model.detect([rgb_image], verbose=0)
 
-        # The r variable will now have the results of detection:
-        # - r['rois'] are the bounding box of each detected object
-        # - r['class_ids'] are the class id (type) of each detected object
-        # - r['scores'] are the confidence scores for each detection
-        # - r['masks'] are the object masks for each detected object (which gives you the object outline)
+            # Mask R-CNN assumes we are running detection on multiple images.
+            # We only passed in one image to detect, so only grab the first result.
+            r = results[0]
 
-        # Filter the results to only grab the car / truck bounding boxes
-        car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+            # The r variable will now have the results of detection:
+            # - r['rois'] are the bounding box of each detected object
+            # - r['class_ids'] are the class id (type) of each detected object
+            # - r['scores'] are the confidence scores for each detection
+            # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
-        print("Cars found in frame of video: ", len(car_boxes))
+            # Filter the results to only grab the car / truck bounding boxes
+            car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
-        poly_pts = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
-                    [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
+            print("Cars found in frame of video: ", len(car_boxes))
 
-        # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
-        colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127], [
-            0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
+            poly_coords = ([[751, 1150], [3200, 1140], [3200, 1350], [816, 1400], [816, 1300]],
+                           [[150, 1400], [815, 1400], [815, 1300], [750, 1150], [240, 1140]])
 
-        # Make an overlay for transparent boxes
-        overlay = frame.copy()
+            # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
+            colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127], [
+                0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
 
-        for index, p in enumerate(poly_pts, start=0):
-            # Hold count of cars in zone
-            count = 0
-            # Draw the filled zones
-            cv2.fillPoly(overlay, np.int32([np.array(p)]), colors[index + 4])
-            # Draw each box on the frame. Do not use rgb_image with cv2!
-            for box in car_boxes:
-                # Get the box coordinates
-                y1, x1, y2, x2 = box
-                # Only show cars in the zones!
-                if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
-                    # Draw the box and add to overlay
-                    cv2.rectangle(frame, (x1, y1),
-                                  (x2, y2), colors[index], 5)
-                    # Count car in zone
-                    count += 1
-                    # Delete the car to avoid double counting
-                    np.delete(car_boxes, box)
+            # Make an overlay for transparent boxes
+            overlay = frame.copy()
 
-            print("Total cars in zone {}: {}".format(poly_pts.index(p), count))
+            for index, p in enumerate(poly_coords, start=0):
+                # Hold count of cars in zone
+                count = 0
+                # Draw the filled zones
+                cv2.fillPoly(overlay, np.int32(
+                    [np.array(p)]), colors[index + 4])
+                # Draw each box on the frame. Do not use rgb_image with cv2!
+                for box in car_boxes:
+                    # Get the box coordinates
+                    y1, x1, y2, x2 = box
+                    # Only show cars in the zones!
+                    if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
+                        # Draw the box and add to overlay
+                        cv2.rectangle(frame, (x1, y1),
+                                      (x2, y2), colors[index], 5)
+                        # Count car in zone
+                        count += 1
+                        # Delete the car to avoid double counting
+                        np.delete(car_boxes, box)
 
-        # Set transparency for boxes
-        alpha = 0.4
-        # Add overlay to frame
-        frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
+                print("Total cars in zone {}: {}".format(
+                    poly_coords.index(p), count))
 
-        # Draw center crosshair
-        height, width, channels = frame.shape
-        cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
-                       [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
-        # Add timestamp
-        cv2.putText(frame, timestamp, (10, 30),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
+            # Set transparency for boxes
+            alpha = 0.4
+            # Add overlay to frame
+            frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
 
-        # Resize image if necessary
-        scaling = int(
-            (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
-        print('Original image dimensions : ', frame.shape)
-        width = int(frame.shape[1] * scaling / 100)
-        height = int(frame.shape[0] * scaling / 100)
-        dim = (width, height)
-        frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
-        print('New image dimensions : ', frame.shape)
+            # Draw center crosshair
+            height, width, channels = frame.shape
+            cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
+                           [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
+            # Add timestamp
+            cv2.putText(frame, timestamp, (10, 30),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
 
-        # Show the frame of video on the screen
-        cv2.imshow('Video', frame)
+            # Resize image if necessary
+            scaling = int(
+                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+            print('Original image dimensions : ', frame.shape)
+            width = int(frame.shape[1] * scaling / 100)
+            height = int(frame.shape[0] * scaling / 100)
+            dim = (width, height)
+            frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
+            print('New image dimensions : ', frame.shape)
 
-        # Hit any key to quit
-        print("Press any key continue...")
-        cv2.waitKey(0)
+            # Show the frame of video on the screen
+            cv2.imshow('Video', frame)
 
-    else:
-        print("Cannot access image or video!")
+            # Hit any key to quit
+            print("Press any key continue...")
+            cv2.waitKey(0)
 
-# Clean up everything when finished
-video_capture.release()
-cv2.destroyAllWindows()
+        else:
+            print("Cannot access image or video!")
 
-print("Job complete. Have an excellent day.")
+    # Clean up everything when finished
+    video_capture.release()
+    cv2.destroyAllWindows()
+
+    print("Job complete. Have an excellent day.")
+
+
+if __name__ == '__main__':
+    main()
