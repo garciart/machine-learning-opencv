@@ -9,3 +9,7 @@ Windows:
 -- Watch your directory structure!
 -- Make sure all packages work with TensorFlow 1.5. Do not use TensorFlow 2.0 (e.g., TensorFlow 1.15 and Keras 2.2.5)
 -- Commit without COCo dataset. Use .gitignore
+-- Database
+Each Zone has one ZoneType
+Each Zone belongs in one Lot
+Each Zone is covvered by one Camera

@@ -54,63 +54,67 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
 FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
 
-for f in FRAME_SOURCE:
-    # Load the video file we want to run detection on
-    video_capture = cv2.VideoCapture(f)
+def main():
+    for f in FRAME_SOURCE:
+        # Load the video file we want to run detection on
+        video_capture = cv2.VideoCapture(f)
 
-    # Attempt to capture a frame
-    success, frame = video_capture.read()
-    if success:
-        # Convert the image from BGR color (which OpenCV uses) to RGB color
-        rgb_image = frame[:, :, ::-1]
+        # Attempt to capture a frame
+        success, frame = video_capture.read()
+        if success:
+            # Convert the image from BGR color (which OpenCV uses) to RGB color
+            rgb_image = frame[:, :, ::-1]
 
-        # Run the image through the Mask R-CNN model to get results.
-        results = model.detect([rgb_image], verbose=0)
+            # Run the image through the Mask R-CNN model to get results.
+            results = model.detect([rgb_image], verbose=0)
 
-        # Mask R-CNN assumes we are running detection on multiple images.
-        # We only passed in one image to detect, so only grab the first result.
-        r = results[0]
+            # Mask R-CNN assumes we are running detection on multiple images.
+            # We only passed in one image to detect, so only grab the first result.
+            r = results[0]
 
-        # The r variable will now have the results of detection:
-        # - r['rois'] are the bounding box of each detected object
-        # - r['class_ids'] are the class id (type) of each detected object
-        # - r['scores'] are the confidence scores for each detection
-        # - r['masks'] are the object masks for each detected object (which gives you the object outline)
+            # The r variable will now have the results of detection:
+            # - r['rois'] are the bounding box of each detected object
+            # - r['class_ids'] are the class id (type) of each detected object
+            # - r['scores'] are the confidence scores for each detection
+            # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
-        # Filter the results to only grab the car / truck bounding boxes
-        car_boxes = get_car_boxes(r['rois'], r['class_ids'])
+            # Filter the results to only grab the car / truck bounding boxes
+            car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
-        print("Cars found in frame of video: ", len(car_boxes))
+            print("Cars found in frame of video: ", len(car_boxes))
 
-        # Draw each box on the frame. Do not use rgb_image with cv2!
-        for box in car_boxes:
-            # Display the box coordinates in the console
-            print("Car: ", box)
-            y1, x1, y2, x2 = box
-            # Draw the box
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
+            # Draw each box on the frame. Do not use rgb_image with cv2!
+            for box in car_boxes:
+                # Display the box coordinates in the console
+                print("Car: ", box)
+                y1, x1, y2, x2 = box
+                # Draw the box
+                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
 
-        # Resize image if necessary
-        scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
-        print('Original image dimensions : ', frame.shape)
-        width = int(frame.shape[1] * scaling / 100)
-        height = int(frame.shape[0] * scaling / 100)
-        dim = (width, height)
-        frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
-        print('New image dimensions : ', frame.shape)
+            # Resize image if necessary
+            scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+            print('Original image dimensions : ', frame.shape)
+            width = int(frame.shape[1] * scaling / 100)
+            height = int(frame.shape[0] * scaling / 100)
+            dim = (width, height)
+            frame = cv2.resize(frame, dim, interpolation = cv2.INTER_AREA)
+            print('New image dimensions : ', frame.shape)
 
-        # Show the frame of video on the screen
-        cv2.imshow('Video', frame)
+            # Show the frame of video on the screen
+            cv2.imshow('Video', frame)
 
-        # Hit any key to quit
-        print("Press any key continue...")
-        cv2.waitKey(0)
+            # Hit any key to quit
+            print("Press any key continue...")
+            cv2.waitKey(0)
 
-    else:
-        print("Cannot access image or video!")
+        else:
+            print("Cannot access image or video!")
 
-# Clean up everything when finished
-video_capture.release()
-cv2.destroyAllWindows()
+    # Clean up everything when finished
+    video_capture.release()
+    cv2.destroyAllWindows()
 
-print("Job complete. Have an excellent day.")
+    print("Job complete. Have an excellent day.")
+
+if __name__ == '__main__':
+    main()

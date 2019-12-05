@@ -1,7 +1,8 @@
 #!python
 import os
-import cv2
 from pathlib import Path
+
+import cv2
 
 # Root directory of the project
 ROOT_DIR = Path(__file__).resolve().parent
@@ -15,35 +16,43 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
 FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
 
-for f in FRAME_SOURCE:
-    # Load the video file we want to run detection on
-    video_capture = cv2.VideoCapture(f)
 
-    # Attempt to capture a frame
-    success, frame = video_capture.read()
-    if success:
-        # Convert the image from BGR color (which OpenCV uses) to RGB color
-        rgb_image = frame[:, :, ::-1]
+def main():
+    for f in FRAME_SOURCE:
+        # Load the video file we want to run detection on
+        video_capture = cv2.VideoCapture(f)
 
-        # Resize image if necessary
-        scaling = int((768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 1
-        print('Original image dimensions : ', rgb_image.shape)
-        width = int(rgb_image.shape[1] * scaling / 100)
-        height = int(rgb_image.shape[0] * scaling / 100)
-        dim = (width, height)
-        rgb_image = cv2.resize(rgb_image, dim, interpolation = cv2.INTER_AREA)
-        print('New image dimensions : ', rgb_image.shape)
+        # Attempt to capture a frame
+        success, frame = video_capture.read()
+        if success:
+            # Convert the image from BGR color (which OpenCV uses) to RGB color
+            rgb_image = frame[:, :, ::-1]
 
-        # Show the frame of video on the screen
-        cv2.imshow('Video', rgb_image)
-        # Hit any key to quit
-        cv2.waitKey(0)
+            # Resize image if necessary
+            scaling = int(
+                (768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 1
+            print('Original image dimensions : ', rgb_image.shape)
+            width = int(rgb_image.shape[1] * scaling / 100)
+            height = int(rgb_image.shape[0] * scaling / 100)
+            dim = (width, height)
+            rgb_image = cv2.resize(
+                rgb_image, dim, interpolation=cv2.INTER_AREA)
+            print('New image dimensions : ', rgb_image.shape)
 
-    else:
-        print("Cannot access image or video!")
+            # Show the frame of video on the screen
+            cv2.imshow('Video', rgb_image)
+            # Hit any key to quit
+            cv2.waitKey(0)
 
-    # Clean up everything when finished
-    video_capture.release()
-    cv2.destroyAllWindows()
+        else:
+            print("Cannot access image or video!")
 
-print("Job complete. Have an excellent day.")
+        # Clean up everything when finished
+        video_capture.release()
+        cv2.destroyAllWindows()
+
+    print("Job complete. Have an excellent day.")
+
+
+if __name__ == '__main__':
+    main()
