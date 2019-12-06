@@ -148,7 +148,7 @@ def main():
 
             # Resize image if necessary
             scaling = int(
-                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
             print('Original image dimensions : ', frame.shape)
             width = int(frame.shape[1] * scaling / 100)
             height = int(frame.shape[0] * scaling / 100)

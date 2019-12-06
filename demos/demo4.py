@@ -16,6 +16,7 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
 FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
+print(FRAME_SOURCE)
 
 # Get UTC time before loop
 local_timezone = datetime.datetime.now(
@@ -65,7 +66,7 @@ def main():
 
             # Resize image if necessary
             scaling = int(
-                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 1
+                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
             print('Original image dimensions : ', frame.shape)
             width = int(frame.shape[1] * scaling / 100)
             height = int(frame.shape[0] * scaling / 100)

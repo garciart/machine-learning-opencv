@@ -14,10 +14,13 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # Image, video or camera to process - set this to 0 to use your webcam instead of a video file
 # FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
-FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
+# FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
+# FRAME_SOURCE = ["http://binaryapi.ap.org/f4d6b22730794576a126bedad673656c/preview/AP19316470225288.jpg?wm=api&ver=0",]
+FRAME_SOURCE = ["https://rgprogramming.com/wp-content/uploads/wp-header-clear-280.png"]
 
 def main():
     for f in FRAME_SOURCE:
+        print(FRAME_SOURCE)
         # Load the video file we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
