@@ -2,13 +2,18 @@ Windows:
 -- Must use Python 3
 -- Must pip install as administrator.
 -- Shapely depends on GEOS. The following steps will install the required geos libraries:
-1. Install Wheel (if not installed): pip install wheel
-2. Uninstall Shapely (if installed): pip uninstall Shapely
-3. Download the appropriate wheel (based on Python version) into the Park directory from https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
-4. Install the .whl file: pip install Shapely-1.6.4.post2-cp36-cp36m-win_amd64.whl
+   1. Install Wheel (if not installed): pip install wheel
+   2. Uninstall Shapely (if installed): pip uninstall Shapely
+   3. Download the appropriate wheel (based on Python version) into the Park directory from https://www.lfd.uci.edu/~gohlke/pythonlibs/#shapely
+   4. Install the .whl file: pip install Shapely-1.6.4.post2-cp36-cp36m-win_amd64.whl
 -- Watch your directory structure!
 -- Make sure all packages work with TensorFlow 1.5. Do not use TensorFlow 2.0 (e.g., TensorFlow 1.15 and Keras 2.2.5)
--- Commit without COCo dataset. Use .gitignore
+-- Commit without COCo dataset. Ignore all .h5 files in .gitignore
+-- May have to pip install scikit-learn
+-- FOLLOW THESE INSTRUCTIONS FOR WINDOWS: https://www.hackeradam.com/installing-opencv-4-on-windows-10/
+   Double check cmake python configuration from here: https://github.com/abidrahmank/OpenCV2-Python-Tutorials/blob/master/source/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.rst
+   REMEMBER TO SET OPENCV_ENABLE_NONFREE=ON
+-- Make sure C:\Program Files\Python36\Lib\site-packages\cv2 exists after Install build
 -- Database
 Each Zone has one ZoneType
 Each Zone belongs in one Lot
