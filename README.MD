@@ -13,8 +13,11 @@
     <li>Python 3 Programming Language Interpreter (using version 3.6.8)</li>
     <li>PHP Hypertext Preprocessor (using version 5.4.16) with Zend Engine Interpreter (using version 2.4.0)</li>
 </ul>
+<hr>
 <h2>Setup</h2>
-<p>As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet. To start things off right, let's create a super user to avoid using the root user:</p>
+<p>As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet.</p>
+<p>We'll be using the default minimal install option. Since our focus is on getting Park up and running, we won't get into creating a CentOS VM in VirtualBox. Several online walkthroughs exist: <a href="https://tutorials.kurtobando.com/install-a-centos-7-minimal-server-in-virtual-machine-with-screenshots/" target="_blank">Kurt Bando's tutorial</a> is an excellent walkthrough.</p>
+<p>Once the VM is setup and to start things off right, let's create a super user to avoid using the root user:</p>
 <pre>
 [root@localhost ~]# adduser park
 [root@localhost ~]# passwd park
@@ -27,8 +30,12 @@ Adding user park to group wheel
 [root@localhost ~]# su - park
 [park@localhost ~]# 
 </pre>
-<p>Next, update the system using the following command:</p>
-<pre>[park@localhost ~]# sudo yum update</pre>
+<p>Next, update the system and add CentOS' development tools using the following commands:</p>
+<pre>
+[park@localhost ~]# sudo yum -y update
+[park@localhost ~]# sudo yum -y install yum-utils
+[park@localhost ~]# sudo yum -y groupinstall development
+</pre>
 <p>This may take a while, especially on a new system.</p>
 <p>Once the system update is completed, make sure that we have everything we need:</p>
 <ol>
@@ -38,7 +45,7 @@ Adding user park to group wheel
 cronie-1.4.11-19.e17.x86_64
 </pre>
         <p>If cron is not installed, install it using the following command:</p>
-<pre>[park@localhost ~]# yum install cronie</pre>
+<pre>[park@localhost ~]# yum -y install cronie</pre>
     </li>
     <li><b>SQLite RDBMS</b> - SQLite should also be installed, but check anyway:
 <pre>
@@ -47,16 +54,16 @@ cronie-1.4.11-19.e17.x86_64
 </pre>
         <p>If SQLite is not installed, install it using the following command:</p>
 <pre>
-[park@localhost ~]# sudo yum install sqlite
+[park@localhost ~]# sudo yum -y install sqlite
 </pre>
     </li>
     <li><b>Nginx HTTP Web Server</b> - To use Nginx, install the <a href="https://fedoraproject.org/wiki/EPEL" target="_blank">Extra Packages for Enterprise Linux (EPEL)</a> first:
 <pre>
-[park@localhost ~]# sudo yum install epel-release
+[park@localhost ~]# sudo yum -y install epel-release
 </pre>
         <p>Once the installation is completed, install Nginx:</p>
 <pre>
-[park@localhost ~]# sudo yum install nginx
+[park@localhost ~]# sudo yum -y install nginx
 </pre>
         <p>Once Nginx is installed, start the server. In addition, run the second command so that Nginx automatically starts when the system boots up:</p>
 <pre>
@@ -68,8 +75,8 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/nginx.service t
         <ul>
             <li>Method #1: Open a browser in the VM - This is the easiest way, but we won't be able to access the site remotely. Install and start a desktop GUI, such as GNOME, using the following commands:
 <pre>
-sudo yum groupinstall "GNOME Desktop"
-startx
+sudo yum -y groupinstall "GNOME Desktop"
+sudo startx
 </pre>
             <p>Once the desktop appears, open a browser and navigate to localhost (http://127.0.0.1) and the Welcome page should appear:</p>
             <img src="images/readme01.png" alt="" style="width:640px;" />
@@ -94,17 +101,18 @@ sudo firewall-cmd --reload
         </ul>
     </li>
     <li><b>PHP Hypertext Preprocessor</b> - We'll be using PHP as the intermediary between the front and back ends. To install PHP, run the following command:
-<pre>[park@localhost ~]# sudo yum install php</pre>
+<pre>[park@localhost ~]# sudo yum -y install php</pre>
     </li>
-    <li><b>Python 3 Programming Language Interpreter</b> - While Python 2 is installed with CentOS by default, we will need Python 3 to run our computer vision and machine learning scripts, specically Python 3.6.x. To install Python, run the following command:
+    <li><b>Python 3 Programming Language Interpreter</b> - While Python 2 is installed with CentOS by default, we will need Python 3 to run our computer vision and machine learning scripts, specically Python 3.6.x. There are a few ways of doing this, but we will use the IUS Community Repo; for an in-depth look at options, check out <a href="https://www.hogarthuk.com/?q=node/15" target="_blank">this link from James Hogarth</a>. To install Python, run the following command:
 <pre>
-[park@localhost ~]# sudo yum install centos-release-scl
-[park@localhost ~]# sudo yum install rh-python36
-[park@localhost ~]# sudo yum groupinstall 'Development Tools'
+[park@localhost ~]# sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+[park@localhost ~]# sudo yum -y install python36u
+[park@localhost ~]# sudo yum -y install python36u-pip
+[park@localhost ~]# sudo yum -y install python36u-devel
 </pre>
     </li>
     <li>Before continuing, do another update of the system using the following command:
-<pre>[park@localhost ~]# sudo yum update</pre>
+<pre>[park@localhost ~]# sudo yum -y update</pre>
     </li>
 </ol>
 <p>Just in case, we'll double check everything is installed and updated using the following commands:</p>
@@ -113,27 +121,34 @@ sudo firewall-cmd --reload
 [park@localhost ~]# sqlite3 -version
 [park@localhost ~]# nginx -v
 [park@localhost ~]# php -v
-[park@localhost ~]# scl enable rh-python36 bash
-[park@localhost ~]# python ––version
+[park@localhost ~]# python3 ––version
+[park@localhost ~]# pip3 ––version
 </pre>
 <img src="images/readme06.png" alt="" style="text-align: center; width: 640px;" />
-<p>Please note that, in order to use Python 3.6.x, we will have to to launch a new shell instance using the Software Collection scl tool each time we start the system. To have the system do this automatically when loading, we'll add a bashrc file to our profile using the following commands:</p>
+<p>One last thing: Using VirtualBox Guest Additions is not necessary, but it will make our life easier (e.g., cut and paste, etc.). Complete the following steps:
+<p>With the VM running...</p>
+<ol>
+<li>Click on "Devices" on the VM menu bar</li>
+<li>Click on the "Insert Guest Additions CD image..." option (If you get an error, you may have already inserted the disk).</li>
+</ol>
+<p>In the terminal, enter the following commands (comments following [#] are not required):</p>
 <pre>
-[park@localhost ~]# cd etc/profile.d
-[park@localhost ~]# sudo nano bashrc
+[park@localhost ~]# sudo yum -y install make gcc kernel-headers kernel-devel perl dkms bzip2 # Installs all requirements
+[park@localhost ~]# export KERN_DIR=/usr/src/kernels/$(uname -r) # set and export the location of the kernel source code
+[park@localhost ~]# mount -r /dev/cdrom /media
+[park@localhost ~]# cd /media/
+[park@localhost ~]# ./VBoxLinuxAdditions.run
+[park@localhost ~]# sudo usermod -aG vboxsf $(whoami)
 </pre>
-<p>Once the file is open in nano, enter the following text:</p>
-<pre>
-# Make Python 3.6.x the default Python interpreter
-scl enable rh-python36 bash
-</pre>
-<p>Hit [CTRL][O] to WriteOut and [CTRL][X] to Exit. Now, return to the park direcctory:</p>
-<pre>
-[park@localhost ~]# cd /home/park
-</pre>
-<p>Whew! That was a lot of setting up! Now let's get to coding...</p> 
+<p>We also recommend enabling shared folders. How to do so is out of our scope (our host machine is Windows, while you may be using something else). For Windows, we recommend <a href="https://www.geeksforgeeks.org/create-shared-folder-host-os-guest-os-virtual-box/" title="Create a shared Folder between Host OS and Guest OS ( Virtual Box)" target="_blank">this walkthrough from Geeks for Geeks.</a> Even though the directions are for Ubuntu, they will work for CentOS as well.</p>
+<p>Whew! That was a lot of setting up! Now let's get to coding...</p>
+<hr>
 <h2>The Data Model</h2>
-<h2>The Scripts<h2>
+<hr>
+<h2>The Scripts</h2>
+<hr>
 <h2>The Back-End</h2>
+<hr>
 <h2>The Front-End</h2>
+<hr>
 <h2>That's All Folks!</h2>
