@@ -1,5 +1,5 @@
 # Park!
-<img src="park_demo.gif" alt="" />
+<img src="README_images/park_demo.gif" alt="" />
 <h2>Introduction</h2>
 <p>As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project with Georgia Tech. Due to architecture, security requirements, cross-lot tracking, etc., the NASA application was a bit complex, but here is a simplified version. It includes the full stack; SQL, Python, Linux scripts, HTML, CSS, JavaScript, and PHP, as well as cool computer vision and machine learning demos.</p>
 <p>While the orginal system ran on three separate Red Hat Linux servers using Apache and MySQL, our demonstration system will run on the following system:</p>
@@ -79,20 +79,20 @@ sudo yum -y groupinstall "GNOME Desktop"
 sudo startx
 </pre>
             <p>Once the desktop appears, open a browser and navigate to localhost (http://127.0.0.1) and the Welcome page should appear:</p>
-            <img src="images/readme01.png" alt="" style="width:640px;" />
+            <img src="README_images/readme01.png" alt="" style="width:640px;" />
             </li>
             <li>Method #2: Access the web server through the VM host's browser - This method allows us to "test" the web server over a an actual connection, even though everything occurs on the VM's host computer.
             <p>First, shutdown the VM and access the network settings:</p>
-            <img src="images/readme02.png" alt="" style="width:640px;" />
+            <img src="README_images/readme02.png" alt="" style="width:640px;" />
             <p>Click on <b>Port Forwarding</b>. Set the Host Port to 8080 and the Guest Port to 80; click on <b>OK</b> when you are done:</p>
-            <img src="images/readme03.png" alt="" style="width:640px;" />
+            <img src="README_images/readme03.png" alt="" style="width:640px;" />
             <p>Restart the VM and enter the following commands:</p>
 <pre>
 sudo firewall-cmd --zone=public --add-service=http --permanent
 sudo firewall-cmd --reload
 </pre>
             <p>Open a browser on the host machine, navigate to http://127.0.0.1:8080, and the Welcome page should appear:</p>
-            <img src="images/readme05.png" alt="" style="width:640px;" />
+            <img src="README_images/readme05.png" alt="" style="width:640px;" />
             </li>
             <li>Method #3: If you are using an actual server, you can access it by entering its public IP address. Pull up the network interfaces using the following command:
 <pre>ip addr</pre>
@@ -101,7 +101,7 @@ sudo firewall-cmd --reload
         </ul>
     </li>
     <li><b>PHP Hypertext Preprocessor</b> - We'll be using PHP as the intermediary between the front and back ends. To install PHP, run the following command:
-<pre>[park@localhost ~]# sudo yum -y install php</pre>
+<pre>[park@localhost ~]# sudo yum -y install php php-fpm</pre>
     </li>
     <li><b>Python 3 Programming Language Interpreter</b> - While Python 2 is installed with CentOS by default, we will need Python 3 to run our computer vision and machine learning scripts, specically Python 3.6.x. There are a few ways of doing this, but we will use the IUS Community Repo; for an in-depth look at options, check out <a href="https://www.hogarthuk.com/?q=node/15" target="_blank">this link from James Hogarth</a>. To install Python, run the following command:
 <pre>
@@ -123,7 +123,7 @@ sudo firewall-cmd --reload
 [park@localhost ~]# python3 ––version
 [park@localhost ~]# pip3 ––version
 </pre>
-<img src="images/readme06.png" alt="" style="text-align: center; width: 640px;" />
+<img src="README_images/readme06.png" alt="" style="text-align: center; width: 640px;" />
 <p>One last thing: Using VirtualBox Guest Additions is not necessary, but it will make our life easier (e.g., cut and paste, etc.). Complete the following steps:
 <p>With the VM running...</p>
 <ol>
@@ -151,7 +151,7 @@ sudo firewall-cmd --reload
 <li><b>Type</b> - This table contains a list of the types of parking zones (e.g., visitor, handicap, etc.). The type description is a unique value.</li>
 <li><b>OccupancyLog</b> - This table is a junction table (i.e., an associative entity) that collects and timestamps all the zone counts, providing both current and historical parking data. In our application, the interval will be every 5 minutes, updated by the cron scheduler.</li>
 </ol>
-<img src="images/readme07.png" alt="Park Data Model" style="text-align: center; width: 640px;" />
+<img src="README_images/readme07.png" alt="Park Data Model" style="text-align: center; width: 640px;" />
 <p>The relationships between the tables are as follows:</p>
 <ul>
 <li>A Zone has only one Source, but a Source may observe one or many Zones.</li>
