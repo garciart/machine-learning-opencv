@@ -1,9 +1,9 @@
-#!python
+#!/usr/bin/env python3
 import os
 import sqlite3
 from sqlite3 import Error
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'db\\test.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'db\\park.db')
 
 def db_connect(db_file=DB_PATH):
     conn = None
@@ -64,6 +64,7 @@ def main():
     conn = db_connect(DB_PATH)
     if conn is not None:
         with conn:
+            # Create tables
             create_db_table(conn, """ CREATE TABLE IF NOT EXISTS Lot (
                                         LotID integer PRIMARY KEY,
                                         Name text NOT NULL UNIQUE,
@@ -108,6 +109,7 @@ def main():
                                         FOREIGN KEY (LotID) REFERENCES Lot (LotID),
                                         UNIQUE (Timestamp, ZoneID, TypeID, LotID)
                                     );""")
+            # Insert initial values
             insert_lot(conn, 'Lot01', 38.364554, -75.601320, 1)
             insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_imagex1.jpg',
                           '', '', 'Salisbury Parking Garage West', 1)

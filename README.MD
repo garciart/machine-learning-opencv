@@ -28,7 +28,7 @@ passwd: all authentication tokens updated successfully.
 [root@localhost ~]# gpasswd -a park wheel
 Adding user park to group wheel
 [root@localhost ~]# su - park
-[park@localhost ~]# 
+[park@localhost ~]#
 </pre>
 <p>Next, update the system and add CentOS' development tools using the following commands:</p>
 <pre>
@@ -111,10 +111,9 @@ sudo firewall-cmd --reload
 [park@localhost ~]# sudo yum -y install python36u-devel
 </pre>
     </li>
-    <li>Before continuing, do another update of the system using the following command:
-<pre>[park@localhost ~]# sudo yum -y update</pre>
-    </li>
 </ol>
+<p>Alright! Before continuing, let's do another update of the system using the following command:</p>
+<pre>[park@localhost ~]# sudo yum -y update</pre>
 <p>Just in case, we'll double check everything is installed and updated using the following commands:</p>
 <pre>
 [park@localhost ~]# whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
@@ -141,9 +140,33 @@ sudo firewall-cmd --reload
 [park@localhost ~]# sudo usermod -aG vboxsf $(whoami)
 </pre>
 <p>We also recommend enabling shared folders. How to do so is out of our scope (our host machine is Windows, while you may be using something else). For Windows, we recommend <a href="https://www.geeksforgeeks.org/create-shared-folder-host-os-guest-os-virtual-box/" title="Create a shared Folder between Host OS and Guest OS ( Virtual Box)" target="_blank">this walkthrough from Geeks for Geeks.</a> Even though the directions are for Ubuntu, they will work for CentOS as well.</p>
-<p>Whew! That was a lot of setting up! Now let's get to coding...</p>
+<p>Whew! That was a lot of setting up! Now let's get to the data model...</p>
 <hr>
 <h2>The Data Model</h2>
+<p>Our data model consists of five tables:</p>
+<ol>
+<li><b>Zone</b> - How many cars are in each zone is the main unit of measurement for this application. This table contains the maximum number of parking spaces within a zone, as well as the boundaries of each zone within its associated "feed".</li>
+<li><b>Source</b> - This table contains a list of the "feeds" that collect images of zones, as well as the feed location and credentials. The source's URI is a unique value.</li>
+<li><b>Lot</b> - This table contains a list of all the parking lots being observed, as well as their centerpoint latitude and longitude. The lot name is a unique value.</li>
+<li><b>Type</b> - This table contains a list of the types of parking zones (e.g., visitor, handicap, etc.). The type description is a unique value.</li>
+<li><b>OccupancyLog</b> - This table is a junction table (i.e., an associative entity) that collects and timestamps all the zone counts, providing both current and historical parking data. In our application, the interval will be every 5 minutes, updated by the cron scheduler.</li>
+</ol>
+<img src="images/readme07.png" alt="Park Data Model" style="text-align: center; width: 640px;" />
+<p>The relationships between the tables are as follows:</p>
+<ul>
+<li>A Zone has only one Source, but a Source may observe one or many Zones.</li>
+<li>A Zone has only one Type, but a Type may apply to zero or many Zones.</li>
+<li>A Zone is located in only one Lot, but a Lot may contain one or many Zones.</li>
+<li>Each Occupancy Log entry lists one Zone, but a Zone may appear in zero to many Occupancy Log entries.</li>
+<li>Each Occupancy Log entry lists one Type, but a Type may appear in zero to many Occupancy Log entries.</li>
+<li>Each Occupancy Log entry lists one Lot, but a Lot may appear in zero to many Occupancy Log entries.</li>
+</ul>
+<p>In addition, the Zone table has a unique constraint, consisting of its ID, a SourceID, a LotID, and a TypeID. The OccupancyLog table also has a unique constraint, consisting of its timestamp, a ZoneID, a LotID, and a TypeID.</p>
+<p>Now its time to run our first script. A few words of caution:</p>
+<ul>
+<li><h3><em>Watch your line endings if switching between OS's!</em></h3></li>
+<li><h3><em>Make sure you stick with either tabs or spaces!</em></h3></li>
+</ul>
 <hr>
 <h2>The Scripts</h2>
 <hr>
