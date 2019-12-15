@@ -1,9 +1,10 @@
 #!python
+''' Summary: Script to capture and display images using OpenCV '''
 import os
 from pathlib import Path
 
 import cv2
-print(cv2.__version__)
+
 # Root directory of the project
 ROOT_DIR = Path(__file__).resolve().parent
 
@@ -11,19 +12,14 @@ ROOT_DIR = Path(__file__).resolve().parent
 IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 
-# print(cv2.getBuildInformation())
-
 # Image, video or camera to process - set this to 0 to use your webcam instead of a video file
 # FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
-FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg")]
-# FRAME_SOURCE = ["http://binaryapi.ap.org/f4d6b22730794576a126bedad673656c/preview/AP19316470225288.jpg?wm=api&ver=0",]
-# FRAME_SOURCE = ["https://rgprogramming.com/wp-content/uploads/wp-header-clear-280.png",]
-# FRAME_SOURCE = ["http://www.pumphreyautobody.com/dpautobody/resources/innerfade/images/dpautobodyphoto03.jpg"]
+FRAME_SOURCE = [(IMAGE_DIR + "\\demo_imagex1.jpg")]
+
 
 def main():
     for f in FRAME_SOURCE:
-        print(f)
         # Load the video file we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
@@ -34,7 +30,8 @@ def main():
             rgb_image = frame[:, :, ::-1]
 
             # Resize image if necessary
-            scaling = int((768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 100
+            scaling = int(
+                (768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 100
             print('Original image dimensions : ', rgb_image.shape)
             width = int(rgb_image.shape[1] * scaling / 100)
             height = int(rgb_image.shape[0] * scaling / 100)
