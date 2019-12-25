@@ -18,3 +18,39 @@ Windows:
 Each Zone has one ZoneType
 Each Zone belongs in one Lot
 Each Zone is covvered by one Camera
+
+Tutorial
+-- Make sure to .gitignore Mask_RCNN folder and any datasets
+-- Steps:
+-- Check that cron, Python, Pip, and SQLite are installed:
+whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
+python3 --version
+pip3 --version
+sqlite3 -version
+-- Clone Park into folder
+cd Park
+-- Clone Mask_RCNN into folder
+cd Mask_RCNN
+vi requirements.txt
+Change:
+tensorflow>=1.3.0,<2.0
+keras>=2.0.8,<2.3
+-- Follow directions or replace pip3 with:
+yum -y install $(requirements.txt)
+-- Continue to follow directions
+-- DON"T FORGET pip3 install opencv-contrib-python
+-- whereis python3
+-- Change shebangs to location, i.e., #!/usr/bin/python3
+-- Try appending "--user" instead of sudo next time or using "su park -c" before commands. May not work with chmod
+sudo chmod 755 demo1.py
+Must use Gnome or a GUI to run demos. OpenCV needs an x server, which you start by running "startx"
+Must take ownership of folder in Gnome sudo chown -R $USER: $HOME
+Change slashes to match Linux! Windows = "\\" and Linux = "/"
+
+Must "sudo yum install python3-tkinter" or you will get a matplotlib is currently using a non-GUI backend ERROR
+
+Pulling images from https works on Linux (e.g., Red Hat, CentOS, etc.), but not Windows due to FFMPEG being compiled without support for openssl
+
+
+
+

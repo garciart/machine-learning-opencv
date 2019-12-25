@@ -1,4 +1,4 @@
-#!python
+#!/usr/bin/python3
 ''' Summary: Script to capture and display images using OpenCV '''
 import os
 from pathlib import Path
@@ -15,10 +15,12 @@ VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
 # Image, video or camera to process - set this to 0 to use your webcam instead of a video file
 # FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
-FRAME_SOURCE = [(IMAGE_DIR + "\\demo_imagex1.jpg")]
+# FRAME_SOURCE = [(IMAGE_DIR + "/demo_imagex1.jpg")]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_imagex1.jpg"]
 
 
 def main():
+    print(FRAME_SOURCE)
     for f in FRAME_SOURCE:
         # Load the video file we want to run detection on
         video_capture = cv2.VideoCapture(f)

@@ -3,7 +3,7 @@ import os
 import sqlite3
 from sqlite3 import Error
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'db//park.db')
+DB_PATH = os.path.join(os.path.dirname(__file__), 'park.db')
 
 
 def db_connect(db_file=DB_PATH):

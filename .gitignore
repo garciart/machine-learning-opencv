@@ -1,2 +1,4 @@
+# Ignore Mask_RCNN folder; you are basically uploading another repo
+Mask_RCNN/
 # ignore all datasets; they are too large to push to GitHub
 *.h5

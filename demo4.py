@@ -1,4 +1,4 @@
-#!python
+#!/usr/bin/python3
 ''' Summary: Script to display zones using Shapely '''
 import datetime
 import os
@@ -18,8 +18,8 @@ CAPTURE_DIR = os.path.join(ROOT_DIR, "captures")
 # Image, video or camera to process - set this to 0 to use your webcam instead of a video file
 # FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
-FRAME_SOURCE = [(IMAGE_DIR + "\\demo_imagex1.jpg")]
-print(FRAME_SOURCE)
+# FRAME_SOURCE = [(IMAGE_DIR + "/demo_imagex1.jpg")]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_imagex1.jpg"]
 
 # Get UTC time before loop
 local_timezone = datetime.datetime.now(
