@@ -80,20 +80,20 @@ sudo yum -y groupinstall "GNOME Desktop"
 sudo startx
 				</pre>
 				<p>Once the desktop appears, open a browser and navigate to localhost (http://127.0.0.1) and the Welcome page should appear:</p>
-				<div style="text-align: center;"><img src="README_images/readme01.png" alt="localhost on GNOME" style="height: 400px;" /></div>
+				<div style="text-align: center;"><img src="README_images/centos01.png" alt="localhost on GNOME" style="height: 400px;" /></div>
 			</li>
 			<li>Method #2: Access the web server through the VM host's browser - This method allows us to "test" the web server over a an actual connection, even though everything occurs on the VM's host computer.
 				<p>First, shutdown the VM and access the network settings:</p>
-				<div style="text-align: center;"><img src="README_images/readme02.png" alt="VirtualBox Network Settings 1" style="height: 400px;" /></div>
+				<div style="text-align: center;"><img src="README_images/centos02.png" alt="VirtualBox Network Settings 1" style="height: 400px;" /></div>
 				<p>Click on <b>Port Forwarding</b>. Set the Host Port to 8080 and the Guest Port to 80; click on <b>OK</b> when you are done:</p>
-				<div style="text-align: center;"><img src="README_images/readme03.png" alt="VirtualBox Network Settings 2" style="height: 400px;" /></div>
+				<div style="text-align: center;"><img src="README_images/centos03.png" alt="VirtualBox Network Settings 2" style="height: 400px;" /></div>
 				<p>Restart the VM and enter the following commands:</p>
 				<pre>
 sudo firewall-cmd --zone=public --add-service=http --permanent
 sudo firewall-cmd --reload
 				</pre>
 				<p>Open a browser on the host machine, navigate to http://127.0.0.1:8080, and the Welcome page should appear:</p>
-				<div style="text-align: center;"><img src="README_images/readme05.png" alt="localhost on Host" style="height: 400px;" /></div>
+				<div style="text-align: center;"><img src="README_images/centos05.png" alt="localhost on Host" style="height: 400px;" /></div>
 			</li>
 			<li>Method #3: If you are using an actual server, you can access it by entering its public IP address. Pull up the network interfaces using the following command:
 				<pre>ip addr</pre>
@@ -124,7 +124,7 @@ sudo firewall-cmd --reload
 [park@localhost ~]# python3 ––version
 [park@localhost ~]# pip3 ––version
 </pre>
-<div style="text-align: center;"><img src="README_images/readme06.png" alt="Verifying initial setup" style="height: 400px;" /></div>
+<div style="text-align: center;"><img src="README_images/centos06.png" alt="Verifying initial setup" style="height: 400px;" /></div>
 <p>One last thing: Using VirtualBox Guest Additions is not necessary, but it will make our life easier (e.g., cut and paste, etc.). Complete the following steps:
 <p>With the VM running...</p>
 <ol>
@@ -134,10 +134,10 @@ sudo firewall-cmd --reload
 <p>In the terminal, enter the following commands (comments following [#] are not required):</p>
 <pre>
 [park@localhost ~]# sudo yum -y install make gcc kernel-headers kernel-devel perl dkms bzip2 # Installs all requirements
-[park@localhost ~]# export KERN_DIR=/usr/src/kernels/$(uname -r) # set and export the location of the kernel source code
-[park@localhost ~]# mount -r /dev/cdrom /media
+[park@localhost ~]# sudo export KERN_DIR=/usr/src/kernels/$(uname -r) # set and export the location of the kernel source code
+[park@localhost ~]# sudo mount -r /dev/cdrom /media
 [park@localhost ~]# cd /media/
-[park@localhost ~]# ./VBoxLinuxAdditions.run
+[park@localhost ~]# sudo ./VBoxLinuxAdditions.run
 [park@localhost ~]# sudo usermod -aG vboxsf $(whoami)
 </pre>
 <p>We also recommend enabling shared folders. How to do so is out of our scope (our host machine is Windows, while you may be using something else). For Windows, we recommend <a href="https://www.geeksforgeeks.org/create-shared-folder-host-os-guest-os-virtual-box/" title="Create a Shared Folder between Host OS and Guest OS (Virtual Box)" target="_blank">this walkthrough from Geeks for Geeks.</a>. Even though the directions are for Ubuntu, they will work for CentOS as well.</p>
@@ -164,7 +164,7 @@ sudo firewall-cmd --reload
 	<li><b>Type</b> - This table contains a list of the types of parking zones (e.g., visitor, handicap, etc.). The type description is a unique value.</li>
 	<li><b>OccupancyLog</b> - This table is a junction table (i.e., an associative entity) that collects and timestamps all the zone counts, providing both current and historical parking data. In our application, the interval will be every 5 minutes, updated by the cron scheduler.</li>
 </ol>
-<div style="text-align: center;"><img src="README_images/readme07.png" alt="Park Data Model" style="height: 400px;" /></div>
+<div style="text-align: center;"><img src="README_images/centos07.png" alt="Park Data Model" style="height: 400px;" /></div>
 <p>The relationships between the tables are as follows:</p>
 <ul>
 	<li>Each Zone has only one Source, but a Source may observe one or many Zones.</li>
@@ -200,7 +200,7 @@ sqlite> SELECT * FROM Type ORDER BY TypeID ASC;
 sqlite> SELECT * FROM Zone ORDER BY ZoneID ASC;
 sqlite> .quit
 </pre>
-<div style="text-align: center;"><img src="README_images/readme08.png" alt="Verifying database creation" style="height: 400px;" /></div>
+<div style="text-align: center;"><img src="README_images/centos08.png" alt="Verifying database creation" style="height: 400px;" /></div>
 <hr>
 <h2>The Back-End</h2>
 <hr>

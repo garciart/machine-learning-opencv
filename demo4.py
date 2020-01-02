@@ -12,14 +12,12 @@ ROOT_DIR = Path(__file__).resolve().parent
 
 # Directory of images or videos to run detection on
 IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
-VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos")
-CAPTURE_DIR = os.path.join(ROOT_DIR, "captures")
+# VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos") # Create to process videos
+CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 
-# Image, video or camera to process - set this to 0 to use your webcam instead of a video file
-# FRAME_SOURCE = [(IMAGE_DIR + "\\demo_image1.jpg"),(IMAGE_DIR + "\\demo_image2.jpg"),(IMAGE_DIR + "\\demo_image3.jpg")]
-# FRAME_SOURCE = [(VIDEO_DIR + "\\demo_video1.mp4"),(VIDEO_DIR + "\\demo_video2.mp4"),(VIDEO_DIR + "\\demo_video3.mp4")]
-# FRAME_SOURCE = [(IMAGE_DIR + "/demo_imagex1.jpg")]
-FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_imagex1.jpg"]
+# Image, video or camera to process - set this to 0 to use your webcam instead of a file
+# FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 # Get UTC time before loop
 local_timezone = datetime.datetime.now(
@@ -83,7 +81,7 @@ def main():
             # Show the frame of video on the screen
             cv2.imshow('Video', frame)
             # Save to file
-            saved = cv2.imwrite(CAPTURE_DIR + ("\\" + smalltimestamp + "_d4_capture.jpg"), frame)
+            saved = cv2.imwrite(CAPTURE_DIR + ("/" + smalltimestamp + "_d4_capture.jpg"), frame)
             if saved is True:
                 print("Image frame captured.")
             else:
