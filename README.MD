@@ -75,18 +75,86 @@ cronie-1.4.11-19.e17.x86_64
 <div style="border:1px solid; padding: 6px;">
 <p><b>NOTE</b> - If you like, you can clone this repository into your folder: <strong>Just make sure you do so before installing the ML packages.</strong> Use the following command to clone the repo:</p>
 <pre>git clone https://github.com/garciart/Park.git</pre>
-<p>This will create a folder "Park" with all the code in the right place:</p>
+<p>This will create a folder "Park" with all the code in the right place. If you are using a shared folder, fetch into your shared folder instead of cloning:</p>
 <pre>
 [park@localhost ~]# cd Park # replace Park with the name of your shared folder
-[park@localhost Park~]$ git init
-[park@localhost Park~]$ git remote add origin https://github.com/garciart/Park.git
-[park@localhost Park~]$ git fetch
-[park@localhost Park~]$ git checkout origin/master -ft
-[park@localhost Park~]$ git branch park # replace park with your username
-[park@localhost Park~]$ git checkout park # replace park with your username
+[park@localhost Park]$ git init
+[park@localhost Park]$ git remote add origin https://github.com/garciart/Park.git
+[park@localhost Park]$ git fetch
+[park@localhost Park]$ git checkout origin/master -ft
 </pre>
-<p>If you are using a shared folder, fetch into your shared folder instead of cloning. In addition, remember to use "Park" as your development folder, not the home folder (in our case, "park").</p>
+<p>As a rule, we don't use the "Master" branch, just like we don't use "root" for development. You don't have to, but we suggest creating a separate branch:</p>
+<pre>
+[park@localhost ~]# cd Park # replace Park with the name of your shared folder
+[park@localhost Park]$ git branch park # replace park with your username
+[park@localhost Park]$ git checkout park # replace park with your username
+[park@localhost Park]$ git status
+</pre>
+<p>In addition, remember to use "Park" as your development folder, not the home folder (in our case, "park").</p>
 </div>
+<br>
+<div style="text-align: center;"><img src="README_images/readme02.png" alt="Cloning the Park repository" style="height: 400px;" /></div>
+<p>Clone the excellent <a href="https://github.com/matterport/Mask_RCNN" target="_blank" title="Mask R-CNN engine from Matterport">Mask R-CNN engine from Matterport</a>, which will serve as our object detection and instance segmentation engine using the following commands:</p>
+<pre>
+[park@localhost Park]$ git clone https://github.com/matterport/Mask_RCNN.git
+[park@localhost Park]$ cd Mask_RCNN
+[park@localhost Mask_RCNN]$ ls
+[park@localhost Mask_RCNN]$ cat requirements.txt
+</pre>
+<br>
+<div style="text-align: center;"><img src="README_images/readme03.png" alt="Cloning the Park repository" style="height: 400px;" /></div>
+<p>Note the setup.py file, which will build and install the Mask RCNN engine, and the requirements.txt file, which contains the list of modules and packages we will need to run the Mask RCNN engine:</p>
+<ul>
+<li><a style="color: orange;" href="https://numpy.org/" title="numpy" target="_blank">numpy</a> - support for high-level mathematics involving arrays and matrices.</li>
+<li><a style="color: orange;" href="https://scipy.org/scipylib" title="scipy" target="_blank">scipy</a> - support for scientific and technical computing.</li>
+<li><a style="color: orange;" href="https://python-pillow.org/" title="Pillow" target="_blank">Pillow</a> - Python Imaging Library to open, manipulate and save image files.</li>
+<li><a style="color: orange;" href="https://cython.org/" title="cython" target="_blank">cython</a> - support for C extensions and datatypes in Python.</li>
+<li><a style="color: orange;" href="https://matplotlib.org/" title="matplotlib" target="_blank">matplotlib</a> - support for 2d plotting.</li>
+<li><a style="color: orange;" href="https://scikit-image.org/" title="scikit-image" target="_blank">scikit-image</a> - support for image processing.</li>
+<li><a style="color: orange;" href="https://www.tensorflow.org/" title="tensorflow" target="_blank">tensorflow>=1.3.0</a> - support for machine learning and tensor mathematics.</li>
+<li><a style="color: orange;" href="https://keras.io/" title="keras" target="_blank">keras>=2.0.8</a> - support for neural networks.</li>
+<li><a style="color: orange;" href="https://opencv.org/" title="opencv" target="_blank">opencv-python</a> - support for real-time computer vision.</li>
+<li><a style="color: orange;" href="https://www.h5py.org/" title="h5py" target="_blank">h5py</a> - support for implementing HDF5 binary data format.</li>
+<li><a style="color: orange;" href="https://imgaug.readthedocs.io/en/latest/" title="imgaug" target="_blank">imgaug</a> - support for for image augmentation in machine learning.</li>
+<li><a style="color: orange;" href="https://ipython.org/" title="IPython" target="_blank">IPython[all]</a> - support for interactive computing.</li>
+</ul>
+<p>However, before executing installing requirements.txt, we have to make some changes. Unfortunately, Matterport's version of Mask R-CNN cannot use TensorFlow 2.0 or Keras 2.3 or above. In addition, we will need to install <a href="https://docs.opencv.org/master/" title="opencv-python-contrib" target="_blank">OpenCV's extra modules</a> to display images. Using your favorite editor, change the TensorFlow and Keras lines to the following:</p>
+<pre>
+tensorflow&gt;=1.3.0,&lt;2.0
+keras&gt;=2.0.8,&lt;2.3
+</pre>
+<p>In addition, add the following line after the OpenCV line:</p>
+<pre>
+opencv-contrib-python
+</pre>
+<div style="text-align: center;"><img src="README_images/readme04.png" alt="Editing requirements.txt" style="height: 400px;" /></div>
+<p>We also have to make sure our <a style="color: orange;" href="https://setuptools.readthedocs.io/en/latest/" title="Setuptools" target="_blank">Setuptools</a> are up-to-date. Otherwise, we may run into errors extracting and creating modules and packages from requirements.txt. We have to make sure <a style="color: orange;" href="https://docs.python.org/3/library/tkinter.html" title="tkinter" target="_blank">tkinter, the standard Python interface to the Tk GUI toolkit</a>, is installed as well, or you may get a "matplotlib is currently using a non-GUI backend" error. Finally, we Therefore, enter the following commands:</p>
+<pre>
+[park@localhost Mask_RCNN]$ pip3 install --upgrade setuptools --user
+[park@localhost Mask_RCNN]$ sudo yum -y install python3-tkinter
+</pre>
+<p>Once the installation is complete, install Mask R-CNN's requirements using the following command:
+<pre>
+[park@localhost Mask_RCNN]$ pip3 install -r requirements.txt --user
+</pre>
+<div style="text-align: center;"><img src="README_images/readme05.png" alt="Installing Mask R-CNN requirements" style="height: 400px;" /></div>
+<p>Hopefully, everything went well; if not, check the verbose comments for any errors and correct them. Remember, you may have to use a different flavor of a package depending on the system you are using. For example, we used Red Hat Linux, so for some packages, we had to use their version (e.g., python36-mysql, etc.). You can look for packages using:
+<pre>
+[park@localhost Mask_RCNN]$ pip3 list
+- or -
+[park@localhost Mask_RCNN]$ yum search [package name]
+</pre>
+<p>Once everything is set, run the setup script using the command:</p>
+<pre>
+[park@localhost Mask_RCNN]$ python3 setup.py install --user
+</pre>
+<div style="text-align: center;"><img src="README_images/readme06.png" alt="Setting up Mask R-CNN" style="height: 400px;" /></div>
+<p>Once again, check the verbose comments for any errors and correct them. Finally, go back one directory and download the Common Objects in Context (COCO) dataset by using the following commands:</p>
+<pre>
+[park@localhost Mask_RCNN]$ cd ..
+[park@localhost Park]$ wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5</pre>
+<p>The COCO dataset consists of over 100,000 images of 80 objects, including cars (#3), buses (#6), and trucks (#8); find out more at <a style="color: orange;" href="http://cocodataset.org" title="COCO Dataset" target="_blank">http://cocodataset.org</a>. Please note that you can replace this dataset with a more specific set for vehicle detection, but for now, we will use the COCO dataset:</p>
+<div style="text-align: center;"><img src="README_images/readme07.png" alt="Getting the COCO dataset" style="height: 400px;" /></div>
 <hr>
 <div style="width: 100%; text-align: center;">
 <img src="sherpa_logo.png" alt="Sherpa Logo" style="height:240px;" />
