@@ -1,33 +1,23 @@
 # Park!
 <div style="text-align: center;"><img src="README_images/park_demo.gif" alt="Welcome to Park!" /></div>
 <h2>Introduction</h2>
-<p>As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project with Georgia Tech.</p>
-<p>The use case was that finding parking is a problem for everyone. In 2016, drivers in New York City spent an average of 107 hours and $2243 a year looking for parking (INRIX, 2017). In addition, there are over 120 outstanding requests for proposals for city and institutional parking management (IPMI, 2019). NASA Langley, in an effort to reduce the stress of its employees, began looking into implementing its own parking management system.</p>
-<p>The original concept for LaRC Park, proposed by a NASA employee, was to place sensors in each parking space. While this solution may have provided the most accurate results, we realized that due to exposure to weather, security, gaps in connectivity, etc., individual sensors would be impractical. We then looked at different systems, including Light Detection and Ranging (LIDAR) and image recognition.</p>
-<p>Each approach had its own issues; LIDAR systems required power and connectivity where there was none, and most image recognition systems required a high, almost overhead, angle of view.</p>
-<p>The break came after reading <a href="https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400" target="_blank" title="Snagging parking spaces with Mask R-CNN and Python">Adam Geitgey's awesome article on object detection</a>, which introduced us to <a href="https://github.com/matterport/Mask_RCNN" target="_blank" title="Matterport Mask R-CNN">Matterport Mask R-CNN</a> (Geitgey, 2019). We realized that this implementation of Mask R-CNN was something we could use with the resources available to us, especially the lower and more practical viewing angle. However, we also realized that we could not use Adam's code as is.</p>
-<p>First, TensorFlow, the heart of the system, is expensive in terms of processing power; even when using his solution on a single system for a single user looking at single parking lot, we could hear the fans of our computers going into overdrive. Satisfying multiple instantiations by multiple users would quickly overwhelm any of our available systems.</p>
-<p>Second, to prepare TensorFlow, the system needs to process a training and test set. This takes a few, but noticeable, number of seconds; check out another project, <a href="http://acronymsfortina.rgprogramming.com/index.html" target="_blank" title="Acronyms for Tina">Acronyms for Tina</a>, to experience this lag for yourself. In addition, the system had to observe several frames before making a prediction, adding to total processing time. Finally, the system had to process two sets of frames in order to make a prediction. The first set of frames had to be a full lot, which would be compared to images of the current state of the lot, to determine if there were any spaces available. </p>
-<p>The combined delay meant that user could wait up to a minute before the system provided them with an optimal parking spot. This delay would only increase as lots were added to the system.</p>
-<p>Therefore, we took the system back to the drawing board and came up with a different solution; we would create zones and use Mask R-CNN to count how many cars were in each zone. In addition, instead of users running TensorFLow on demand, the system would:</p>
+<p>As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project.</p>
+<p>The use case was that finding parking is a problem for everyone. In 2016, drivers in New York City spent an average of 107 hours and $2243 a year looking for parking (INRIX, 2017). In addition, there are over 120 outstanding requests for proposals for city and institutional parking management (IPMI, 2019). NASA Langley, in an effort to reduce its own parking problems, began looking into implementing a parking management system.</p>
+<p>We looked at various solutions, including sensors in each parking space; Light Detection and Ranging (LIDAR) to count cars entering and exiting parking areas; etc. Each approach had issues that made it impractical to implement with the resources we had; for example, most image recognition systems we looked at required a high, almost overhead, angle of view.</p>
+<p>Finally, we came accross <a href="https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400" target="_blank" title="Snagging parking spaces with Mask R-CNN and Python">Adam Geitgey's awesome article on object detection</a>, which introduced us to <a href="https://github.com/matterport/Mask_RCNN" target="_blank" title="Matterport Mask R-CNN">Matterport Mask R-CNN</a> (Geitgey, 2019). We realized that his implementation of Mask R-CNN was something we could use with the resources available to us, especially the lower and more practical viewing angle. However, Adam’s solution, designed for a single system for a single user looking at a single parking lot, was too expensive in terms of processing power and time. The first time we implemented it, it sent our cooling fans into overdrive and hung our computers for several minutes; run another of our projects, <a href="http://acronymsfortina.rgprogramming.com/index.html" target="_blank" title="Acronyms for Tina">Acronyms for Tina</a>, on localhost for a similar, albeit less intense, experience.</p>
+<p>Still, it worked, so using what we learned, we went back to the drawing board to develop a system that would rotate through multiple lots; analyze and collect parking data, and present this information to users in a timely manner. After much trial and error, we came up with a system that leveraged Linux scripting, Python, OpenCV, TensorFlow, SQL, and PHP to:</p>
 <ol>
-<li>Use the cron task scheduler to run a Python script that would process each lot on an optimized schedule.</li>
-<li>Collect the results in a database.</li>
-<li>Have the front end pull data from the database.</li>
+<li>Use a cron task scheduler to access the cameras overlooking each lot in turn.</li>
+<li>Capture a frame from each camera; divide it into zones (e.g., employee, handicap, etc.), and count the number of vehicles in each zone.</li>
+<li>Aggregate the results and collect them in a database.</li>
+<li>Have the front-end pull data for users from the database.</li>
 </ol>
-<p>This would prevent the user from experiencing the processing lag. In addition, while the system still needed time to process the frames. it was much faster than the original system.</p>
-<p>Due to architecture, security requirements, cross-lot tracking, etc., the NASA application was a bit complex, but here are a series of demos, written in Python, that breakdown the way the system works. While the original system ran on three separate Red Hat Linux servers using Apache and MySQL, our demonstration system will run on the following system:</p>
-<ul>
-	<li>Oracle VirtualBox Virtual Machine (VM) Manager(using 6.0.6)</li>
-	<li>CentOS Linux 7 (using 3.10.0-957.e17.x86_84)</li>
-	<li>cron Time-Based Job Scheduler (using cronie-1.4.11-19.e17.x86_64)</li>
-	<li>SQLite Relational Database Management System (RDBMS) (using 3.7.17)</li>
-	<li>GNOME Desktop Version 3.28.2
-	<li>Python 3 Programming Language Interpreter (using version 3.6.8)</li>
-	<li>Extra Packages for Enterprise Linux (EPEL) (using epel-release-7-11.noarch)</li>
-	<li>Nginx Hypertext Transfer Protocol (HTTP) Web Server (using nginx.x86_64 1:1.16.1-1.e17)</li>
-	<li>PHP Hypertext Preprocessor (using version 5.4.16) with Zend Engine Interpreter (using version 2.4.0)</li>
-</ul>
+<p>Due to architecture, security requirements, cross-lot tracking, etc., the NASA application was a bit complex, but here are a series of demos, written in Python, that breakdown the way the system works. Besides a practical application of TensorFlow, Mask R-CNN, and computer vision, this is also a very good introduction to the Common Objects in COntext (COCO) dataset. Have fun and good luck!</p>
+<hr>
+<h2>Setup</h2>
+<p>As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet.</p>
+<p style="border:1px solid; padding: 6px; text-align: center;"><b>NOTE</b> - If you do choose to use CentOS, we've included another README file name CENTOS with directions on how to do so.</p>
+<p style="border:1px solid; padding: 6px; text-align: center;"><b>NOTE</b> - To view the images from the demo scripts, you will need an X Server. We used the GNOME Graphical User Interface (GUI) for development; it came with a display server; it was lightweight; and it allowed us to cut-and-paste from the host machine into the VM's Terminal.</p>
 <hr>
 <div style="width: 100%; text-align: center;">
 <img src="sherpa_q2a_logo.png" alt="Sherpa Logo" style="height:240px;" />

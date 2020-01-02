@@ -1,18 +1,19 @@
 # Park!
 <div style="text-align: center;"><img src="README_images/park_demo.gif" alt="Welcome to Park!" /></div>
 <h2>Introduction</h2>
-<p>As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project with Georgia Tech. Due to architecture, security requirements, cross-lot tracking, etc., the NASA application was a bit complex, but here is a simplified version. It includes the full stack; SQL, Python, Linux scripts, HTML, CSS, JavaScript, and PHP, as well as cool computer vision and machine learning demos.</p>
-<p>While the orginal system ran on three separate Red Hat Linux servers using Apache and MySQL, our demonstration system will run on the following system:</p>
+<p>Like we stated in the README, due to architecture, security requirements, cross-lot tracking, etc., NASA's version of LaRC Park was a bit complex, running on three separate Red Hat Linux servers using Apache and MySQL. However, you can recreate it on any system; in our case, we used the following:</p>
 <ul>
-	<li>Oracle VirtualBox Virtual Machine (VM) Manager(using 6.0.6)</li>
-	<li>CentOS Linux 7 (using 3.10.0-957.e17.x86_84)</li>
-	<li>cron Time-Based Job Scheduler (using cronie-1.4.11-19.e17.x86_64)</li>
-	<li>SQLite Relational Database Management System (RDBMS) (using 3.7.17)</li>
-	<li>Extra Packages for Enterprise Linux (EPEL) (using epel-release-7-11.noarch)</li>
-	<li>Nginx Hypertext Transfer Protocol (HTTP) Web Server (using nginx.x86_64 1:1.16.1-1.e17)</li>
-	<li>Python 3 Programming Language Interpreter (using version 3.6.8)</li>
-	<li>PHP Hypertext Preprocessor (using version 5.4.16) with Zend Engine Interpreter (using version 2.4.0)</li>
+<li>Oracle VirtualBox Virtual Machine (VM) Manager(using 6.0.6)</li>
+<li>CentOS Linux 7 (using 3.10.0-957.e17.x86_84)</li>
+<li>cron Time-Based Job Scheduler (using cronie-1.4.11-19.e17.x86_64)</li>
+<li>SQLite Relational Database Management System (RDBMS) (using 3.7.17)</li>
+<li>GNOME Desktop Version 3.28.2</li>
+<li>Python 3 Programming Language Interpreter (using version 3.6.8)</li>
+<li>Extra Packages for Enterprise Linux (EPEL) (using epel-release-7-11.noarch)</li>
+<li>Nginx Hypertext Transfer Protocol (HTTP) Web Server (using nginx.x86_64 1:1.16.1-1.e17)</li>
+<li>PHP Hypertext Preprocessor (using version 5.4.16) with Zend Engine Interpreter (using version 2.4.0)</li>
 </ul>
+<p>This setup will provide you with the full stack; SQL, Python, Linux scripts, HTML, CSS, JavaScript, and PHP. Have fun and good luck!</p>
 <hr>
 <h2>Setup</h2>
 <p>As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet.</p>
