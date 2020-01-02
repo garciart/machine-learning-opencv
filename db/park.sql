@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS OccupancyLog (
 	UNIQUE (Timestamp, ZoneID, TypeID, LotID)
 );
 INSERT INTO Lot(Name, Latitude, Longitude, Active) VALUES('Lot01', 38.364554, -75.601320, 1);
-INSERT INTO Source(URI, Username, Password, Location, Active) VALUES('https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_imagex1.jpg', '', '', 'Salisbury Parking Garage West', 1);
+INSERT INTO Source(URI, Username, Password, Location, Active) VALUES('https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_image.jpg', '', '', 'Salisbury Parking Garage West', 1);
 INSERT INTO Type(Description) VALUES('General');
 INSERT INTO Type(Description) VALUES('Handicap');
 INSERT INTO Type(Description) VALUES('Employee');

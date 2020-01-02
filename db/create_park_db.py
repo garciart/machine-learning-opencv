@@ -119,7 +119,7 @@ def main():
                                     );""")
             # Insert initial values
             insert_lot(conn, 'Lot01', 38.364554, -75.601320, 1)
-            insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_imagex1.jpg',
+            insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_image.jpg',
                           '', '', 'Salisbury Parking Garage West', 1)
             insert_type(conn, 'General')
             insert_type(conn, 'Handicap')
