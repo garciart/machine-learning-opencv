@@ -13,8 +13,11 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 # VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos") # Create to process videos
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
+# FRAME_SOURCE = [(IMAGE_DIR + "/demo_image1.jpg"),(IMAGE_DIR + "/demo_image2.jpg"),(IMAGE_DIR + "/demo_image3.jpg")]
+# FRAME_SOURCE = [(VIDEO_DIR + "/demo_video1.mp4"),(VIDEO_DIR + "/demo_video2.mp4"),(VIDEO_DIR + "/demo_video3.mp4")]
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = [
+    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 
 def main():

@@ -276,4 +276,1037 @@ Python 3.6.8
 pip 9.0.3 from /usr/lib/python3.6/site-packages (python 3.6)
 [park@localhost ~]$ whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
 cronie-1.4.11-23.el7.x86_64
-[park@localhost ~]$ 
+[park@localhost ~]$ git clone https://github.com/garciart/Park.git
+Cloning into 'Park'...
+remote: Enumerating objects: 284, done.
+remote: Total 284 (delta 0), reused 0 (delta 0), pack-reused 284
+Receiving objects: 100% (284/284), 95.64 MiB | 9.04 MiB/s, done.
+Resolving deltas: 100% (119/119), done.
+[park@localhost ~]$ cd Park
+[park@localhost Park]$ git branch park
+[park@localhost Park]$ git checkout park
+Switched to branch 'park'
+[park@localhost Park]$ git status
+# On branch park
+nothing to commit, working directory clean
+[park@localhost Park]$ git clone https://github.com/matterport/Mask_RCNN.git
+Cloning into 'Mask_RCNN'...
+remote: Enumerating objects: 956, done.
+remote: Total 956 (delta 0), reused 0 (delta 0), pack-reused 956
+Receiving objects: 100% (956/956), 111.83 MiB | 5.71 MiB/s, done.
+Resolving deltas: 100% (569/569), done.
+[park@localhost Park]$ cd Mask_RCNN
+[park@localhost Mask_RCNN]$ ls
+assets  LICENSE      mrcnn      requirements.txt  setup.cfg
+images  MANIFEST.in  README.md  samples           setup.py
+[park@localhost Mask_RCNN]$ cat requirements.txt
+numpy
+scipy
+Pillow
+cython
+matplotlib
+scikit-image
+tensorflow>=1.3.0
+keras>=2.0.8
+opencv-python
+h5py
+imgaug
+IPython[all][park@localhost Mask_RCNN]$ sudo nano requirements.txt
+[sudo] password for park: 
+[park@localhost Mask_RCNN]$ sudo nano requirements.txt
+[park@localhost Mask_RCNN]$ pip3 install --upgrade setuptools --user
+Collecting setuptools
+  Downloading https://files.pythonhosted.org/packages/f9/d3/955738b20d3832dfa3cd3d9b07e29a8162edb480bf988332f5e6e48ca444/setuptools-44.0.0-py2.py3-none-any.whl (583kB)
+    100% |████████████████████████████████| 583kB 1.6MB/s 
+Installing collected packages: setuptools
+Successfully installed setuptools-44.0.0
+[park@localhost Mask_RCNN]$ sudo yum install python3-tkinter
+[sudo] password for park: 
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: ewr.edge.kernel.org
+ * epel: mirror.siena.edu
+ * extras: ewr.edge.kernel.org
+ * updates: ewr.edge.kernel.org
+Resolving Dependencies
+--> Running transaction check
+---> Package python3-tkinter.x86_64 0:3.6.8-10.el7 will be installed
+--> Processing Dependency: libtk8.5.so()(64bit) for package: python3-tkinter-3.6.8-10.el7.x86_64
+--> Processing Dependency: libtcl8.5.so()(64bit) for package: python3-tkinter-3.6.8-10.el7.x86_64
+--> Running transaction check
+---> Package tcl.x86_64 1:8.5.13-8.el7 will be installed
+---> Package tk.x86_64 1:8.5.13-6.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=======================================================================================
+ Package                  Arch            Version                  Repository     Size
+=======================================================================================
+Installing:
+ python3-tkinter          x86_64          3.6.8-10.el7             base          364 k
+Installing for dependencies:
+ tcl                      x86_64          1:8.5.13-8.el7           base          1.9 M
+ tk                       x86_64          1:8.5.13-6.el7           base          1.4 M
+
+Transaction Summary
+=======================================================================================
+Install  1 Package (+2 Dependent packages)
+
+Total download size: 3.7 M
+Installed size: 9.8 M
+Is this ok [y/d/N]: y
+Downloading packages:
+(1/3): python3-tkinter-3.6.8-10.el7.x86_64.rpm                  | 364 kB  00:00:00     
+(2/3): tcl-8.5.13-8.el7.x86_64.rpm                              | 1.9 MB  00:00:00     
+(3/3): tk-8.5.13-6.el7.x86_64.rpm                               | 1.4 MB  00:00:00     
+---------------------------------------------------------------------------------------
+Total                                                     3.8 MB/s | 3.7 MB  00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:tcl-8.5.13-8.el7.x86_64                                           1/3 
+  Installing : 1:tk-8.5.13-6.el7.x86_64                                            2/3 
+  Installing : python3-tkinter-3.6.8-10.el7.x86_64                                 3/3 
+  Verifying  : 1:tcl-8.5.13-8.el7.x86_64                                           1/3 
+  Verifying  : python3-tkinter-3.6.8-10.el7.x86_64                                 2/3 
+  Verifying  : 1:tk-8.5.13-6.el7.x86_64                                            3/3 
+
+Installed:
+  python3-tkinter.x86_64 0:3.6.8-10.el7                                                
+
+Dependency Installed:
+  tcl.x86_64 1:8.5.13-8.el7                  tk.x86_64 1:8.5.13-6.el7                 
+
+Complete!
+[park@localhost Mask_RCNN]$ pip3 install -r requirements.txt --user
+Collecting numpy (from -r requirements.txt (line 1))
+  Downloading https://files.pythonhosted.org/packages/92/e6/45f71bd24f4e37629e9db5fb75caab919507deae6a5a257f9e4685a5f931/numpy-1.18.0-cp36-cp36m-manylinux1_x86_64.whl (20.1MB)
+    100% |████████████████████████████████| 20.1MB 64kB/s 
+Collecting scipy (from -r requirements.txt (line 2))
+  Downloading https://files.pythonhosted.org/packages/dc/29/162476fd44203116e7980cfbd9352eef9db37c49445d1fec35509022f6aa/scipy-1.4.1-cp36-cp36m-manylinux1_x86_64.whl (26.1MB)
+    100% |████████████████████████████████| 26.1MB 48kB/s 
+Collecting Pillow (from -r requirements.txt (line 3))
+  Downloading https://files.pythonhosted.org/packages/19/5e/23dcc0ce3cc2abe92efd3cd61d764bee6ccdf1b667a1fb566f45dc249953/Pillow-7.0.0-cp36-cp36m-manylinux1_x86_64.whl (2.1MB)
+    100% |████████████████████████████████| 2.1MB 586kB/s 
+Collecting cython (from -r requirements.txt (line 4))
+  Downloading https://files.pythonhosted.org/packages/df/d1/4d3f8a7a920e805488a966cc6ab55c978a712240f584445d703c08b9f405/Cython-0.29.14-cp36-cp36m-manylinux1_x86_64.whl (2.1MB)
+    100% |████████████████████████████████| 2.1MB 553kB/s 
+Collecting matplotlib (from -r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/4e/11/06958a2b895a3853206dea1fb2a5b11bf044f626f90745987612af9c8f2c/matplotlib-3.1.2-cp36-cp36m-manylinux1_x86_64.whl (13.1MB)
+    100% |████████████████████████████████| 13.1MB 93kB/s 
+Collecting scikit-image (from -r requirements.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/c8/bb/771800366f41d66eef51e4b80515f8ef7edab234a3f244fdce3bafe89b39/scikit_image-0.16.2-cp36-cp36m-manylinux1_x86_64.whl (26.5MB)
+    100% |████████████████████████████████| 26.5MB 46kB/s 
+Collecting tensorflow<2.0,>=1.3.0 (from -r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/de/f0/96fb2e0412ae9692dbf400e5b04432885f677ad6241c088ccc5fe7724d69/tensorflow-1.14.0-cp36-cp36m-manylinux1_x86_64.whl (109.2MB)
+    100% |████████████████████████████████| 109.2MB 10kB/s 
+Collecting keras<2.3,>=2.0.8 (from -r requirements.txt (line 8))
+  Downloading https://files.pythonhosted.org/packages/f8/ba/2d058dcf1b85b9c212cc58264c98a4a7dd92c989b798823cc5690d062bb2/Keras-2.2.5-py2.py3-none-any.whl (336kB)
+    100% |████████████████████████████████| 337kB 3.4MB/s 
+Collecting opencv-python (from -r requirements.txt (line 9))
+  Downloading https://files.pythonhosted.org/packages/c0/a9/9828dfaf93f40e190ebfb292141df6b7ea1a2d57b46263e757f52be8589f/opencv_python-4.1.2.30-cp36-cp36m-manylinux1_x86_64.whl (28.3MB)
+    100% |████████████████████████████████| 28.3MB 39kB/s 
+Collecting opencv-contrib-python (from -r requirements.txt (line 10))
+  Downloading https://files.pythonhosted.org/packages/4b/b4/fa81f7944cfbefe5cd7cd75a2c0696a2f9114dd668a6ff9dc5dea3cee473/opencv_contrib_python-4.1.2.30-cp36-cp36m-manylinux1_x86_64.whl (34.3MB)
+    100% |████████████████████████████████| 34.3MB 32kB/s 
+Collecting h5py (from -r requirements.txt (line 11))
+  Downloading https://files.pythonhosted.org/packages/60/06/cafdd44889200e5438b897388f3075b52a8ef01f28a17366d91de0fa2d05/h5py-2.10.0-cp36-cp36m-manylinux1_x86_64.whl (2.9MB)
+    100% |████████████████████████████████| 2.9MB 432kB/s 
+Collecting imgaug (from -r requirements.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/11/df/5a3bba95b4600d5ca7aff072082ef0d9837056dd28cc4e738e7ce88dd8f8/imgaug-0.3.0-py2.py3-none-any.whl (819kB)
+    100% |████████████████████████████████| 829kB 1.5MB/s 
+Collecting IPython[all] (from -r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/1c/f3/c8be38ee117d02508bb8b9158eb41ca416f442a6e8e3b3159c2f2d14ed79/ipython-7.11.1-py3-none-any.whl (777kB)
+    100% |████████████████████████████████| 778kB 1.7MB/s 
+Collecting kiwisolver>=1.0.1 (from matplotlib->-r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/f8/a1/5742b56282449b1c0968197f63eae486eca2c35dcd334bab75ad524e0de1/kiwisolver-1.1.0-cp36-cp36m-manylinux1_x86_64.whl (90kB)
+    100% |████████████████████████████████| 92kB 3.6MB/s 
+Collecting cycler>=0.10 (from matplotlib->-r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
+Collecting python-dateutil>=2.1 (from matplotlib->-r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/d4/70/d60450c3dd48ef87586924207ae8907090de0b306af2bce5d134d78615cb/python_dateutil-2.8.1-py2.py3-none-any.whl (227kB)
+    100% |████████████████████████████████| 235kB 4.1MB/s 
+Collecting pyparsing!=2.0.4,!=2.1.2,!=2.1.6,>=2.0.1 (from matplotlib->-r requirements.txt (line 5))
+  Downloading https://files.pythonhosted.org/packages/5d/bc/1e58593167fade7b544bfe9502a26dc860940a79ab306e651e7f13be68c2/pyparsing-2.4.6-py2.py3-none-any.whl (67kB)
+    100% |████████████████████████████████| 71kB 8.9MB/s 
+Collecting PyWavelets>=0.4.0 (from scikit-image->-r requirements.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/59/bb/d2b85265ec9fa3c1922210c9393d4cdf7075cc87cce6fe671d7455f80fbc/PyWavelets-1.1.1-cp36-cp36m-manylinux1_x86_64.whl (4.4MB)
+    100% |████████████████████████████████| 4.4MB 304kB/s 
+Collecting imageio>=2.3.0 (from scikit-image->-r requirements.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/1a/de/f7f985018f462ceeffada7f6e609919fbcc934acd9301929cba14bc2c24a/imageio-2.6.1-py3-none-any.whl (3.3MB)
+    100% |████████████████████████████████| 3.3MB 342kB/s 
+Collecting networkx>=2.0 (from scikit-image->-r requirements.txt (line 6))
+  Downloading https://files.pythonhosted.org/packages/41/8f/dd6a8e85946def36e4f2c69c84219af0fa5e832b018c970e92f2ad337e45/networkx-2.4-py3-none-any.whl (1.6MB)
+    100% |████████████████████████████████| 1.6MB 672kB/s 
+Collecting termcolor>=1.1.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/8a/48/a76be51647d0eb9f10e2a4511bf3ffb8cc1e6b14e9e4fab46173aa79f981/termcolor-1.1.0.tar.gz
+Collecting tensorboard<1.15.0,>=1.14.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/91/2d/2ed263449a078cd9c8a9ba50ebd50123adf1f8cfbea1492f9084169b89d9/tensorboard-1.14.0-py3-none-any.whl (3.1MB)
+    100% |████████████████████████████████| 3.2MB 425kB/s 
+Collecting wrapt>=1.11.1 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/23/84/323c2415280bc4fc880ac5050dddfb3c8062c2552b34c2e512eb4aa68f79/wrapt-1.11.2.tar.gz
+Collecting six>=1.10.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/65/26/32b8464df2a97e6dd1b656ed26b2c194606c16fe163c695a992b36c11cdf/six-1.13.0-py2.py3-none-any.whl
+Collecting google-pasta>=0.1.6 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/c3/fd/1e86bc4837cc9a3a5faf3db9b1854aa04ad35b5f381f9648fbe81a6f94e4/google_pasta-0.1.8-py3-none-any.whl (57kB)
+    100% |████████████████████████████████| 61kB 7.0MB/s 
+Collecting gast>=0.2.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/1f/04/4e36c33f8eb5c5b6c622a1f4859352a6acca7ab387257d4b3c191d23ec1d/gast-0.3.2.tar.gz
+Collecting absl-py>=0.7.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/1a/53/9243c600e047bd4c3df9e69cfabc1e8004a82cac2e0c484580a78a94ba2a/absl-py-0.9.0.tar.gz (104kB)
+    100% |████████████████████████████████| 112kB 7.7MB/s 
+Collecting astor>=0.6.0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/c3/88/97eef84f48fa04fbd6750e62dcceafba6c63c81b7ac1420856c8dcc0a3f9/astor-0.8.1-py2.py3-none-any.whl
+Collecting protobuf>=3.6.1 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/ca/ac/838c8c8a5f33a58132dd2ad2a30329f6ae1614a9f56ffb79eaaf71a9d156/protobuf-3.11.2-cp36-cp36m-manylinux1_x86_64.whl (1.3MB)
+    100% |████████████████████████████████| 1.3MB 874kB/s 
+Collecting tensorflow-estimator<1.15.0rc0,>=1.14.0rc0 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/3c/d5/21860a5b11caf0678fbc8319341b0ae21a07156911132e0e71bffed0510d/tensorflow_estimator-1.14.0-py2.py3-none-any.whl (488kB)
+    100% |████████████████████████████████| 491kB 1.5MB/s 
+Collecting keras-applications>=1.0.6 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/71/e3/19762fdfc62877ae9102edf6342d71b28fbfd9dea3d2f96a882ce099b03f/Keras_Applications-1.0.8-py3-none-any.whl (50kB)
+    100% |████████████████████████████████| 51kB 4.3MB/s 
+Collecting grpcio>=1.8.6 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/8b/9b/ba5d094f979325fdba696bafa9ee23cc50b8fc60481e3d2a9e13d76817dc/grpcio-1.26.0-cp36-cp36m-manylinux1_x86_64.whl (2.5MB)
+    100% |████████████████████████████████| 2.5MB 488kB/s 
+Collecting wheel>=0.26 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/00/83/b4a77d044e78ad1a45610eb88f745be2fd2c6d658f9798a15e384b7d57c9/wheel-0.33.6-py2.py3-none-any.whl
+Collecting keras-preprocessing>=1.0.5 (from tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/28/6a/8c1f62c37212d9fc441a7e26736df51ce6f0e38455816445471f10da4f0a/Keras_Preprocessing-1.1.0-py2.py3-none-any.whl (41kB)
+    100% |████████████████████████████████| 51kB 6.4MB/s 
+Collecting pyyaml (from keras<2.3,>=2.0.8->-r requirements.txt (line 8))
+  Downloading https://files.pythonhosted.org/packages/8d/c9/e5be955a117a1ac548cdd31e37e8fd7b02ce987f9655f5c7563c656d5dcb/PyYAML-5.2.tar.gz (265kB)
+    100% |████████████████████████████████| 266kB 2.7MB/s 
+Collecting Shapely (from imgaug->-r requirements.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/38/b6/b53f19062afd49bb5abd049aeed36f13bf8d57ef8f3fa07a5203531a0252/Shapely-1.6.4.post2-cp36-cp36m-manylinux1_x86_64.whl (1.5MB)
+    100% |████████████████████████████████| 1.5MB 696kB/s 
+Collecting opencv-python-headless (from imgaug->-r requirements.txt (line 12))
+  Downloading https://files.pythonhosted.org/packages/5d/96/b2824df85d8c5f148125e4fee073a62fde17639502fe67042b212ebfe488/opencv_python_headless-4.1.2.30-cp36-cp36m-manylinux1_x86_64.whl (21.8MB)
+    100% |████████████████████████████████| 21.8MB 56kB/s 
+Collecting prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0 (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/7f/1f/e145dd467dc9b0e6f1e64232c03119498dfec497e383f1e8be9f83eaa97e/prompt_toolkit-3.0.2-py3-none-any.whl (344kB)
+    100% |████████████████████████████████| 348kB 3.5MB/s 
+Collecting pickleshare (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/9a/41/220f49aaea88bc6fa6cba8d05ecf24676326156c23b991e80b3f2fc24c77/pickleshare-0.7.5-py2.py3-none-any.whl
+Collecting pygments (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/be/39/32da3184734730c0e4d3fa3b2b5872104668ad6dc1b5a73d8e477e5fe967/Pygments-2.5.2-py2.py3-none-any.whl (896kB)
+    100% |████████████████████████████████| 901kB 1.5MB/s 
+Collecting backcall (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/84/71/c8ca4f5bb1e08401b916c68003acf0a0655df935d74d93bf3f3364b310e0/backcall-0.1.0.tar.gz
+Requirement already satisfied: setuptools>=18.5 in /home/park/.local/lib/python3.6/site-packages (from IPython[all]->-r requirements.txt (line 13))
+Collecting traitlets>=4.2 (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/ca/ab/872a23e29cec3cf2594af7e857f18b687ad21039c1f9b922fac5b9b142d5/traitlets-4.3.3-py2.py3-none-any.whl (75kB)
+    100% |████████████████████████████████| 81kB 304kB/s 
+Collecting pexpect; sys_platform != "win32" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/0e/3e/377007e3f36ec42f1b84ec322ee12141a9e10d808312e5738f52f80a232c/pexpect-4.7.0-py2.py3-none-any.whl (58kB)
+    100% |████████████████████████████████| 61kB 2.4MB/s 
+Collecting decorator (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/8f/b7/f329cfdc75f3d28d12c65980e4469e2fa373f1953f5df6e370e84ea2e875/decorator-4.4.1-py2.py3-none-any.whl
+Collecting jedi>=0.10 (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/e9/97/55e575a5b49e5c3df9eb3c116c61021d7badf556c816be13bbd7baf55234/jedi-0.15.2-py2.py3-none-any.whl (1.1MB)
+    100% |████████████████████████████████| 1.1MB 1.3MB/s 
+Collecting requests; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/51/bd/23c926cd341ea6b7dd0b2a00aba99ae0f828be89d72b2190f27c11d4b7fb/requests-2.22.0-py2.py3-none-any.whl (57kB)
+    100% |████████████████████████████████| 61kB 4.3MB/s 
+Collecting testpath; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/1b/9e/1a170feaa54f22aeb5a5d16c9015e82234275a3c8ab630b552493f9cb8a9/testpath-0.4.4-py2.py3-none-any.whl (163kB)
+    100% |████████████████████████████████| 174kB 3.9MB/s 
+Collecting notebook; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/f5/69/d2ffaf7efc20ce47469187e3a41e6e03e17b45de5a6559f4e7ab3eace5e1/notebook-6.0.2-py3-none-any.whl (9.7MB)
+    100% |████████████████████████████████| 9.7MB 125kB/s 
+Collecting nbconvert; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/79/6c/05a569e9f703d18aacb89b7ad6075b404e8a4afde2c26b73ca77bb644b14/nbconvert-5.6.1-py2.py3-none-any.whl (455kB)
+    100% |████████████████████████████████| 460kB 1.7MB/s 
+Collecting nose>=0.10.1; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/15/d8/dd071918c040f50fa1cf80da16423af51ff8ce4a0f2399b7bf8de45ac3d9/nose-1.3.7-py3-none-any.whl (154kB)
+    100% |████████████████████████████████| 163kB 4.3MB/s 
+Collecting nbformat; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/da/27/9a654d2b6cc1eaa517d1c5a4405166c7f6d72f04f6e7eea41855fe808a46/nbformat-4.4.0-py2.py3-none-any.whl (155kB)
+    100% |████████████████████████████████| 163kB 4.7MB/s 
+Collecting qtconsole; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/7c/57/3528b84ffa753e2089908bbf74bb5ae60653eb7a63797b6234e88b847d67/qtconsole-4.6.0-py2.py3-none-any.whl (121kB)
+    100% |████████████████████████████████| 122kB 4.2MB/s 
+Collecting ipykernel; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/e1/92/8fec943b5b81078399f969f00557804d884c96fcd0bc296e81a2ed4fd270/ipykernel-5.1.3-py3-none-any.whl (116kB)
+    100% |████████████████████████████████| 122kB 3.8MB/s 
+Collecting ipywidgets; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/56/a0/dbcf5881bb2f51e8db678211907f16ea0a182b232c591a6d6f276985ca95/ipywidgets-7.5.1-py2.py3-none-any.whl (121kB)
+    100% |████████████████████████████████| 122kB 3.4MB/s 
+Collecting Sphinx>=1.3; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/c4/bb/64c45dd915150952feda858a112a13dc43fb24df2f397d82cdbd4db274b6/Sphinx-2.3.1-py3-none-any.whl (2.7MB)
+    100% |████████████████████████████████| 2.7MB 322kB/s 
+Collecting ipyparallel; extra == "all" (from IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/3f/82/aaa7a357845a98d4028f27c799f0d3bb2fe55fc1247c73dc712b4ae2344c/ipyparallel-6.2.4-py2.py3-none-any.whl (198kB)
+    100% |████████████████████████████████| 204kB 5.5MB/s 
+Collecting werkzeug>=0.11.15 (from tensorboard<1.15.0,>=1.14.0->tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/ce/42/3aeda98f96e85fd26180534d36570e4d18108d62ae36f87694b476b83d6f/Werkzeug-0.16.0-py2.py3-none-any.whl (327kB)
+    100% |████████████████████████████████| 327kB 2.2MB/s 
+Collecting markdown>=2.6.8 (from tensorboard<1.15.0,>=1.14.0->tensorflow<2.0,>=1.3.0->-r requirements.txt (line 7))
+  Downloading https://files.pythonhosted.org/packages/c0/4e/fd492e91abdc2d2fcb70ef453064d980688762079397f779758e055f6575/Markdown-3.1.1-py2.py3-none-any.whl (87kB)
+    100% |████████████████████████████████| 92kB 5.3MB/s 
+Collecting wcwidth (from prompt-toolkit!=3.0.0,!=3.0.1,<3.1.0,>=2.0.0->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/58/b4/4850a0ccc6f567cc0ebe7060d20ffd4258b8210efadc259da62dc6ed9c65/wcwidth-0.1.8-py2.py3-none-any.whl
+Collecting ipython-genutils (from traitlets>=4.2->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/fa/bc/9bd3b5c2b4774d5f33b2d544f1460be9df7df2fe42f352135381c347c69a/ipython_genutils-0.2.0-py2.py3-none-any.whl
+Collecting ptyprocess>=0.5 (from pexpect; sys_platform != "win32"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/d1/29/605c2cc68a9992d18dada28206eeada56ea4bd07a239669da41674648b6f/ptyprocess-0.6.0-py2.py3-none-any.whl
+Collecting parso>=0.5.2 (from jedi>=0.10->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/9b/b0/90353a5ece0987279837835224dead0c424833a224195683e188d384e06b/parso-0.5.2-py2.py3-none-any.whl (99kB)
+    100% |████████████████████████████████| 102kB 3.3MB/s 
+Collecting chardet<3.1.0,>=3.0.2 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl (133kB)
+    100% |████████████████████████████████| 143kB 3.8MB/s 
+Collecting certifi>=2017.4.17 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b9/63/df50cac98ea0d5b006c55a399c3bf1db9da7b5a24de7890bc9cfd5dd9e99/certifi-2019.11.28-py2.py3-none-any.whl (156kB)
+    100% |████████████████████████████████| 163kB 2.2MB/s 
+Collecting idna<2.9,>=2.5 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/14/2c/cd551d81dbe15200be1cf41cd03869a46fe7226e7450af7a6545bfc474c9/idna-2.8-py2.py3-none-any.whl (58kB)
+    100% |████████████████████████████████| 61kB 3.2MB/s 
+Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 (from requests; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b4/40/a9837291310ee1ccc242ceb6ebfd9eb21539649f193a7c8c86ba15b98539/urllib3-1.25.7-py2.py3-none-any.whl (125kB)
+    100% |████████████████████████████████| 133kB 2.9MB/s 
+Collecting terminado>=0.8.1 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/ff/96/1d9a2c23990aea8f8e0b5c3b6627d03196a73771a17a2d9860bbe9823ab6/terminado-0.8.3-py2.py3-none-any.whl
+Collecting prometheus-client (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b3/23/41a5a24b502d35a4ad50a5bb7202a5e1d9a0364d0c12f56db3dbf7aca76d/prometheus_client-0.7.1.tar.gz
+Collecting jupyter-core>=4.6.0 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/fb/82/86437f661875e30682e99d04c13ba6c216f86f5f6ca6ef212d3ee8b6ca11/jupyter_core-4.6.1-py2.py3-none-any.whl (82kB)
+    100% |████████████████████████████████| 92kB 3.8MB/s 
+Collecting Send2Trash (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/49/46/c3dc27481d1cc57b9385aff41c474ceb7714f7935b1247194adae45db714/Send2Trash-1.5.0-py3-none-any.whl
+Collecting pyzmq>=17 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/94/07/cee3d328a2e13f9de1c2b62cced7a389b61ac81424f2e377f3dc9d668282/pyzmq-18.1.1-cp36-cp36m-manylinux1_x86_64.whl (1.1MB)
+    100% |████████████████████████████████| 1.1MB 901kB/s 
+Collecting jupyter-client>=5.3.4 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/13/81/fe0eee1bcf949851a120254b1f530ae1e01bdde2d3ab9710c6ff81525061/jupyter_client-5.3.4-py2.py3-none-any.whl (92kB)
+    100% |████████████████████████████████| 92kB 5.7MB/s 
+Collecting tornado>=5.0 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/30/78/2d2823598496127b21423baffaa186b668f73cd91887fcef78b6eade136b/tornado-6.0.3.tar.gz (482kB)
+    100% |████████████████████████████████| 491kB 2.0MB/s 
+Collecting jinja2 (from notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/65/e0/eb35e762802015cab1ccee04e8a277b03f1d8e53da3ec3106882ec42558b/Jinja2-2.10.3-py2.py3-none-any.whl (125kB)
+    100% |████████████████████████████████| 133kB 3.4MB/s 
+Collecting bleach (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/ab/05/27e1466475e816d3001efb6e0a85a819be17411420494a1e602c36f8299d/bleach-3.1.0-py2.py3-none-any.whl (157kB)
+    100% |████████████████████████████████| 163kB 3.3MB/s 
+Collecting pandocfilters>=1.4.1 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/4c/ea/236e2584af67bb6df960832731a6e5325fd4441de001767da328c33368ce/pandocfilters-1.4.2.tar.gz
+Collecting mistune<2,>=0.8.1 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/09/ec/4b43dae793655b7d8a25f76119624350b4d65eb663459eb9603d7f1f0345/mistune-0.8.4-py2.py3-none-any.whl
+Collecting entrypoints>=0.2.2 (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/ac/c6/44694103f8c221443ee6b0041f69e2740d89a25641e62fb4f2ee568f2f9c/entrypoints-0.3-py2.py3-none-any.whl
+Collecting defusedxml (from nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/06/74/9b387472866358ebc08732de3da6dc48e44b0aacd2ddaa5cb85ab7e986a2/defusedxml-0.6.0-py2.py3-none-any.whl
+Collecting jsonschema!=2.5.0,>=2.4 (from nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/c5/8f/51e89ce52a085483359217bc72cdbf6e75ee595d5b1d4b5ade40c7e018b8/jsonschema-3.2.0-py2.py3-none-any.whl (56kB)
+    100% |████████████████████████████████| 61kB 3.9MB/s 
+Collecting widgetsnbextension~=3.5.0 (from ipywidgets; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/6c/7b/7ac231c20d2d33c445eaacf8a433f4e22c60677eb9776c7c5262d7ddee2d/widgetsnbextension-3.5.1-py2.py3-none-any.whl (2.2MB)
+    100% |████████████████████████████████| 2.2MB 569kB/s 
+Collecting sphinxcontrib-serializinghtml (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/57/b3/3648e48fa5682e61e9839d62de4e23af1795ceb738d68d73bd974257a95c/sphinxcontrib_serializinghtml-1.1.3-py2.py3-none-any.whl (89kB)
+    100% |████████████████████████████████| 92kB 3.6MB/s 
+Collecting alabaster<0.8,>=0.7 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/10/ad/00b090d23a222943eb0eda509720a404f531a439e803f6538f35136cae9e/alabaster-0.7.12-py2.py3-none-any.whl
+Collecting imagesize (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/31/b2/b5522a0c8d11e4aff83f8342f3f0dea68c2fb25aa44403e420587f0ce204/imagesize-1.2.0-py2.py3-none-any.whl
+Collecting babel!=2.0,>=1.3 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/15/a1/522dccd23e5d2e47aed4b6a16795b8213e3272c7506e625f2425ad025a19/Babel-2.8.0-py2.py3-none-any.whl (8.6MB)
+    100% |████████████████████████████████| 8.6MB 109kB/s 
+Collecting packaging (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/cf/94/9672c2d4b126e74c4496c6b3c58a8b51d6419267be9e70660ba23374c875/packaging-19.2-py2.py3-none-any.whl
+Collecting sphinxcontrib-htmlhelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/e4/35/80a67cc493f4a8a9634ab203a77aaa1b84d79ccb1c02eca72cb084d2c7f7/sphinxcontrib_htmlhelp-1.0.2-py2.py3-none-any.whl (96kB)
+    100% |████████████████████████████████| 102kB 11.0MB/s 
+Collecting snowballstemmer>=1.1 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/7d/4b/cdf1113a0e88b641893b814e9c36f69a6fda28cd88b62c7f0d858cde3166/snowballstemmer-2.0.0-py2.py3-none-any.whl (97kB)
+    100% |████████████████████████████████| 102kB 5.4MB/s 
+Collecting sphinxcontrib-qthelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/ce/5b/4747c3ba98b3a3e21a66faa183d8f79b9ded70e74212a7988d236a6eb78a/sphinxcontrib_qthelp-1.0.2-py2.py3-none-any.whl (90kB)
+    100% |████████████████████████████████| 92kB 6.3MB/s 
+Collecting sphinxcontrib-jsmath (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/c2/42/4c8646762ee83602e3fb3fbe774c2fac12f317deb0b5dbeeedd2d3ba4b77/sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl
+Collecting sphinxcontrib-devhelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b0/a3/fea98741f0b2f2902fbf6c35c8e91b22cd0dd13387291e81d457f9a93066/sphinxcontrib_devhelp-1.0.1-py2.py3-none-any.whl (84kB)
+    100% |████████████████████████████████| 92kB 6.3MB/s 
+Collecting docutils>=0.12 (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/22/cd/a6aa959dca619918ccb55023b4cb151949c64d4d5d55b3f4ffd7eee0c6e8/docutils-0.15.2-py3-none-any.whl (547kB)
+    100% |████████████████████████████████| 552kB 1.3MB/s 
+Collecting sphinxcontrib-applehelp (from Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/13/9a/4428b3114d654cb1cd34d90d5e6fab938d5436f94a571155187ea1dd78b4/sphinxcontrib_applehelp-1.0.1-py2.py3-none-any.whl (121kB)
+    100% |████████████████████████████████| 122kB 3.9MB/s 
+Collecting MarkupSafe>=0.23 (from jinja2->notebook; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/b2/5f/23e0023be6bb885d00ffbefad2942bc51a620328ee910f64abe5a8d18dd1/MarkupSafe-1.1.1-cp36-cp36m-manylinux1_x86_64.whl
+Collecting webencodings (from bleach->nbconvert; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl
+Collecting attrs>=17.4.0 (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/a2/db/4313ab3be961f7a763066401fb77f7748373b6094076ae2bda2806988af6/attrs-19.3.0-py2.py3-none-any.whl
+Collecting importlib-metadata; python_version < "3.8" (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/e9/71/1a1e0ed0981bb6a67bce55a210f168126b7ebd2065958673797ea66489ca/importlib_metadata-1.3.0-py2.py3-none-any.whl
+Collecting pyrsistent>=0.14.0 (from jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/6c/6f/c1a2e8da80a0029f6b618d7e20e1a6f2a61dd04e2e54225309c2cc4268f7/pyrsistent-0.15.6.tar.gz (107kB)
+    100% |████████████████████████████████| 112kB 3.1MB/s 
+Collecting pytz>=2015.7 (from babel!=2.0,>=1.3->Sphinx>=1.3; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/e7/f9/f0b53f88060247251bf481fa6ea62cd0d25bf1b11a87888e53ce5b7c8ad2/pytz-2019.3-py2.py3-none-any.whl (509kB)
+    100% |████████████████████████████████| 512kB 1.8MB/s 
+Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/74/3d/1ee25a26411ba0401b43c6376d2316a71addcc72ef8690b101b4ea56d76a/zipp-0.6.0-py2.py3-none-any.whl
+Collecting more-itertools (from zipp>=0.5->importlib-metadata; python_version < "3.8"->jsonschema!=2.5.0,>=2.4->nbformat; extra == "all"->IPython[all]->-r requirements.txt (line 13))
+  Downloading https://files.pythonhosted.org/packages/68/03/0604cec1ea13c9f063dd50f900d1a36160334dd3cfb01fd0e638f61b46ba/more_itertools-8.0.2-py3-none-any.whl (40kB)
+    100% |████████████████████████████████| 40kB 5.7MB/s 
+Installing collected packages: numpy, scipy, Pillow, cython, kiwisolver, six, cycler, python-dateutil, pyparsing, matplotlib, PyWavelets, imageio, decorator, networkx, scikit-image, termcolor, werkzeug, grpcio, wheel, absl-py, protobuf, markdown, tensorboard, wrapt, google-pasta, gast, astor, tensorflow-estimator, h5py, keras-applications, keras-preprocessing, tensorflow, pyyaml, keras, opencv-python, opencv-contrib-python, Shapely, opencv-python-headless, imgaug, wcwidth, prompt-toolkit, pickleshare, pygments, backcall, ipython-genutils, traitlets, ptyprocess, pexpect, parso, jedi, chardet, certifi, idna, urllib3, requests, testpath, tornado, terminado, prometheus-client, webencodings, bleach, jupyter-core, pandocfilters, MarkupSafe, jinja2, attrs, more-itertools, zipp, importlib-metadata, pyrsistent, jsonschema, nbformat, mistune, entrypoints, defusedxml, nbconvert, Send2Trash, pyzmq, jupyter-client, ipykernel, notebook, nose, qtconsole, widgetsnbextension, ipywidgets, sphinxcontrib-serializinghtml, alabaster, imagesize, pytz, babel, packaging, sphinxcontrib-htmlhelp, snowballstemmer, sphinxcontrib-qthelp, sphinxcontrib-jsmath, sphinxcontrib-devhelp, docutils, sphinxcontrib-applehelp, Sphinx, ipyparallel, IPython
+  Running setup.py install for termcolor ... done
+  Running setup.py install for absl-py ... done
+  Running setup.py install for wrapt ... done
+  Running setup.py install for gast ... done
+  Running setup.py install for pyyaml ... done
+  Running setup.py install for backcall ... done
+  Running setup.py install for tornado ... done
+  Running setup.py install for prometheus-client ... done
+  Running setup.py install for pandocfilters ... done
+  Running setup.py install for pyrsistent ... done
+Successfully installed IPython-7.11.1 MarkupSafe-1.1.1 Pillow-7.0.0 PyWavelets-1.1.1 Send2Trash-1.5.0 Shapely-1.6.4.post2 Sphinx-2.3.1 absl-py-0.9.0 alabaster-0.7.12 astor-0.8.1 attrs-19.3.0 babel-2.8.0 backcall-0.1.0 bleach-3.1.0 certifi-2019.11.28 chardet-3.0.4 cycler-0.10.0 cython-0.29.14 decorator-4.4.1 defusedxml-0.6.0 docutils-0.15.2 entrypoints-0.3 gast-0.3.2 google-pasta-0.1.8 grpcio-1.26.0 h5py-2.10.0 idna-2.8 imageio-2.6.1 imagesize-1.2.0 imgaug-0.3.0 importlib-metadata-1.3.0 ipykernel-5.1.3 ipyparallel-6.2.4 ipython-genutils-0.2.0 ipywidgets-7.5.1 jedi-0.15.2 jinja2-2.10.3 jsonschema-3.2.0 jupyter-client-5.3.4 jupyter-core-4.6.1 keras-2.2.5 keras-applications-1.0.8 keras-preprocessing-1.1.0 kiwisolver-1.1.0 markdown-3.1.1 matplotlib-3.1.2 mistune-0.8.4 more-itertools-8.0.2 nbconvert-5.6.1 nbformat-4.4.0 networkx-2.4 nose-1.3.7 notebook-6.0.2 numpy-1.18.0 opencv-contrib-python-4.1.2.30 opencv-python-4.1.2.30 opencv-python-headless-4.1.2.30 packaging-19.2 pandocfilters-1.4.2 parso-0.5.2 pexpect-4.7.0 pickleshare-0.7.5 prometheus-client-0.7.1 prompt-toolkit-3.0.2 protobuf-3.11.2 ptyprocess-0.6.0 pygments-2.5.2 pyparsing-2.4.6 pyrsistent-0.15.6 python-dateutil-2.8.1 pytz-2019.3 pyyaml-5.2 pyzmq-18.1.1 qtconsole-4.6.0 requests-2.22.0 scikit-image-0.16.2 scipy-1.4.1 six-1.13.0 snowballstemmer-2.0.0 sphinxcontrib-applehelp-1.0.1 sphinxcontrib-devhelp-1.0.1 sphinxcontrib-htmlhelp-1.0.2 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-qthelp-1.0.2 sphinxcontrib-serializinghtml-1.1.3 tensorboard-1.14.0 tensorflow-1.14.0 tensorflow-estimator-1.14.0 termcolor-1.1.0 terminado-0.8.3 testpath-0.4.4 tornado-6.0.3 traitlets-4.3.3 urllib3-1.25.7 wcwidth-0.1.8 webencodings-0.5.1 werkzeug-0.16.0 wheel-0.33.6 widgetsnbextension-3.5.1 wrapt-1.11.2 zipp-0.6.0
+[park@localhost Mask_RCNN]$ pip3 install shapely
+Requirement already satisfied: shapely in /home/park/.local/lib/python3.6/site-packages
+[park@localhost Mask_RCNN]$ pip3 install Shapely --user
+Requirement already satisfied: Shapely in /home/park/.local/lib/python3.6/site-packages
+[park@localhost Mask_RCNN]$ python3 setup.py install --user
+running install
+running bdist_egg
+running egg_info
+creating mask_rcnn.egg-info
+writing mask_rcnn.egg-info/PKG-INFO
+writing dependency_links to mask_rcnn.egg-info/dependency_links.txt
+writing requirements to mask_rcnn.egg-info/requires.txt
+writing top-level names to mask_rcnn.egg-info/top_level.txt
+writing manifest file 'mask_rcnn.egg-info/SOURCES.txt'
+reading manifest file 'mask_rcnn.egg-info/SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+writing manifest file 'mask_rcnn.egg-info/SOURCES.txt'
+installing library code to build/bdist.linux-x86_64/egg
+running install_lib
+running build_py
+creating build
+creating build/lib
+creating build/lib/mrcnn
+copying mrcnn/__init__.py -> build/lib/mrcnn
+copying mrcnn/config.py -> build/lib/mrcnn
+copying mrcnn/model.py -> build/lib/mrcnn
+copying mrcnn/parallel_model.py -> build/lib/mrcnn
+copying mrcnn/utils.py -> build/lib/mrcnn
+copying mrcnn/visualize.py -> build/lib/mrcnn
+creating build/bdist.linux-x86_64
+creating build/bdist.linux-x86_64/egg
+creating build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/__init__.py -> build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/config.py -> build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/model.py -> build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/parallel_model.py -> build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/utils.py -> build/bdist.linux-x86_64/egg/mrcnn
+copying build/lib/mrcnn/visualize.py -> build/bdist.linux-x86_64/egg/mrcnn
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/__init__.py to __init__.cpython-36.pyc
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/config.py to config.cpython-36.pyc
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/model.py to model.cpython-36.pyc
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/parallel_model.py to parallel_model.cpython-36.pyc
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/utils.py to utils.cpython-36.pyc
+byte-compiling build/bdist.linux-x86_64/egg/mrcnn/visualize.py to visualize.cpython-36.pyc
+creating build/bdist.linux-x86_64/egg/EGG-INFO
+copying mask_rcnn.egg-info/PKG-INFO -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying mask_rcnn.egg-info/SOURCES.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying mask_rcnn.egg-info/dependency_links.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying mask_rcnn.egg-info/requires.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+copying mask_rcnn.egg-info/top_level.txt -> build/bdist.linux-x86_64/egg/EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+creating dist
+creating 'dist/mask_rcnn-2.1-py3.6.egg' and adding 'build/bdist.linux-x86_64/egg' to it
+removing 'build/bdist.linux-x86_64/egg' (and everything under it)
+Processing mask_rcnn-2.1-py3.6.egg
+Copying mask_rcnn-2.1-py3.6.egg to /home/park/.local/lib/python3.6/site-packages
+Adding mask-rcnn 2.1 to easy-install.pth file
+
+Installed /home/park/.local/lib/python3.6/site-packages/mask_rcnn-2.1-py3.6.egg
+Processing dependencies for mask-rcnn==2.1
+Searching for ipython==7.11.1
+Best match: ipython 7.11.1
+Adding ipython 7.11.1 to easy-install.pth file
+Installing iptest script to /home/park/.local/bin
+Installing iptest3 script to /home/park/.local/bin
+Installing ipython script to /home/park/.local/bin
+Installing ipython3 script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for imgaug==0.3.0
+Best match: imgaug 0.3.0
+Adding imgaug 0.3.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for h5py==2.10.0
+Best match: h5py 2.10.0
+Adding h5py 2.10.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for opencv-contrib-python==4.1.2.30
+Best match: opencv-contrib-python 4.1.2.30
+Adding opencv-contrib-python 4.1.2.30 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for opencv-python==4.1.2.30
+Best match: opencv-python 4.1.2.30
+Adding opencv-python 4.1.2.30 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Keras==2.2.5
+Best match: Keras 2.2.5
+Adding Keras 2.2.5 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for tensorflow==1.14.0
+Best match: tensorflow 1.14.0
+Adding tensorflow 1.14.0 to easy-install.pth file
+Installing freeze_graph script to /home/park/.local/bin
+Installing saved_model_cli script to /home/park/.local/bin
+Installing tensorboard script to /home/park/.local/bin
+Installing tf_upgrade_v2 script to /home/park/.local/bin
+Installing tflite_convert script to /home/park/.local/bin
+Installing toco script to /home/park/.local/bin
+Installing toco_from_protos script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for scikit-image==0.16.2
+Best match: scikit-image 0.16.2
+Adding scikit-image 0.16.2 to easy-install.pth file
+Installing skivi script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for matplotlib==3.1.2
+Best match: matplotlib 3.1.2
+Adding matplotlib 3.1.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Cython==0.29.14
+Best match: Cython 0.29.14
+Adding Cython 0.29.14 to easy-install.pth file
+Installing cygdb script to /home/park/.local/bin
+Installing cython script to /home/park/.local/bin
+Installing cythonize script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Pillow==7.0.0
+Best match: Pillow 7.0.0
+Adding Pillow 7.0.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for scipy==1.4.1
+Best match: scipy 1.4.1
+Adding scipy 1.4.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for numpy==1.18.0
+Best match: numpy 1.18.0
+Adding numpy 1.18.0 to easy-install.pth file
+Installing f2py script to /home/park/.local/bin
+Installing f2py3 script to /home/park/.local/bin
+Installing f2py3.6 script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for ipykernel==5.1.3
+Best match: ipykernel 5.1.3
+Adding ipykernel 5.1.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for testpath==0.4.4
+Best match: testpath 0.4.4
+Adding testpath 0.4.4 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for nbconvert==5.6.1
+Best match: nbconvert 5.6.1
+Adding nbconvert 5.6.1 to easy-install.pth file
+Installing jupyter-nbconvert script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Pygments==2.5.2
+Best match: Pygments 2.5.2
+Adding Pygments 2.5.2 to easy-install.pth file
+Installing pygmentize script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for notebook==6.0.2
+Best match: notebook 6.0.2
+Adding notebook 6.0.2 to easy-install.pth file
+Installing jupyter-bundlerextension script to /home/park/.local/bin
+Installing jupyter-nbextension script to /home/park/.local/bin
+Installing jupyter-notebook script to /home/park/.local/bin
+Installing jupyter-serverextension script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for ipyparallel==6.2.4
+Best match: ipyparallel 6.2.4
+Adding ipyparallel 6.2.4 to easy-install.pth file
+Installing ipcluster script to /home/park/.local/bin
+Installing ipcontroller script to /home/park/.local/bin
+Installing ipengine script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for nose==1.3.7
+Best match: nose 1.3.7
+Adding nose 1.3.7 to easy-install.pth file
+Installing nosetests script to /home/park/.local/bin
+Installing nosetests-3.4 script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for requests==2.22.0
+Best match: requests 2.22.0
+Adding requests 2.22.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Sphinx==2.3.1
+Best match: Sphinx 2.3.1
+Adding Sphinx 2.3.1 to easy-install.pth file
+Installing sphinx-apidoc script to /home/park/.local/bin
+Installing sphinx-autogen script to /home/park/.local/bin
+Installing sphinx-build script to /home/park/.local/bin
+Installing sphinx-quickstart script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for qtconsole==4.6.0
+Best match: qtconsole 4.6.0
+Adding qtconsole 4.6.0 to easy-install.pth file
+Installing jupyter-qtconsole script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for ipywidgets==7.5.1
+Best match: ipywidgets 7.5.1
+Adding ipywidgets 7.5.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for nbformat==4.4.0
+Best match: nbformat 4.4.0
+Adding nbformat 4.4.0 to easy-install.pth file
+Installing jupyter-trust script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pexpect==4.7.0
+Best match: pexpect 4.7.0
+Adding pexpect 4.7.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for jedi==0.15.2
+Best match: jedi 0.15.2
+Adding jedi 0.15.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for prompt-toolkit==3.0.2
+Best match: prompt-toolkit 3.0.2
+Adding prompt-toolkit 3.0.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pickleshare==0.7.5
+Best match: pickleshare 0.7.5
+Adding pickleshare 0.7.5 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for decorator==4.4.1
+Best match: decorator 4.4.1
+Adding decorator 4.4.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for setuptools==44.0.0
+Best match: setuptools 44.0.0
+Adding setuptools 44.0.0 to easy-install.pth file
+Installing easy_install script to /home/park/.local/bin
+Installing easy_install-3.8 script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for backcall==0.1.0
+Best match: backcall 0.1.0
+Adding backcall 0.1.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for traitlets==4.3.3
+Best match: traitlets 4.3.3
+Adding traitlets 4.3.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for imageio==2.6.1
+Best match: imageio 2.6.1
+Adding imageio 2.6.1 to easy-install.pth file
+Installing imageio_download_bin script to /home/park/.local/bin
+Installing imageio_remove_bin script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Shapely==1.6.4.post2
+Best match: Shapely 1.6.4.post2
+Adding Shapely 1.6.4.post2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for opencv-python-headless==4.1.2.30
+Best match: opencv-python-headless 4.1.2.30
+Adding opencv-python-headless 4.1.2.30 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for six==1.13.0
+Best match: six 1.13.0
+Adding six 1.13.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for PyYAML==5.2
+Best match: PyYAML 5.2
+Adding PyYAML 5.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Keras-Preprocessing==1.1.0
+Best match: Keras-Preprocessing 1.1.0
+Adding Keras-Preprocessing 1.1.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Keras-Applications==1.0.8
+Best match: Keras-Applications 1.0.8
+Adding Keras-Applications 1.0.8 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for gast==0.3.2
+Best match: gast 0.3.2
+Adding gast 0.3.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for absl-py==0.9.0
+Best match: absl-py 0.9.0
+Adding absl-py 0.9.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for wheel==0.33.6
+Best match: wheel 0.33.6
+Adding wheel 0.33.6 to easy-install.pth file
+Installing wheel script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for google-pasta==0.1.8
+Best match: google-pasta 0.1.8
+Adding google-pasta 0.1.8 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for grpcio==1.26.0
+Best match: grpcio 1.26.0
+Adding grpcio 1.26.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for protobuf==3.11.2
+Best match: protobuf 3.11.2
+Adding protobuf 3.11.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for termcolor==1.1.0
+Best match: termcolor 1.1.0
+Adding termcolor 1.1.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for astor==0.8.1
+Best match: astor 0.8.1
+Adding astor 0.8.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for tensorboard==1.14.0
+Best match: tensorboard 1.14.0
+Adding tensorboard 1.14.0 to easy-install.pth file
+Installing tensorboard script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for tensorflow-estimator==1.14.0
+Best match: tensorflow-estimator 1.14.0
+Adding tensorflow-estimator 1.14.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for wrapt==1.11.2
+Best match: wrapt 1.11.2
+Adding wrapt 1.11.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for PyWavelets==1.1.1
+Best match: PyWavelets 1.1.1
+Adding PyWavelets 1.1.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for networkx==2.4
+Best match: networkx 2.4
+Adding networkx 2.4 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pyparsing==2.4.6
+Best match: pyparsing 2.4.6
+Adding pyparsing 2.4.6 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for kiwisolver==1.1.0
+Best match: kiwisolver 1.1.0
+Adding kiwisolver 1.1.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for cycler==0.10.0
+Best match: cycler 0.10.0
+Adding cycler 0.10.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for python-dateutil==2.8.1
+Best match: python-dateutil 2.8.1
+Adding python-dateutil 2.8.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for tornado==6.0.3
+Best match: tornado 6.0.3
+Adding tornado 6.0.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for jupyter-client==5.3.4
+Best match: jupyter-client 5.3.4
+Adding jupyter-client 5.3.4 to easy-install.pth file
+Installing jupyter-kernel script to /home/park/.local/bin
+Installing jupyter-kernelspec script to /home/park/.local/bin
+Installing jupyter-run script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Jinja2==2.10.3
+Best match: Jinja2 2.10.3
+Adding Jinja2 2.10.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pandocfilters==1.4.2
+Best match: pandocfilters 1.4.2
+Adding pandocfilters 1.4.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for defusedxml==0.6.0
+Best match: defusedxml 0.6.0
+Adding defusedxml 0.6.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for bleach==3.1.0
+Best match: bleach 3.1.0
+Adding bleach 3.1.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for entrypoints==0.3
+Best match: entrypoints 0.3
+Adding entrypoints 0.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for mistune==0.8.4
+Best match: mistune 0.8.4
+Adding mistune 0.8.4 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for jupyter-core==4.6.1
+Best match: jupyter-core 4.6.1
+Adding jupyter-core 4.6.1 to easy-install.pth file
+Installing jupyter script to /home/park/.local/bin
+Installing jupyter-migrate script to /home/park/.local/bin
+Installing jupyter-troubleshoot script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for ipython-genutils==0.2.0
+Best match: ipython-genutils 0.2.0
+Adding ipython-genutils 0.2.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pyzmq==18.1.1
+Best match: pyzmq 18.1.1
+Adding pyzmq 18.1.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for terminado==0.8.3
+Best match: terminado 0.8.3
+Adding terminado 0.8.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Send2Trash==1.5.0
+Best match: Send2Trash 1.5.0
+Adding Send2Trash 1.5.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for prometheus-client==0.7.1
+Best match: prometheus-client 0.7.1
+Adding prometheus-client 0.7.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for idna==2.8
+Best match: idna 2.8
+Adding idna 2.8 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for chardet==3.0.4
+Best match: chardet 3.0.4
+Adding chardet 3.0.4 to easy-install.pth file
+Installing chardetect script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for certifi==2019.11.28
+Best match: certifi 2019.11.28
+Adding certifi 2019.11.28 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for urllib3==1.25.7
+Best match: urllib3 1.25.7
+Adding urllib3 1.25.7 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for imagesize==1.2.0
+Best match: imagesize 1.2.0
+Adding imagesize 1.2.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-jsmath==1.0.1
+Best match: sphinxcontrib-jsmath 1.0.1
+Adding sphinxcontrib-jsmath 1.0.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-htmlhelp==1.0.2
+Best match: sphinxcontrib-htmlhelp 1.0.2
+Adding sphinxcontrib-htmlhelp 1.0.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-devhelp==1.0.1
+Best match: sphinxcontrib-devhelp 1.0.1
+Adding sphinxcontrib-devhelp 1.0.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-serializinghtml==1.1.3
+Best match: sphinxcontrib-serializinghtml 1.1.3
+Adding sphinxcontrib-serializinghtml 1.1.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for alabaster==0.7.12
+Best match: alabaster 0.7.12
+Adding alabaster 0.7.12 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Babel==2.8.0
+Best match: Babel 2.8.0
+Adding Babel 2.8.0 to easy-install.pth file
+Installing pybabel script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for snowballstemmer==2.0.0
+Best match: snowballstemmer 2.0.0
+Adding snowballstemmer 2.0.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for docutils==0.15.2
+Best match: docutils 0.15.2
+Adding docutils 0.15.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-applehelp==1.0.1
+Best match: sphinxcontrib-applehelp 1.0.1
+Adding sphinxcontrib-applehelp 1.0.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for packaging==19.2
+Best match: packaging 19.2
+Adding packaging 19.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for sphinxcontrib-qthelp==1.0.2
+Best match: sphinxcontrib-qthelp 1.0.2
+Adding sphinxcontrib-qthelp 1.0.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for widgetsnbextension==3.5.1
+Best match: widgetsnbextension 3.5.1
+Adding widgetsnbextension 3.5.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for jsonschema==3.2.0
+Best match: jsonschema 3.2.0
+Adding jsonschema 3.2.0 to easy-install.pth file
+Installing jsonschema script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for ptyprocess==0.6.0
+Best match: ptyprocess 0.6.0
+Adding ptyprocess 0.6.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for parso==0.5.2
+Best match: parso 0.5.2
+Adding parso 0.5.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for wcwidth==0.1.8
+Best match: wcwidth 0.1.8
+Adding wcwidth 0.1.8 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Werkzeug==0.16.0
+Best match: Werkzeug 0.16.0
+Adding Werkzeug 0.16.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for Markdown==3.1.1
+Best match: Markdown 3.1.1
+Adding Markdown 3.1.1 to easy-install.pth file
+Installing markdown_py script to /home/park/.local/bin
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for MarkupSafe==1.1.1
+Best match: MarkupSafe 1.1.1
+Adding MarkupSafe 1.1.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for webencodings==0.5.1
+Best match: webencodings 0.5.1
+Adding webencodings 0.5.1 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pytz==2019.3
+Best match: pytz 2019.3
+Adding pytz 2019.3 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for attrs==19.3.0
+Best match: attrs 19.3.0
+Adding attrs 19.3.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for importlib-metadata==1.3.0
+Best match: importlib-metadata 1.3.0
+Adding importlib-metadata 1.3.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for pyrsistent==0.15.6
+Best match: pyrsistent 0.15.6
+Adding pyrsistent 0.15.6 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for zipp==0.6.0
+Best match: zipp 0.6.0
+Adding zipp 0.6.0 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Searching for more-itertools==8.0.2
+Best match: more-itertools 8.0.2
+Adding more-itertools 8.0.2 to easy-install.pth file
+
+Using /home/park/.local/lib/python3.6/site-packages
+Finished processing dependencies for mask-rcnn==2.1
+[park@localhost Mask_RCNN]$ cd ..
+[park@localhost Park]$ wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
+--2020-01-02 18:03:00--  https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
+Resolving github.com (github.com)... 140.82.113.4
+Connecting to github.com (github.com)|140.82.113.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-production-release-asset-2e65be.s3.amazonaws.com/107595270/872d3234-d21f-11e7-9a51-7b4bc8075835?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200102%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200102T230301Z&X-Amz-Expires=300&X-Amz-Signature=0b119704f349941f5923176426ecb9d4e686c67752975d142acc92c3362d0a2c&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Dmask_rcnn_coco.h5&response-content-type=application%2Foctet-stream [following]
+--2020-01-02 18:03:01--  https://github-production-release-asset-2e65be.s3.amazonaws.com/107595270/872d3234-d21f-11e7-9a51-7b4bc8075835?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20200102%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20200102T230301Z&X-Amz-Expires=300&X-Amz-Signature=0b119704f349941f5923176426ecb9d4e686c67752975d142acc92c3362d0a2c&X-Amz-SignedHeaders=host&actor_id=0&response-content-disposition=attachment%3B%20filename%3Dmask_rcnn_coco.h5&response-content-type=application%2Foctet-stream
+Resolving github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)... 52.216.101.27
+Connecting to github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)|52.216.101.27|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 257557808 (246M) [application/octet-stream]
+Saving to: ‘mask_rcnn_coco.h5’
+
+100%[=============================================>] 257,557,808 5.11MB/s   in 42s    
+
+2020-01-02 18:03:43 (5.84 MB/s) - ‘mask_rcnn_coco.h5’ saved [257557808/257557808]
+
+[park@localhost Park]$ 
+
