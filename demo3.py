@@ -9,8 +9,9 @@ import numpy as np
 import mrcnn.config
 from mrcnn.model import MaskRCNN
 
-
 # Configuration that will be used by the Mask-RCNN library
+
+
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
     IMAGES_PER_GPU = 1
@@ -19,6 +20,8 @@ class MaskRCNNConfig(mrcnn.config.Config):
     DETECTION_MIN_CONFIDENCE = 0.5
 
 # Filter a list of Mask R-CNN detection results to get only the detected cars / trucks
+
+
 def get_car_boxes(boxes, class_ids):
     car_boxes = []
 
@@ -57,7 +60,8 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = [
+    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 
 def main():

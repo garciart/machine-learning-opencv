@@ -11,6 +11,7 @@ ROOT_DIR = Path(__file__).resolve().parent
 # Directory of images or videos to run detection on
 IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 # VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos") # Create to process videos
+CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image1.jpg"),(IMAGE_DIR + "/demo_image2.jpg"),(IMAGE_DIR + "/demo_image3.jpg")]
@@ -32,6 +33,14 @@ def main():
             # Convert the image from BGR color (which OpenCV uses) to RGB color
             rgb_image = frame[:, :, ::-1]
 
+            # Save to file
+            saved = cv2.imwrite(
+                CAPTURE_DIR + ("/d1_capture.jpg"), rgb_image)
+            if saved is True:
+                print("Image frame captured.")
+            else:
+                print("Could not save the image!")
+
             # Resize image if necessary
             scaling = int(
                 (768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 100
@@ -45,6 +54,7 @@ def main():
 
             # Show the frame of video on the screen
             cv2.imshow('Video', rgb_image)
+
             # Hit any key to quit
             cv2.waitKey(0)
 
