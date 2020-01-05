@@ -17,15 +17,15 @@ CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = [
+    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 # Get UTC time before loop
 local_timezone = datetime.datetime.now(
     datetime.timezone.utc).astimezone().tzinfo
 timestamp = datetime.datetime.now(
     local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
-smalltimestamp = datetime.datetime.now(
-    local_timezone).strftime("%y%m%d")
+smalltimestamp = datetime.datetime.now(local_timezone).strftime("%y%m%d")
 
 
 def main():
@@ -41,8 +41,8 @@ def main():
                            [[240, 1140], [815, 1150], [815, 1400], [150, 1400]])
 
             # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
-            colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127], [
-                0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
+            colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127],
+                      [0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
 
             # Make an overlay for transparent boxes
             overlay = frame.copy()
@@ -81,7 +81,8 @@ def main():
             # Show the frame of video on the screen
             cv2.imshow('Video', frame)
             # Save to file
-            saved = cv2.imwrite(CAPTURE_DIR + ("/" + smalltimestamp + "_d4_capture.jpg"), frame)
+            saved = cv2.imwrite(
+                CAPTURE_DIR + ("/" + smalltimestamp + "_d4_capture.jpg"), frame)
             if saved is True:
                 print("Image frame captured.")
             else:

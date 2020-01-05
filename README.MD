@@ -128,7 +128,7 @@ keras&gt;=2.0.8,&lt;2.3
 opencv-contrib-python
 </pre>
 <div style="text-align: center;"><img src="README_images/readme04.png" alt="Editing requirements.txt" style="height: 400px;" /></div>
-<p>We also have to make sure our <a style="color: orange;" href="https://setuptools.readthedocs.io/en/latest/" title="Setuptools" target="_blank">Setuptools</a> are up-to-date. Otherwise, we may run into errors extracting and creating modules and packages from requirements.txt. We have to make sure <a style="color: orange;" href="https://docs.python.org/3/library/tkinter.html" title="tkinter" target="_blank">tkinter, the standard Python interface to the Tk GUI toolkit</a>, is installed as well, or you may get a "matplotlib is currently using a non-GUI backend" error. Finally, we Therefore, enter the following commands:</p>
+<p>We also have to make sure our <a style="color: orange;" href="https://setuptools.readthedocs.io/en/latest/" title="Setuptools" target="_blank">Setuptools</a> are up-to-date. Otherwise, we may run into errors extracting and creating modules and packages from requirements.txt. In addition, we have to make sure <a style="color: orange;" href="https://docs.python.org/3/library/tkinter.html" title="tkinter" target="_blank">tkinter, the standard Python interface to the Tk GUI toolkit</a>, is installed as well, or you may get a "matplotlib is currently using a non-GUI backend" error. Therefore, enter the following commands:</p>
 <pre>
 [park@localhost Mask_RCNN]$ pip3 install --upgrade setuptools --user
 [park@localhost Mask_RCNN]$ sudo yum -y install python3-tkinter
