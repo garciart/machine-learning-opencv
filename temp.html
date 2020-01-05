@@ -504,6 +504,188 @@ ORDER BY Lot.Name, Type.Description;
 <strong>By the way, demo7.py requires user interaction after displaying each frame. The above image is an animation of the demo7.py results, created using GIMP.</strong>
 </p>
 </div>
+
+
+
+<pre>
+    # Update front_end_lot table
+    sql = "TRUNCATE front_end_lot;";
+    cursor.execute(sql)
+    sql = ("INSERT INTO " \
+    "front_end_lot (lotid, lotname, employee, employee_max, handicap, handicap_max, visitor, visitor_max, efficient, efficient_max, shortterm, " \
+    "shortterm_max, latitude, longitude, MinX, MinY, MaxX, MaxY, timestamp) " \
+    "SELECT r_occupancy_log.lot_id AS lotid, r_lot.lot_name AS lotname, " \
+    "sum(case when r_occupancy_log.zone_type_id = '1' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_occ else 0 end) AS employee, " \
+    "sum(case when r_occupancy_log.zone_type_id = '1' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_max else 0 end) AS employee_max, " \
+    "sum(case when r_occupancy_log.zone_type_id = '2' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_occ else 0 end) AS handicap, " \
+    "sum(case when r_occupancy_log.zone_type_id = '2' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_max else 0 end) AS handicap_max, " \
+    "sum(case when r_occupancy_log.zone_type_id = '3' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_occ else 0 end) AS visitor, " \
+    "sum(case when r_occupancy_log.zone_type_id = '3' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_max else 0 end) AS visitor_max, " \
+    "sum(case when r_occupancy_log.zone_type_id = '4' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_occ else 0 end) AS efficient, " \
+    "sum(case when r_occupancy_log.zone_type_id = '4' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_max else 0 end) AS efficient_max, " \
+    "sum(case when r_occupancy_log.zone_type_id = '5' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_occ else 0 end) AS shortterm, " \
+    "sum(case when r_occupancy_log.zone_type_id = '5' AND r_occupancy_log.timestamp = '{0}' then r_occupancy_log.snapshot_max else 0 end) AS shortterm_max, " \
+    "r_lot.lat AS latitude, r_lot.lon AS longitude, r_lot.MinX AS MinX, r_lot.MinY AS MinY, r_lot.MaxX AS MaxX, r_lot.MaxY AS MaxY, '{0}' AS timestamp " \
+    "FROM r_occupancy_log " \
+    "INNER JOIN r_lot ON r_occupancy_log.lot_id = r_lot.lot_id " \
+    "WHERE r_occupancy_log.timestamp = '{0}'" \
+    "GROUP BY r_occupancy_log.lot_id " \
+    "ORDER BY r_lot.lot_name ASC;".format(timestamp))
+    </pre>
+        <p>You must have one active camera for it to work (actually, you will need an active camera for LaRC
+            Park to work at all!), and the enclosed database script should set you up for success. Once you
+            run
+            the script, look for the latest entries in the r_occupancy_log and front_end_lot data tables.
+            They
+            should match the counts the demo came up with. Remember, r_occupancy_log, which is not
+            accessible
+            outside the NASA firewall, holds current and historical data, while front_end_lot, which is
+            accessible to users, only holds the latest counts.</p>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image025.jpg" alt="Occupancy Log data table updated">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 25. Occupancy
+                Log
+                data table updated</figcaption>
+        </figure>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image026.jpg" alt="Front-End data table updated">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 26. Front-End
+                data
+                table updated</figcaption>
+        </figure>
+        <p>Before you continue, we recommend you look over both the park-d_engine.py and frame-d_capture.py
+            scripts. You should have a good understanding on how they work. Our next step will be to have
+            them
+            automatically update the database and image folders.</p>
+        <br>
+        <hr>
+        <br>
+        <h2 id="p5">Step 4: Add and Schedule the Scripts in cron</h2>
+        <p>If LaRC Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get video
+            feeds, the site would be <strong><em>SLOWWWWW!</em></strong> Instead, we use cron, the Linux
+            task
+            scheduler, to do all that work in the background, and use the database as the intermediary
+            between
+            the cron daemon and the front end. As stated before, cron will runengine.py every five
+            minutes, between 0400 and 1859, Monday thru Friday, and run frame_capture.py every day at 1000,
+            Monday thru Friday.</p>
+        <p>Log back into the cron folder on the server using PuTTY with the following command:</p>
+        <pre>sudo su - cron-park-d</pre>
+        <p>Copy the files and directories in the <b>scripts</b> folder of this repository into the
+            cron-park-d
+            folder. Due to cron folder permissions, you may have to copy the files to your local folder or
+            htdocs/park-d first, and then copy them into cron-park-d, using commands similar to the
+            following:
+        </p>
+        <pre>
+    cp -r /home/[Your AUID]/scripts/* /home/cron-park-d
+    - or -
+    cp -r /usr/local/web/htdocs/park-d/scripts/* /home/cron-park-d
+    </pre>
+        <p>Next, get rid of the demo scripts and folders using the following commands; as we stated earlier,
+            you
+            cannot execute them in cron:</p>
+        <pre>
+    rm -r test_images
+    rm -r test_videos
+    rm -r park-d_demo*
+    </pre>
+        <p>Look at the directory contents and at the directory structure using the following commands:</p>
+        <pre>
+        ls
+        tree # if tree is not installed use ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
+    </pre>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image027.jpg" alt="cron directory contents and tree">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 27. cron
+                directory contents and tree</figcaption>
+        </figure>
+        <p>The files are:</p>
+        <ul>
+            <li>config.ini - Contains encryption keys and the credentials needed to connect to the
+                database.
+            </li>
+            <li>frame_capture.py - Captures and saves an image of the video feed, overlaid with zone
+                boundaries. This script is used for camera calibration and maintenance.</li>
+            <li>Mask_RCNN - The directory containing the Mask R-CNN scripts.</li>
+            <li>mask_rcnn_coco.h5 - The file containing the pre-trained COCO weights for TensorFlow and
+                Keras.</li>
+            <li>park_engine.py - Uses machine learning and image recognition to detect and count cars
+                trucks
+                and buses in specific zones within a video feed. This script is used to update the
+                counts in
+                the database for each zone.</li>
+            <li>permissions.sh - A script to change the permission of the other scripts to executable.
+            </li>
+        </ul>
+        <p>First, ensure <span>permissions.sh</span> is executable, and then reset permissions on all
+            the
+            other scripts using the following commands:</p>
+        <pre>
+    chmod 755 permissions.sh
+    ./permissions.sh
+    </pre>
+        <p>Now we will edit the cron table. On our system, entering the following command opens the
+            table
+            using the Vim text editor (if you want to use nano, ed or emacs, talk to your system
+            administrator, because select-editor does not work):</p>
+        <pre>crontab -e</pre>
+        <p>Go into insert mode by pressing [i], then add the following lines:</p>
+        <pre>
+    */5 04-18 * * 1-5 /home/cron-park-d/park-d_engine.py
+    0   10    * * 1-5 /home/cron-park-d/frame-d_capture.py
+    </pre>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image028.jpg" alt="crontab contents">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 28.
+                crontab
+                contents</figcaption>
+        </figure>
+        <p>We built a little cheat sheet into ours; you can do the same. Press [ESC] to return to
+            command
+            mode, then enter ":wq" to write out and quit. Wait about 5 to 15 minutes and enter the
+            following
+            commands</p>
+        <pre>
+    cron-tab -l
+    mail
+    </pre>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image029.jpg" alt="Active cron jobs">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 29. Active
+                cron jobs and mail</figcaption>
+        </figure>
+        <p>Wow! crontab -l shows a listing of all active cron jobs, and mail brings up the results of
+            the
+            cron jobs. As you can see, we have been running the scripts for a while. Type in the number
+            of
+            messages and the newest mail should open up:</p>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image030.jpg" alt="cron job mail (top)">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 30. cron
+                job
+                mail (top)</figcaption>
+        </figure>
+        <figure style="text-align: center;">
+            <img src="LaRC%20Park%20Tutorial_files/image031.jpg" alt="cron job mail (bottom)">
+            <figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Figure 31. cron
+                job
+                mail (bottom)</figcaption>
+        </figure>
+        <p>As you can see, cron job mail contains the results of running the scripts. In this case, the
+            script successfully counted vehicles in zone, but you should monitor the database and the
+            cron
+            job mail for any errors due to system changes or patches, etc. By the way, inputing exit
+            once
+            will exit mail, entering exit again will exit cron, and entering exit one more time will
+            exit
+            PuTTY.</p>
+        <p>Congratulations! The system is now on autopilot. Next, we will go over how to add, update,
+            and
+            delete everything from buildings to zones.</p>
+        <br>
+
+
 <hr>
 <div style="width: 100%; text-align: center;">
 <img src="sherpa_logo.png" alt="Sherpa Logo" style="height:240px;" />

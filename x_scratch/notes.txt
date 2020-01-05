@@ -51,6 +51,7 @@ Must "sudo yum install python3-tkinter" or you will get a matplotlib is currentl
 
 Pulling images from https works on Linux (e.g., Red Hat, CentOS, etc.), but not Windows due to FFMPEG being compiled without support for openssl
 
+Use centroid intersects is better than intersects alone 
 
 
 

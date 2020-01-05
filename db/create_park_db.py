@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import os
 import sqlite3
 from sqlite3 import Error
@@ -80,6 +80,7 @@ def main():
                                         Longitude real NOT NULL DEFAULT '0.0',
                                         Active integer NOT NULL  DEFAULT '0' CHECK (Active >= 0 OR Active <= 1)
                                     );""")
+            print("Lot table created...")
             create_db_table(conn, """ CREATE TABLE IF NOT EXISTS Source (
                                         SourceID integer PRIMARY KEY,
                                         URI text NOT NULL UNIQUE,
@@ -88,10 +89,12 @@ def main():
                                         Location text NOT NULL,
                                         Active integer NOT NULL DEFAULT '0' CHECK (Active >= 0 OR Active <= 1)
                                     );""")
+            print("Source table created...")
             create_db_table(conn, """ CREATE TABLE IF NOT EXISTS Type (
                                         TypeID integer PRIMARY KEY,
                                         Description text NOT NULL UNIQUE
                                     ); """)
+            print("Type table created...")
             create_db_table(conn, """ CREATE TABLE IF NOT EXISTS Zone (
                                         ZoneID integer PRIMARY KEY,
                                         LotID integer NOT NULL,
@@ -105,6 +108,7 @@ def main():
                                         FOREIGN KEY (TypeID) REFERENCES Type (TypeID),
                                         UNIQUE (ZoneID, LotID, SourceID, TypeID)
                                     );""")
+            print("Zone table created...")
             create_db_table(conn, """ CREATE TABLE IF NOT EXISTS OccupancyLog (
                                         Timestamp real NOT NULL,
                                         ZoneID integer NOT NULL,
@@ -117,18 +121,24 @@ def main():
                                         FOREIGN KEY (LotID) REFERENCES Lot (LotID),
                                         UNIQUE (Timestamp, ZoneID, TypeID, LotID)
                                     );""")
+            print("Occupancy Log table created...")
             # Insert initial values
             insert_lot(conn, 'Lot01', 38.364554, -75.601320, 1)
+            print("Lot data inserted...")
             insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_image.jpg',
                           '', '', 'Salisbury Parking Garage West', 1)
+            print("Source data inserted...")
             insert_type(conn, 'General')
             insert_type(conn, 'Handicap')
             insert_type(conn, 'Employee')
             insert_type(conn, 'Visitor')
+            print("Type data inserted...")
             insert_zone(
-                conn, 1, 1, 3, 9, '[[816, 1150], [3200, 1140], [3200, 1350], [816, 1400]]', 1)
+                conn, 1, 1, 3, 9, '[[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]]', 1)
             insert_zone(
-                conn, 1, 1, 2, 2, '[[240, 1140], [815, 1150], [815, 1400], [150, 1400]]', 1)
+                conn, 1, 1, 2, 2, '[[240, 1140], [750, 1150], [850, 1400], [150, 1400]]', 1)
+            print("Zone data inserted...")
+            print("Database initialization complete.")
     else:
         print("Error! Cannot connect to the database!")
 
