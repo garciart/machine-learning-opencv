@@ -20,7 +20,6 @@
 <li><a href="#p5" title="Schedule the Scripts Using cron">Schedule the Scripts Using cron</a></li>
 <li><a href="#p10" title="References">References</a>
 </ul>
-<br>
 <hr>
 <h2 id="p1">Introduction</h2>
 <p>As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project.</p>
@@ -42,7 +41,6 @@
 <p>
 <b>NOTE</b> - If you do choose to use CentOS or Red Hat Linux, we've included another README file name CENTOS with directions on how to set up your environment.</p>
 </div>
-<br>
 <div style="background-color: lightgoldenrodyellow; padding: 6px;">
 <p>
 <b>NOTE</b> - While the production code for NASA only generated data, the demo scripts also display images. To view these images, you will need an X Server. For these demos, our solution was to use the GNOME Graphical User Interface (GUI) for development; it comes with a display server; it's lightweight; and it allows you to cut-and-paste from the host machine into the VM's Terminal. To use GNOME on CentOS or Red Hat Linux, use the following commands:</p>
@@ -100,10 +98,10 @@ cronie-1.4.11-19.e17.x86_64
 [park@localhost ~]# sqlite3 -version
 [park@localhost ~]# whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme01.png" alt="Verifying initial setup" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Verifying initial setup </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Verifying initial setup </p>
+</div>
 </div>
 <hr>
 <h2 id="p3">Adding the Machine Learning Packages</h2>
@@ -131,10 +129,10 @@ git clone https://github.com/garciart/Park.git
 </pre>
 <p>In addition, remember to use "Park" as your development folder, not the home folder (in our case, "park"). </p>
 </div>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme02.png" alt="Cloning the Park repository" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Cloning the Park repository </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Cloning the Park repository </p>
+</div>
 </div>
 <p>Clone the excellent <a href="https://github.com/matterport/Mask_RCNN" target="_blank" title="Mask R-CNN engine from Matterport">Mask R-CNN engine from Matterport</a>, which will serve as our object detection and instance segmentation engine using the following commands:</p>
 <pre>
@@ -143,10 +141,10 @@ git clone https://github.com/garciart/Park.git
 [park@localhost Mask_RCNN]$ ls
 [park@localhost Mask_RCNN]$ cat requirements.txt
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme03.png" alt="Cloning the Mask R-CNN repository" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Cloning the Mask R-CNN repository </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Cloning the Mask R-CNN repository </p>
+</div>
 </div>
 <p>Note the setup.py file, which will build and install the Mask RCNN engine, and the requirements.txt file, which contains the list of modules and packages we will need to run the Mask RCNN engine:</p>
 <ul>
@@ -172,10 +170,10 @@ keras&gt;=2.0.8,&lt;2.3
 <pre>
 opencv-contrib-python
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme04.png" alt="Editing requirements.txt" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Editing requirements.txt </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Editing requirements.txt </p>
+</div>
 </div>
 <p>We also have to make sure our <a href="https://setuptools.readthedocs.io/en/latest/" title="Setuptools" target="_blank">Setuptools</a> are up-to-date. Otherwise, we may run into errors extracting and creating modules and packages from requirements.txt. In addition, we have to make sure <a href="https://docs.python.org/3/library/tkinter.html" title="tkinter" target="_blank">tkinter, the standard Python interface to the Tk GUI toolkit</a>, is installed as well, or you may get a "matplotlib is currently using a non-GUI backend" error. Therefore, enter the following commands: </p>
 <pre>
@@ -186,10 +184,10 @@ opencv-contrib-python
 <pre>
 [park@localhost Mask_RCNN]$ pip3 install -r requirements.txt --user
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme05.png" alt="Installing Mask R-CNN requirements" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Installing Mask R-CNN requirements</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Installing Mask R-CNN requirements</p>
+</div>
 </div>
 <p>Hopefully, everything went well; if not, check the verbose comments for any errors and correct them. Remember, you may have to use a different flavor of a package depending on the system you are using. For example, we used Red Hat Linux, so for some packages, we had to use their version (e.g., python36-mysql, etc.). You can look for packages using:</p>
 <pre>
@@ -201,10 +199,10 @@ opencv-contrib-python
 <pre>
 [park@localhost Mask_RCNN]$ python3 setup.py install --user
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme06.png" alt="Setting up Mask R-CNN" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Setting up Mask R-CNN </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Setting up Mask R-CNN </p>
+</div>
 </div>
 <p>Once again, check the verbose comments for any errors and correct them. Finally, go back one directory and download the Common Objects in Context (COCO) dataset by using the following commands:</p>
 <pre>
@@ -212,10 +210,10 @@ opencv-contrib-python
 [park@localhost Park]$ wget https://github.com/matterport/Mask_RCNN/releases/download/v2.0/mask_rcnn_coco.h5
 </pre>
 <p>The COCO dataset consists of over 100,000 images of 80 objects, including cars (#3), buses (#6), and trucks (#8); find out more at <a href="http://cocodataset.org" title="COCO Dataset" target="_blank">http://cocodataset.org</a>. Please note that you can replace this dataset with a more specific set for vehicle detection, but for now, we will use the COCO dataset: </p>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme07.png" alt="Getting the COCO dataset" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Getting the COCO dataset </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Getting the COCO dataset </p>
+</div>
 </div>
 <hr>
 <h2 id="p4">Running the Scripts</h2>
@@ -239,10 +237,10 @@ sudo startx
 <li>demo7.py - El Super Demo: Incorporates communicating with the database and the functionality of all of the previous demos.</li>
 </ul>
 <p>You will also need the log, capture, image, and video folders. If you cloned or fetched the repository, your directory should look like this:</p>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme08.png" alt="Development folder listing" />
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Development folder listing </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Development folder listing </p>
+</div>
 </div>
 <p>Once you are all set up, open the code for each demo in your favorite editor as we get to it and follow along. By the way, each script has its own "shebang", so you can run them directly by setting their permissions to executable.</p>
 <hr>
@@ -263,10 +261,10 @@ rgb_image = frame[:, :, ::-1]
 </pre>
 <p>We did not notice a difference in detection accuracy when we ran the other scripts, but we do what the great guys at Matterport tell us to do!</p>
 <p>By the way, this script also saves a full-size copy of the image in the demo_captures folder, named "d1_capture.jpg". You will need this image for demo4.py to create zones using pixel coordinates.</p>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme09.png" alt="What Mask R-CNN sees">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">What Mask R-CNN sees</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">What Mask R-CNN sees</p>
+</div>
 <div style="background-color: lightgoldenrodyellow; padding: 6px;">
 <p>
 <b>NOTE</b> - After some installations, you may receive the following error when attempting to use cv2.imshow():</p>
@@ -287,20 +285,20 @@ pip3 install --upgrade --force-reinstall opencv-contrib-python --user
 # Index of the class in the list is its ID. For example, to get ID of
 # the teddy bear class, use: class_names.index('teddy bear')
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
-'bus', 'train', 'truck', 'boat', 'traffic light',
-'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird',
-'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear',
-'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie',
-'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball',
-'kite', 'baseball bat', 'baseball glove', 'skateboard',
-'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup',
-'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
-'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
-'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed',
-'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote',
-'keyboard', 'cell phone', 'microwave', 'oven', 'toaster',
-'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
-'teddy bear', 'hair drier', 'toothbrush']
+               'bus', 'train', 'truck', 'boat', 'traffic light',
+               'fire hydrant', 'stop sign', 'parking meter', 'bench', 'bird',
+               'cat', 'dog', 'horse', 'sheep', 'cow', 'elephant', 'bear',
+               'zebra', 'giraffe', 'backpack', 'umbrella', 'handbag', 'tie',
+               'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball',
+               'kite', 'baseball bat', 'baseball glove', 'skateboard',
+               'surfboard', 'tennis racket', 'bottle', 'wine glass', 'cup',
+               'fork', 'knife', 'spoon', 'bowl', 'banana', 'apple',
+               'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
+               'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed',
+               'dining table', 'toilet', 'tv', 'laptop', 'mouse', 'remote',
+               'keyboard', 'cell phone', 'microwave', 'oven', 'toaster',
+               'sink', 'refrigerator', 'book', 'clock', 'vase', 'scissors',
+               'teddy bear', 'hair drier', 'toothbrush']
 </pre>
 <p>However, Mask R-CNN runs through all of the classes, making it inefficient. Eventually, we hope to replace it with a smaller dataset focused on vehicles, which will make the processing faster. </p>
 <p>The script loads a pre-trained model (line 44), collects the rgb_image from the camera, and then processes the image against the model, creating an array of detected objects (line 87):</p>
@@ -317,16 +315,16 @@ results = model.detect([rgb_image], verbose=0)
 # Show the frame of video on the screen
 mrcnn.visualize.display_instances(rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme10.png" alt="Mask R-CNN masking and scoring">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Mask R-CNN masking and scoring</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Mask R-CNN masking and scoring</p>
+</div>
 <p>Once again, look at the code and note the changes between demo1.py and demo2.py, especially the imports. Also note that if the dataset you downloaded earlier is missing, the script will automatically download it from Matterport's GitHub repository, using mrcnn.utils on line 37. If you are behind a firewall, as we were at NASA, you can disabled this functionality with the following code:</p>
 <pre>
 # Do not download COCO trained weights from Releases if needed!
 if not os.path.exists(COCO_MODEL_PATH):
-# mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
-print("Oh no! We are missing the mask_rcnn_coco.h5 dataset!")
+    # mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
+    print("Oh no! We are missing the mask_rcnn_coco.h5 dataset!")
 </pre>
 <hr>
 <h3 id="d3">Demo 3 - Recognizing and Counting Vehicles</h3>
@@ -334,47 +332,49 @@ print("Oh no! We are missing the mask_rcnn_coco.h5 dataset!")
 <pre>
 # Filter a list of Mask R-CNN detection results to get only the detected cars / trucks
 def get_car_boxes(boxes, class_ids):
-car_boxes = []
-for i, box in enumerate(boxes):
-# If the detected object isn't a car / truck, skip it
-if class_ids[i] in [3, 8, 6]:
-car_boxes.append(box)
-return np.array(car_boxes)
+    car_boxes = []
+
+    for i, box in enumerate(boxes):
+        # If the detected object isn't a car / truck, skip it
+        if class_ids[i] in [3, 8, 6]:
+            car_boxes.append(box)
+
+    return np.array(car_boxes)
 </pre>
 <p>We use that array with the OpenCV rectangle function to box the vehicles in (line 102):</p>
 <pre>
 # Draw the box
 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme11.png" alt="Identifying vehicles">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Identifying vehicles</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Identifying vehicles</p>
+</div>
 <p>We also acquired their locations in the frame, which we will use this later to determine if a vehicle is within a zone.</p>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme11b.png" alt="Raw counts and coordinates">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Raw counts and coordinates</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Raw counts and coordinates</p>
+</div>
 <hr>
 <h3 id="d4">Demo 4 - Creating and Displaying Zones</h3>
 <p>Next, we create the zones using OpenCV. We will only count cars within these zones, to avoid counting cars on roads, other parking lots, etc. In addition, each of these zones will have a zone type (e.g., employee, handicap, etc.), which will allow us to provide better counts to the users.</p>
 <p>Using the frame you captured in demo1.py and your favorite image viewer/editor, determine the pixel coordinates of each zone and enter them in the poly_coords array. For demo4.py, we created two zones, employee and handicap, and overlaid them on the frame:</p>
 <pre>
 # Read clockwise from top-left corner
-poly_coords = ([[816, 1150], [3200, 1140], [3200, 1350], [816, 1400]],
-[[240, 1140], [815, 1150], [815, 1400], [150, 1400]])
+poly_coords = ([[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]],
+                [[240, 1140], [750, 1150], [850, 1400], [150, 1400]])
 
 \# BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
 colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127],
-[0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
+            [0, 255, 255], [255, 255, 0], [127, 0, 255], [255, 255, 255]]
 
 \# Make an overlay for transparent boxes
 overlay = frame.copy()
 
 \# Draw the filled zones
 for index, p in enumerate(poly_coords, start=0):
-cv2.fillPoly(overlay, np.int32(
-[np.array(p)]), colors[index + 4])
+    cv2.fillPoly(overlay, np.int32(
+        [np.array(p)]), colors[index + 4])
 
 \# Set transparency for boxes
 alpha = 0.4
@@ -383,53 +383,53 @@ frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
 
 \# Optional Draw the zone boundaries
 for index, p in enumerate(poly_coords, start=0):
-cv2.polylines(frame, np.int32(
-[np.array(p)]), True, colors[index], 10)
+    cv2.polylines(frame, np.int32(
+        [np.array(p)]), True, colors[index], 10)
 
 \# Draw center crosshair
 height, width, channels = frame.shape
 cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
-[255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
+                [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
 \# Add timestamp
 cv2.putText(frame, timestamp, (10, 30),
-cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
+            cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme12.png" alt="Creating and displaying zones">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Creating and displaying zones</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Creating and displaying zones</p>
+</div>
 <p>The cyan triangle in the middle is a calibration point. For Pan-Tilt-Zoom (PTZ) cameras, if the triangle and an outside reference point (e.g., a cone, sign, etc.) line up, the zone overlays are placed correctly on the frame. To see your work, this script also saves a time-stamped scaled copy of the image in the demo_captures folder, named "[YYMMDD]_d4_capture.jpg".</p>
 <hr>
 <h3 id="d5">Demo 5 - Counting Vehicles in Zones</h3>
-<p>Now that we have our zones, we will run Mask R-CNN again, but we will use Shapely's intersects function to to determine if a vehicle is in a zone (line 127). If a vehicle is in a zone, it is added to the zone's count (line 132). However, is is deleted from the numpy array, to avoid double counting cars that may intersect more than one zone (line 134):</p>
+<p>Now that we have our zones, we will run Mask R-CNN again, but we will use Shapely's centroid and intersects function to determine if a vehicle is in a zone (line 127). Using the centerpoint prevents vehicles from being counted in a zone they overlap, but do not occupy. If a vehicle is in a zone, it is added to the zone's count (line 132). However, is is deleted from the numpy array, to avoid double counting cars that may intersect more than one zone (line 134):</p>
 <pre>
 # Only show cars in the zones!
-if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
-# Draw the box and add to overlay
-cv2.rectangle(frame, (x1, y1), (x2, y2),
-colors[index], 5)
-# Count car in zone
-count += 1
-# Delete the car to avoid double counting
-np.delete(car_boxes, box)
+if(((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).centroid).intersects(Polygon(asPoint(array(p))))):
+    # Draw the box and add to overlay
+    cv2.rectangle(frame, (x1, y1), (x2, y2),
+                    colors[index], 5)
+    # Count car in zone
+    count += 1
+    # Delete the car to avoid double counting
+    np.delete(car_boxes, box)
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme13.png" alt="Identifying vehicles within zones">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Identifying vehicles within zones</figcaption>
-</figure>
-<figure style="text-align: center;">
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Identifying vehicles within zones</p>
+</div>
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme14.png" alt="Counting vehicles within zones">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Counting vehicles within zones</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Counting vehicles within zones</p>
+</div>
 <hr>
 <h3 id="d6">Demo 6 - Creating the Database</h3>
 <p>Like we stated earlier, due to architecture, security requirements, cross-lot tracking, etc., the NASA application was complex, and required two separate databases. For our demo, we will use a simpler data model, and, for portabililty (and to keep this README from being longer than it already is!) we'll use SQLite to hold the data.</p>
 <p>As stated earlier, Park counts the number of vehicles in parking zones. We found that a single camera cannot always observe a complete lot. Instead, a camera can observe portions of multiple lots and a lot can be observed by multiple cameras. Therefore, we divided each feed into zones, with each zone associated with a lot, and, as shown in demo4.py, each zone is classified as employee parking, handicap parking, etc. In demo7.py. we will show you how Park cycles through and analyzes all the feeds every five minutes, collecting the counts for the zones that each camera can observe. Once the cycle is complete, Park can aggregate the counts into lot totals, which the front end can present to the user.</p>
 <p>Here's the data model:</p>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme15.png" alt="Park Data Model">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Park Data Model </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Park Data Model </p>
+</div>
 <p>And here are the table descriptions:</p>
 <ul>
 <li><b>Source:</b> This table contains a list of the sources, such as cameras, that collect images, as well as their location and credentials. The camera's URL is a unique value.</li>
@@ -444,10 +444,10 @@ np.delete(car_boxes, box)
 [park@localhost Park]$ ls db
 [park@localhost Park]$ sqlite3 db/park.db
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme16.png" alt="Creating the Database">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Creating the Database </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Creating the Database </p>
+</div>
 <p>Once complete, test the new database with the some queries. Here are some examples; if they do not work, check for any errors that may have occurred when you created the database:</p>
 <pre>
 SELECT * FROM Lot ORDER BY Name ASC;
@@ -461,16 +461,16 @@ INNER JOIN Type ON Zone.TypeID = Type.TypeID
 INNER JOIN Lot ON Zone.LotID = Lot.LotID
 ORDER BY Lot.Name, Type.Description;
 </pre>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img style="height: 480px" src="README_images/readme17.png" alt="Running test queries">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Running test queries </figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Running test queries </p>
+</div>
 <hr>
 <h3 id="d7">Demo 7 - Putting It All Together.</h3>
-<figure style="text-align: center;">
+<div style="text-align: center;">
 <img src="README_images/park_demo.gif" alt="Putting it all together">
-<figcaption style="margin-top: 0; font-style: italic; font-size: smaller;">Putting it all together</figcaption>
-</figure>
+<p style="margin-top: 0; font-style: italic; font-size: smaller;">Putting it all together</p>
+</div>
 <p>Finally! demo7.py is a super demo. It incorporates all of the functionality of the previous demos, and actually connects to the database to get feed credentials and to update data.</p>
 <div style="background-color: lightgoldenrodyellow; padding: 6px;">
 <p>

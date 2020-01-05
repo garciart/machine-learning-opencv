@@ -14,7 +14,6 @@ from mrcnn.model import MaskRCNN
 
 # Configuration that will be used by the Mask-RCNN library
 
-
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
     IMAGES_PER_GPU = 1
@@ -103,8 +102,8 @@ def main():
             print("Cars found in frame of video: ", len(car_boxes))
 
             # Read clockwise from top-left corner
-            poly_coords = ([[816, 1150], [3200, 1140], [3200, 1350], [816, 1400]],
-                           [[240, 1140], [815, 1150], [815, 1400], [150, 1400]])
+            poly_coords = ([[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]],
+                           [[240, 1140], [750, 1150], [850, 1400], [150, 1400]])
 
             # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
             colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127],
@@ -123,8 +122,9 @@ def main():
                 for box in car_boxes:
                     # Get the box coordinates
                     y1, x1, y2, x2 = box
+
                     # Only show cars in the zones!
-                    if((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).intersects(Polygon(asPoint(array(p))))):
+                    if(((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).centroid).intersects(Polygon(asPoint(array(p))))):
                         # Draw the box and add to overlay
                         cv2.rectangle(frame, (x1, y1), (x2, y2),
                                       colors[index], 5)

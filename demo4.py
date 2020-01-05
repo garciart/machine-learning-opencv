@@ -37,8 +37,8 @@ def main():
         success, frame = video_capture.read()
         if success:
             # Read clockwise from top-left corner
-            poly_coords = ([[816, 1150], [3200, 1140], [3200, 1350], [816, 1400]],
-                           [[240, 1140], [815, 1150], [815, 1400], [150, 1400]])
+            poly_coords = ([[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]],
+                           [[240, 1140], [750, 1150], [850, 1400], [150, 1400]])
 
             # BGR colors: Orange, Blue, Red, Gray, Yellow, Cyan, Pink, White
             colors = [[0, 127, 255], [255, 0, 0], [0, 0, 255], [127, 127, 127],
