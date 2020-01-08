@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 ''' Summary: Script to classify objects using MaskRCNN and the COCo Dataset '''
 import os
@@ -11,8 +12,6 @@ import mrcnn.visualize
 from mrcnn.model import MaskRCNN
 
 # Configuration that will be used by the Mask-RCNN library
-
-
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
     IMAGES_PER_GPU = 1
@@ -37,8 +36,7 @@ if not os.path.exists(COCO_MODEL_PATH):
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
 
 # Create a Mask-RCNN model in inference mode
-model = MaskRCNN(mode="inference", model_dir=MODEL_DIR,
-                 config=MaskRCNNConfig())
+model = MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=MaskRCNNConfig())
 
 # Load pre-trained model
 model.load_weights(COCO_MODEL_PATH, by_name=True)
@@ -68,13 +66,12 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = [
-    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 
 def main():
     for f in FRAME_SOURCE:
-        # Load the video file we want to run detection on
+        # Load the source we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
         # Attempt to capture a frame
@@ -97,8 +94,7 @@ def main():
             # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
             # Show the frame of video on the screen
-            mrcnn.visualize.display_instances(
-                rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
+            mrcnn.visualize.display_instances(rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
 
             # Hit any key to quit
             print("Close the window to continue...")

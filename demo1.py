@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 ''' Summary: Script to capture and display images using OpenCV '''
 import os
@@ -17,14 +18,13 @@ CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image1.jpg"),(IMAGE_DIR + "/demo_image2.jpg"),(IMAGE_DIR + "/demo_image3.jpg")]
 # FRAME_SOURCE = [(VIDEO_DIR + "/demo_video1.mp4"),(VIDEO_DIR + "/demo_video2.mp4"),(VIDEO_DIR + "/demo_video3.mp4")]
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = [
-    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 
 def main():
     print(FRAME_SOURCE)
     for f in FRAME_SOURCE:
-        # Load the video file we want to run detection on
+        # Load the source we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
         # Attempt to capture a frame
@@ -42,17 +42,16 @@ def main():
                 print("Could not save the image!")
 
             # Resize image if necessary
-            scaling = int(
-                (768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 100
+            scaling = int((768 * 100) / rgb_image.shape[0]) if rgb_image.shape[0] > 768 else 100
             print('Original image dimensions : ', rgb_image.shape)
             width = int(rgb_image.shape[1] * scaling / 100)
             height = int(rgb_image.shape[0] * scaling / 100)
             dim = (width, height)
-            rgb_image = cv2.resize(
-                rgb_image, dim, interpolation=cv2.INTER_AREA)
+            rgb_image = cv2.resize(rgb_image, dim, interpolation=cv2.INTER_AREA)
             print('New image dimensions : ', rgb_image.shape)
 
             # Show the frame of video on the screen
+            print("Click on the image window and press enter to continue...")
             cv2.imshow('Video', rgb_image)
 
             # Hit any key to quit

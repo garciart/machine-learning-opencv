@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 ''' Summary: Script to display zones using Shapely '''
 import datetime
@@ -17,20 +18,17 @@ CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = [
-    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 # Get UTC time before loop
-local_timezone = datetime.datetime.now(
-    datetime.timezone.utc).astimezone().tzinfo
-timestamp = datetime.datetime.now(
-    local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
-smalltimestamp = datetime.datetime.now(local_timezone).strftime("%y%m%d")
+local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
+timestamp = datetime.datetime.now(local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
+smalltimestamp = datetime.datetime.now(local_timezone).strftime("%Y%m%d")
 
 
 def main():
     for f in FRAME_SOURCE:
-        # Load the video file we want to run detection on
+        # Load the source we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
         # Attempt to capture a frame
@@ -49,8 +47,7 @@ def main():
 
             # Draw the filled zones
             for index, p in enumerate(poly_coords, start=0):
-                cv2.fillPoly(overlay, np.int32(
-                    [np.array(p)]), colors[index + 4])
+                cv2.fillPoly(overlay, np.int32([np.array(p)]), colors[index + 4])
 
             # Set transparency for boxes
             alpha = 0.4
@@ -59,30 +56,26 @@ def main():
 
             # Optional Draw the zone boundaries
             for index, p in enumerate(poly_coords, start=0):
-                cv2.polylines(frame, np.int32(
-                    [np.array(p)]), True, colors[index], 10)
-
-            # Draw center crosshair
-            height, width, channels = frame.shape
-            cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
-                           [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
-            # Add timestamp
-            cv2.putText(frame, timestamp, (10, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
+                cv2.polylines(frame, np.int32([np.array(p)]), True, colors[index], 10)
 
             # Resize image if necessary
-            scaling = int(
-                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
+            scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
             width = int(frame.shape[1] * scaling / 100)
             height = int(frame.shape[0] * scaling / 100)
             dim = (width, height)
             frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
+            # Draw center crosshair
+            height, width, channels = frame.shape
+            cv2.drawMarker(frame, (int(width / 2), int(height / 2)), [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
+            # Add timestamp
+            cv2.putText(frame, timestamp, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
+
             # Show the frame of video on the screen
+            print("Click on the image window and press enter to continue...")
             cv2.imshow('Video', frame)
             # Save to file
-            saved = cv2.imwrite(
-                CAPTURE_DIR + ("/" + smalltimestamp + "_d4_capture.jpg"), frame)
+            saved = cv2.imwrite(CAPTURE_DIR + ("/" + smalltimestamp + "_d4_capture.jpg"), frame)
             if saved is True:
                 print("Image frame captured.")
             else:

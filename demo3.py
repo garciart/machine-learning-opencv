@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 ''' Summary: Script to detect and count cars, trucks, and buses '''
 import os
@@ -10,8 +11,6 @@ import mrcnn.config
 from mrcnn.model import MaskRCNN
 
 # Configuration that will be used by the Mask-RCNN library
-
-
 class MaskRCNNConfig(mrcnn.config.Config):
     NAME = "coco_pretrained_model_config"
     IMAGES_PER_GPU = 1
@@ -19,9 +18,8 @@ class MaskRCNNConfig(mrcnn.config.Config):
     NUM_CLASSES = 1 + 80  # COCO dataset has 80 classes + one background class
     DETECTION_MIN_CONFIDENCE = 0.5
 
+
 # Filter a list of Mask R-CNN detection results to get only the detected cars / trucks
-
-
 def get_car_boxes(boxes, class_ids):
     car_boxes = []
 
@@ -48,8 +46,7 @@ if not os.path.exists(COCO_MODEL_PATH):
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
 
 # Create a Mask-RCNN model in inference mode
-model = MaskRCNN(mode="inference", model_dir=MODEL_DIR,
-                 config=MaskRCNNConfig())
+model = MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=MaskRCNNConfig())
 
 # Load pre-trained model
 model.load_weights(COCO_MODEL_PATH, by_name=True)
@@ -60,13 +57,12 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = [
-    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 
 def main():
     for f in FRAME_SOURCE:
-        # Load the video file we want to run detection on
+        # Load the source we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
         # Attempt to capture a frame
@@ -102,14 +98,14 @@ def main():
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 5)
 
             # Resize image if necessary
-            scaling = int(
-                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
+            scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
             width = int(frame.shape[1] * scaling / 100)
             height = int(frame.shape[0] * scaling / 100)
             dim = (width, height)
             frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
             # Show the frame of video on the screen
+            print("Click on the image window and press enter to continue...")
             cv2.imshow('Video', frame)
 
             # Hit any key to quit

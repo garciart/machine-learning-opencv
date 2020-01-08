@@ -1,0 +1,9 @@
+# Minute of the Hour (0 - 59)
+# |      Hour of the Day (0 - 23)
+# |      |      Day of the Month (1 - 31)
+# |      |      |      Month of the Year (1 - 12 / 1 = January)
+# |      |      |      |      Day of the Week (0 - 6 / 0 = Sunday)
+# |      |      |      |      |      Script to Run
+# |      |      |      |      |      |
+  */5    04-18  *      *      1-5    /home/park/Park/demo7.py
+  0      10     *      *      1-5    /home/park/Park/demo4.py 

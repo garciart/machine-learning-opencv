@@ -11,8 +11,8 @@ def db_connect(db_file=DB_PATH):
     try:
         conn = sqlite3.connect(db_file)
         return conn
-    except Error as e:
-        print(e)
+    except Error as ex:
+        print(ex)
 
     return conn
 
@@ -21,8 +21,8 @@ def create_db_table(conn, query):
     try:
         c = conn.cursor()
         c.execute(query)
-    except Error as e:
-        print(e)
+    except Error as ex:
+        print(ex)
 
 
 def insert_lot(conn, name, latitude, longitude, active):
@@ -125,18 +125,15 @@ def main():
             # Insert initial values
             insert_lot(conn, 'Lot01', 38.364554, -75.601320, 1)
             print("Lot data inserted...")
-            insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demos/demo_images/demo_image.jpg',
-                          '', '', 'Salisbury Parking Garage West', 1)
+            insert_source(conn, 'https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg', '', '', 'Salisbury Parking Garage West', 1)
             print("Source data inserted...")
             insert_type(conn, 'General')
             insert_type(conn, 'Handicap')
             insert_type(conn, 'Employee')
             insert_type(conn, 'Visitor')
             print("Type data inserted...")
-            insert_zone(
-                conn, 1, 1, 3, 9, '[[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]]', 1)
-            insert_zone(
-                conn, 1, 1, 2, 2, '[[240, 1140], [750, 1150], [850, 1400], [150, 1400]]', 1)
+            insert_zone(conn, 1, 1, 3, 9, '[[751, 1150], [3200, 1140], [3200, 1350], [851, 1400]]', 1)
+            insert_zone(conn, 1, 1, 2, 2, '[[240, 1140], [750, 1150], [850, 1400], [150, 1400]]', 1)
             print("Zone data inserted...")
             print("Database initialization complete.")
     else:
