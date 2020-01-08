@@ -2,7 +2,7 @@
 
 ![Welcome to Park!](README_images/park_demo.gif)
 
-## [](https://github.com/garciart/Park/blob/master/CentOS.md#introduction)Introduction
+## Introduction
 
 Like we stated in the README, due to architecture, security requirements, cross-lot tracking, etc., NASA's version of LaRC Park was a bit complex, running on multiple separate Red Hat Linux servers using Apache or MySQL. However, you can recreate it on any system; for our demo, we used the following setup:
 
@@ -22,7 +22,7 @@ This setup will allow you to implement the stack shown below. Have fun and good 
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/CentOS.md#setup)Setup
+## Setup
 
 As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet.
 

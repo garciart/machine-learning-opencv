@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 ''' Summary: Script to identify and count vehicles in zones '''
 import datetime
@@ -50,8 +51,7 @@ if not os.path.exists(COCO_MODEL_PATH):
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
 
 # Create a Mask-RCNN model in inference mode
-model = MaskRCNN(mode="inference", model_dir=MODEL_DIR,
-                 config=MaskRCNNConfig())
+model = MaskRCNN(mode="inference", model_dir=MODEL_DIR, config=MaskRCNNConfig())
 
 # Load pre-trained model
 model.load_weights(COCO_MODEL_PATH, by_name=True)
@@ -62,19 +62,16 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 
 # Image, video or camera to process - set this to 0 to use your webcam instead of a file
 # FRAME_SOURCE = [(IMAGE_DIR + "/demo_image.jpg")]
-FRAME_SOURCE = [
-    "https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
+FRAME_SOURCE = ["https://raw.githubusercontent.com/garciart/Park/master/demo_images/demo_image.jpg"]
 
 # Get UTC time before loop
-local_timezone = datetime.datetime.now(
-    datetime.timezone.utc).astimezone().tzinfo
-timestamp = datetime.datetime.now(
-    local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
+local_timezone = datetime.datetime.now(datetime.timezone.utc).astimezone().tzinfo
+timestamp = datetime.datetime.now(local_timezone).strftime("%Y-%m-%d %H:%M:%S %Z")
 
 
 def main():
     for f in FRAME_SOURCE:
-        # Load the video file we want to run detection on
+        # Load the source we want to run detection on
         video_capture = cv2.VideoCapture(f)
 
         # Attempt to capture a frame
@@ -116,8 +113,7 @@ def main():
                 # Hold count of cars in zone
                 count = 0
                 # Draw the filled zones
-                cv2.fillPoly(overlay, np.int32(
-                    [np.array(p)]), colors[index + 4])
+                cv2.fillPoly(overlay, np.int32([np.array(p)]), colors[index + 4])
                 # Draw each box on the frame. Do not use rgb_image with cv2!
                 for box in car_boxes:
                     # Get the box coordinates
@@ -126,8 +122,7 @@ def main():
                     # Only show cars in the zones!
                     if(((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).centroid).intersects(Polygon(asPoint(array(p))))):
                         # Draw the box and add to overlay
-                        cv2.rectangle(frame, (x1, y1), (x2, y2),
-                                      colors[index], 5)
+                        cv2.rectangle(frame, (x1, y1), (x2, y2), colors[index], 5)
                         # Count car in zone
                         count += 1
                         # Delete the car to avoid double counting
@@ -141,23 +136,21 @@ def main():
             # Add overlay to frame
             frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
 
-            # Draw center crosshair
-            height, width, channels = frame.shape
-            cv2.drawMarker(frame, (int(width / 2), int(height / 2)),
-                           [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
-            # Add timestamp
-            cv2.putText(frame, timestamp, (10, 30),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
-
             # Resize image if necessary
-            scaling = int(
-                (768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
+            scaling = int((768 * 100) / frame.shape[0]) if frame.shape[0] > 768 else 100
             width = int(frame.shape[1] * scaling / 100)
             height = int(frame.shape[0] * scaling / 100)
             dim = (width, height)
             frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
+            # Draw center crosshair
+            height, width, channels = frame.shape
+            cv2.drawMarker(frame, (int(width / 2), int(height / 2)), [255, 255, 0], cv2.MARKER_TRIANGLE_UP, 16, 2, cv2.LINE_4)
+            # Add timestamp
+            cv2.putText(frame, timestamp, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, [0, 0, 255], 1)
+
             # Show the frame of video on the screen
+            print("Click on the image window and press enter to continue...")
             cv2.imshow('Video', frame)
 
             # Hit any key to quit

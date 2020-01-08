@@ -3,27 +3,27 @@
 
 ![Welcome to Park!](README_images/park_demo.gif)
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#table-of-contents)Table of Contents
+## Table of Contents
 
-- [Introduction](https://github.com/garciart/Park/blob/master/README.MD#p1 "Introduction")
-- [Setting Up the Development Environment](https://github.com/garciart/Park/blob/master/README.MD#p2 "Setting Up the Development Environment")
-- [Adding the Machine Learning Packages](https://github.com/garciart/Park/blob/master/README.MD#p3 "Adding the Machine Learning Packages")
-- [Running the Scripts](https://github.com/garciart/Park/blob/master/README.MD#p4 "Running the Scripts")
+- [Introduction](introduction)
+- [Setting Up the Development Environment](#setting-up-the-development-environment)
+- [Adding the Machine Learning Packages](#adding-the-machine-learning-packages)
+- [Running the Scripts](#running-the-scripts)
 
-    1. [OpenCV Image Capture and Display](https://github.com/garciart/Park/blob/master/README.MD#d1 "OpenCV Image Capture and Display")
-    2. [Mask R-CNN Object Detection](https://github.com/garciart/Park/blob/master/README.MD#d2 "Mask R-CNN Object Detection")
-    3. [Recognizing and Counting Vehicles](https://github.com/garciart/Park/blob/master/README.MD#d3 "Recognizing and Counting Vehicles")
-    4. [Creating and Displaying Zones](https://github.com/garciart/Park/blob/master/README.MD#d4 "Creating and Displaying zones")
-    5. [Counting Vehicles in Zones](https://github.com/garciart/Park/blob/master/README.MD#d5 "Counting Vehicles in Zones")
-    6. [Creating the Database](https://github.com/garciart/Park/blob/master/README.MD#d6 "Creating the Database")
-    7. [El Super Demo](https://github.com/garciart/Park/blob/master/README.MD#d7 "El Super Demo")
+    1. [Demo 1 - OpenCV Image Capture and Display](#demo-1---opencv-image-capture-and-display)
+    2. [Demo 2 - Mask R-CNN Segmentation and Detection](#demo-2---mask-r-cnn-segmentation-and-detection)
+    3. [Demo 3 - Vehicle Localization](#demo-3---vehicle-localization)
+    4. [Demo 4 - Creating and Displaying Zones](#demo-4---creating-and-displaying-zones)
+    5. [Demo 5 - Counting Vehicles in Zones](#demo-5---counting-vehicles-in-zones)
+    6. [Demo 6 - Creating the Database](#demo-6---creating-the-database)
+    7. [Demo 7 - Putting It All Together](#demo-7---putting-it-all-together)
 
-- [Schedule the Scripts Using cron](https://github.com/garciart/Park/blob/master/README.MD#p5 "Schedule the Scripts Using cron")
-- [References](https://github.com/garciart/Park/blob/master/README.MD#p10 "References")
+- [Schedule the Scripts Using cron](#schedule-the-scripts-using-cron)
+- [References](#references)
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#introduction)Introduction
+## Introduction
 
 As interns at NASA Langley, aka "The Sherpas", we worked on a lot of projects. Some of them involved machine learning, and, yes, this included a parking lot project.
 
@@ -46,7 +46,7 @@ Due to architecture, security requirements, cross-lot tracking, etc., the NASA a
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#setting-up-the-development-environment)Setting Up the Development Environment
+## Setting Up the Development Environment
 
 As we just said, we'll be using CentOS Linux 7 in VirtualBox for this demo, but you can use another virtual machine or an actual server if you like. Just make sure that your system has at least 2GB of memory; 16GB of hard disk space; 128MB of video memory; and a connection to the Internet.
 
@@ -107,7 +107,7 @@ Just in case, we'll double check everything is installed and updated using the f
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#adding-the-machine-learning-packages)Adding the Machine Learning Packages
+## Adding the Machine Learning Packages
 
 Our next step is to add the packages we will need to run the scripts. While you can enter the code yourself, we suggest you clone this repository into your folder:  **Just make sure you do so before installing the ML packages.**  Use the following command to clone the repo:
 
@@ -201,7 +201,7 @@ The COCO dataset consists of over 100,000 images of 80 objects, including cars (
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#running-the-scripts)Running the Scripts
+## Running the Scripts
 
 Now comes the fun part: Writing and running the scripts. Before we start, a few words of caution if you are switching between operating systems:
 
@@ -219,8 +219,8 @@ Our Python code is a combination of Matterport's open-source Mask-RCNN's samples
 Download the demos to your development folder if you did not clone or fetch the repo. There are seven demos, and each one adds new functionality to Park.
 
 - demo1.py - OpenCV image capture and display demo.
-- demo2.py - Adds Mask R-CNN object detection to the demo.
-- demo3.py - Adds recognizing and counting vehicles to the demo.
+- demo2.py - Adds Mask R-CNN object detection and segmentation to the demo.
+- demo3.py - Adds object localization to the demo.
 - demo4.py - Adds creating and displaying zones to the demo.
 - demo5.py - Adds counting vehicles in zones to the demo.
 - demo6.py - Creates the database.
@@ -242,7 +242,7 @@ Once you are all set up, open the code for each demo in your favorite editor as 
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-1---opencv-image-capture-and-display)Demo 1 - OpenCV Image Capture and Display
+### Demo 1 - OpenCV Image Capture and Display
 
 This one is pretty easy, but using OpenCV is the foundation of Park's image recognition system. Note that we listed four FRAME_SOURCE's, with three of them commented out:
 
@@ -276,7 +276,7 @@ By the way, this script also saves a full-size copy of the image in the demo_cap
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-2---mask-r-cnn-object-detection)Demo 2 - Mask R-CNN Object Detection
+### Demo 2 - Mask R-CNN Segmentation and Detection
 
 Speaking of Mask R-CNN, it is time to add it to the demo. As we stated earlier, we are using the Common Objects in Context (COCO) dataset for this demo. The COCO dataset has 80 classes of objects, of which we want three: cars (#3), trucks (#6), and buses (#8):
 
@@ -310,7 +310,7 @@ The script loads a pre-trained model, collects the rgb_image from the camera, an
     # Run the image through the Mask R-CNN model to get results.
     results = model.detect([rgb_image], verbose=0)
 
-We use the built-in visualize function to display the masks of these objects on the screen:
+We use the built-in visualize function to display the instance segmentation on the screen:
 
     # Show the frame of video on the screen
     mrcnn.visualize.display_instances(rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
@@ -326,7 +326,7 @@ Once again, look at the code and note the changes between demo1.py and demo2.py,
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-3---recognizing-and-counting-vehicles)Demo 3 - Recognizing and Counting Vehicles
+### Demo 3 - Vehicle Localization
 
 In the previous demo, Mask R-CNN placed masks on every item it detected. However, as we stated earlier, we are only looking for vehicles. Therefore, we added the get_car_boxes function, which returns a numpy array of the cars (#3), trucks (#6), and buses (#8) that Mask R-CNN detected:
 
@@ -354,7 +354,7 @@ We also acquired their locations in the frame, which we will use this later to d
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-4---creating-and-displaying-zones)Demo 4 - Creating and Displaying Zones
+### Demo 4 - Creating and Displaying Zones
 
 Next, we create the zones using OpenCV. We will only count cars within these zones, to avoid counting cars on roads, other parking lots, etc. In addition, each of these zones will have a zone type (e.g., employee, handicap, etc.), which will allow us to provide better counts to the users.
 
@@ -398,7 +398,7 @@ The cyan triangle in the middle is a calibration point. For Pan-Tilt-Zoom (PTZ) 
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-5---counting-vehicles-in-zones)Demo 5 - Counting Vehicles in Zones
+### Demo 5 - Counting Vehicles in Zones
 
 Now that we have our zones, we will run Mask R-CNN again, but we will use Shapely's centroid and intersects function to determine if a vehicle is in a zone. Using the center point prevents vehicles from being counted in a zone they overlap, but do not occupy. If a vehicle is in a zone, it is added to the zone's count. However, is is deleted from the numpy array, to avoid double counting cars that may intersect more than one zone:
 
@@ -417,7 +417,7 @@ Now that we have our zones, we will run Mask R-CNN again, but we will use Shapel
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-6---creating-the-database)Demo 6 - Creating the Database
+### Demo 6 - Creating the Database
 
 Like we stated earlier, due to architecture, security requirements, cross-lot tracking, etc., the NASA application was complex, and required two separate databases. For our demo, we will use a simpler data model, and, for portabililty (and to keep this README from being longer than it already is!) we'll use SQLite to hold the data.
 
@@ -469,7 +469,7 @@ Once complete, test the new database with the some queries. Here are some exampl
 
 ----------
 
-### [](https://github.com/garciart/Park/blob/master/README.MD#demo-7---putting-it-all-together)Demo 7 - Putting It All Together
+### Demo 7 - Putting It All Together
 
 ![Putting it all together](README_images/park_demo.gif)
 
@@ -479,13 +479,19 @@ Finally! demo7.py is a super demo. It incorporates all of the functionality of t
 
 ----------
 
+## Schedule the Scripts Using cron
+
+If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get feeds, the site would be SLOWWWWW! Instead, we use cron, the Linux task scheduler, to do all that work in the background, and use the database as the intermediary between the cron daemon and the front end. As stated before, cron will run demo7.py, which counts the vehicles in the lots, every five minutes, between 0400 and 1859, Monday thru Friday, and run demo4.py, which captures the feed image, every day at 1000, Monday thru Friday.
+
+----------
+
 <p align="center"><img src="sherpa_logo.png" height="240" alt="Sherpa Logo" /></p>
 
 The Sherpas are Jrei Dimanno, Justine Forrest, Rob Garcia, John Graham, Tanner Griffin, Ryan Hashi, Brandon Hutton, Gabriel Jacobs, Fernando Jauregui, Wesley Madden, and Doug Trent
 
 ----------
 
-## [](https://github.com/garciart/Park/blob/master/README.MD#references)References
+## References
 
 Geitgey, A. (2019, January 21). Snagging parking spaces with Mask R-CNN and Python. Retrieved from  [https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400](https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400 "Snagging parking spaces with Mask R-CNN and Python")
 
