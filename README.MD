@@ -477,11 +477,37 @@ Finally! demo7.py is a super demo. It incorporates all of the functionality of t
 
 > ***By the way, demo7.py requires user interaction after displaying each frame. The above image is an animation of the demo7.py results, created using GIMP.***
 
+The first statement gets the URI, credentials, and location of the source (you must have one active source for the demo to work):
+
+    source = query_database("SELECT * FROM Source").fetchall()
+
+The second query gets all the zones associated with the source, as well as the description (e.g., handicap, etc.) of the zones from Type:
+
+    sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
+
+The final statement updates the occupany log with the counts:
+
+    sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
+
+Once you run the script, look for the latest entries in the OccupancyLog, which holds current and historical data. They should match the counts of the demo:
+
+<p align="center"><img src="README_images/readme18.png" height="480" alt="Out of and into the database" /></p>
+
 ----------
 
 ## Schedule the Scripts Using cron
 
-If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get feeds, the site would be SLOWWWWW! Instead, we use cron, the Linux task scheduler, to do all that work in the background, and use the database as the intermediary between the cron daemon and the front end. As stated before, cron will run demo7.py, which counts the vehicles in the lots, every five minutes, between 0400 and 1859, Monday thru Friday, and run demo4.py, which captures the feed image, every day at 1000, Monday thru Friday.
+If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get feeds, the site would be SLOWWWWW! Instead, we use cron, the Linux task scheduler, to do all that work in the background, and use the database as the intermediary between the cron daemon and the front end. As stated before, cron will run park.py, which counts the vehicles in the lots, every five minutes, between 0400 and 1859, Monday thru Friday, and run capture.py, which captures the feed image, every day at 1000, Monday thru Friday:
+
+    # Minute of the Hour (0 - 59)
+    # |      Hour of the Day (0 - 23)
+    # |      |      Day of the Month (1 - 31)
+    # |      |      |      Month of the Year (1 - 12 / 1 = January)
+    # |      |      |      |      Day of the Week (0 - 6 / 0 = Sunday)
+    # |      |      |      |      |      Script to Run
+    # |      |      |      |      |      |
+      */5    04-18  *      *      1-5    /home/park/Park/park.py
+      0      10     *      *      1-5    /home/park/Park/capture.py
 
 ----------
 
