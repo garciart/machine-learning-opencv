@@ -17,6 +17,15 @@ import mrcnn.visualize
 from mrcnn.model import MaskRCNN
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db/park.db')
+try:
+    # Open database connection
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    # prepare a cursor object using cursor() method
+    cursor = conn.cursor()
+except Error as ex:
+    print("Error in connection: {}".format(ex))
+    exit()
 
 # Configuration that will be used by the Mask-RCNN library
 class MaskRCNNConfig(mrcnn.config.Config):
@@ -58,6 +67,14 @@ def resize_image(display_frame):
     display_frame = draw_timestamp(display_frame)
     return display_frame
 
+def query_database(sql):
+    with conn:
+        # execute SQL query using execute() method.
+        cursor.execute(sql)
+        # Commit on CREATE, INSERT, UPDATE, and DELETE
+        if sql.lower().startswith("select") == False:
+            conn.commit
+        return cursor
 
 # Root directory of the project
 ROOT_DIR = Path(__file__).resolve().parent
@@ -78,25 +95,11 @@ IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
 # VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos") # Create to process videos
 CAPTURE_DIR = os.path.join(ROOT_DIR, "demo_captures")
 
-try:
-    # Open database connection
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    # prepare a cursor object using cursor() method
-    cursor = conn.cursor()
-    # execute SQL query using execute() method.
-    cursor.execute("select sqlite_version();")
-    # Fetch a single row using fetchone() method.
-    db_vers = cursor.fetchone()
-    print("Connected. Database version: {}".format(db_vers[0]))
-
-    # Get source data
-    sql = "SELECT * FROM Source"
-    cursor.execute(sql)
-    source = cursor.fetchall()
-except Error as ex:
-    print("Error in connection: {}".format(ex))
-    exit()
+# Get database version
+db_vers = query_database("SELECT sqlite_version();").fetchone()
+print("Connected. Database version: {}".format(db_vers[0]))
+# Get source data
+source = query_database("SELECT * FROM Source").fetchall()
 
 if len(source) == 0:
     print("No feeds found! Exiting now...")
@@ -191,21 +194,12 @@ else:
                     # Filter the results to only grab the car / truck bounding boxes
                     car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
-                    try:
-                        # Get source data
-                        conn = sqlite3.connect(DB_PATH)
-                        conn.row_factory = sqlite3.Row
-                        # prepare a cursor object using cursor() method
-                        cursor = conn.cursor()
-                        sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
-                        cursor.execute(sql)
-                        zone = cursor.fetchall()
-                        if len(zone) == 0:
-                            print("There are no zones defined for this source!")
-                            break
-                    except Error as ex:
-                        print("Error in connection: {}".format(ex))
-                        exit()
+                    # Get zone data
+                    sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
+                    zone = query_database(sql).fetchall()
+                    if len(zone) == 0:
+                        print("There are no zones defined for this source!")
+                        break
 
                     print("Cars found in frame: {}".format(len(car_boxes)))
 
@@ -296,19 +290,10 @@ else:
 
                         # Make sure the number counted is not more than the number of spaces
                         count = count if count <= z['TotalSpaces'] else z['TotalSpaces']
-                        print("Total cars in zone {} ({}): {}.".format(z['ZoneID'], z['TypeID'], count))
+                        print("Total cars in zone {} ({}): {}.".format(z['ZoneID'], z['Description'], count))
                         # Insert count into database
-                        try:
-                            conn = sqlite3.connect(DB_PATH)
-                            conn.row_factory = sqlite3.Row
-                            # prepare a cursor object using cursor() method
-                            cursor = conn.cursor()
-                            sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
-                            cursor.execute(sql)
-                            conn.commit()
-                        except Error as ex:
-                            print("Error in connection: {}".format(ex))
-                            exit()
+                        sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
+                        query_database(sql)
 
                     ''' NOT PART OF park.py - Part 2 Demo 5 display (Counting Vehicles in Zones) '''
                     # Show the frame of video on the screen
@@ -326,10 +311,9 @@ else:
                 else:
                     print("Cannot access source {} vic {}!".format(s['SourceID'], s['Location']))
 
-        # Disconnect from the server
+        cursor.close()
         conn.close()
         print("Job complete. Have an excellent day.")
-
 
 if __name__ == '__main__':
     main()

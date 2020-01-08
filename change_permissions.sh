@@ -5,4 +5,6 @@ chmod 755 demo4.py
 chmod 755 demo5.py
 chmod 755 demo6.py
 chmod 755 demo7.py
+chmod 755 park.py
+chmod 755 capture.py
 chmod 755 db/create_park_db.py
