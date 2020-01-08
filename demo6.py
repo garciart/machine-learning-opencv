@@ -1,3 +1,4 @@
+#!python
 #!/usr/bin/python3
 import os
 import sqlite3
