@@ -142,12 +142,6 @@ else:
 
                 # Video file or camera feed to process
                 FRAME_SOURCE = s['URI']
-                print(FRAME_SOURCE)
-
-                if FRAME_SOURCE.startswith('https'):
-                    FRAME_SOURCE = IMAGE_DIR + "\\demo_image.jpg"
-
-                print(FRAME_SOURCE)
 
                 # Load the source we want to run detection on
                 video_capture = cv2.VideoCapture(FRAME_SOURCE)
@@ -203,7 +197,7 @@ else:
                         conn.row_factory = sqlite3.Row
                         # prepare a cursor object using cursor() method
                         cursor = conn.cursor()
-                        sql = "SELECT * FROM Zone WHERE SourceID = {}".format(s['SourceID'])
+                        sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
                         cursor.execute(sql)
                         zone = cursor.fetchall()
                         if len(zone) == 0:
@@ -289,9 +283,9 @@ else:
                             y1, x1, y2, x2 = box
 
                             if(((Polygon([(x1, y1), (x2, y1), (x1, y2), (x2, y2)])).centroid).intersects(Polygon(asPoint(array(poly_coords))))):
-                                ''' NOT PART OF park.py - Part 1 Demo 5 display (Counting Vehicles in Zones) '''
                                 # Display the box coordinates in the console
                                 print("Car: ", box)
+                                ''' NOT PART OF park.py - Part 1 Demo 5 display (Counting Vehicles in Zones) '''
                                 # Draw the box on the frame
                                 frame_copy = cv2.rectangle(frame_copy, (x1, y1), (x2, y2), (0, 255, 0), 3)
                                 ''' NOT PART OF park.py - End Part 1 Demo 5 display '''
@@ -302,7 +296,7 @@ else:
 
                         # Make sure the number counted is not more than the number of spaces
                         count = count if count <= z['TotalSpaces'] else z['TotalSpaces']
-                        print("Total cars in zone {} (Type {}): {}.".format(z['ZoneID'], z['TypeID'], count))
+                        print("Total cars in zone {} ({}): {}.".format(z['ZoneID'], z['TypeID'], count))
                         # Insert count into database
                         try:
                             conn = sqlite3.connect(DB_PATH)
@@ -332,9 +326,9 @@ else:
                 else:
                     print("Cannot access source {} vic {}!".format(s['SourceID'], s['Location']))
 
-    # Disconnect from the server
-    conn.close()
-    print("Job complete. Have an excellent day.")
+        # Disconnect from the server
+        conn.close()
+        print("Job complete. Have an excellent day.")
 
 
 if __name__ == '__main__':

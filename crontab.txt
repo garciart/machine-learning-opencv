@@ -5,5 +5,5 @@
 # |      |      |      |      Day of the Week (0 - 6 / 0 = Sunday)
 # |      |      |      |      |      Script to Run
 # |      |      |      |      |      |
-  */5    04-18  *      *      1-5    /home/park/Park/demo7.py
-  0      10     *      *      1-5    /home/park/Park/demo4.py 
+  */5    04-18  *      *      1-5    /home/park/Park/park.py
+  0      10     *      *      1-5    /home/park/Park/capture.py

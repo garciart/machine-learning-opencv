@@ -152,9 +152,7 @@ def main():
             # Show the frame of video on the screen
             print("Click on the image window and press enter to continue...")
             cv2.imshow('Video', frame)
-
             # Hit any key to quit
-            print("Press any key continue...")
             cv2.waitKey(0)
 
         else:
