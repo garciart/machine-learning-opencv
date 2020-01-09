@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to process images and update the database '''
 import datetime
@@ -159,15 +158,15 @@ else:
 
                     ''' NOT PART OF park.py - Start Demo 1 OpenCV Image Capture and Display '''
                     print('New image dimensions : ', rgb_image.shape)
-
                     # Show the frame of video on the screen
                     print("Click on the image window and press enter to continue...")
                     # Resize image if necessary
                     cv2.imshow('Video', resize_image(rgb_image))
                     cv2.waitKey(0)
                     cv2.destroyAllWindows()
-                    print("Starting Mask R-CNN segmentation and detection...")
                     ''' NOT PART OF park.py - End Demo 1 Display '''
+
+                    print("Starting Mask R-CNN segmentation and detection...")
 
                     # Run the image through the Mask R-CNN model to get results.
                     results = model.detect([rgb_image], verbose=0)
@@ -188,8 +187,9 @@ else:
                     mrcnn.visualize.display_instances(rgb_image, r['rois'], r['masks'], r['class_ids'], class_names, r['scores'])
                     cv2.waitKey(0)
                     cv2.destroyAllWindows()
-                    print("Starting vehicle localization...")
                     ''' NOT PART OF park.py - End Demo 2 Display '''
+
+                    print("Starting vehicle localization...")
 
                     # Filter the results to only grab the car / truck bounding boxes
                     car_boxes = get_car_boxes(r['rois'], r['class_ids'])
@@ -219,8 +219,9 @@ else:
                     cv2.imshow('Video', resize_image(frame_copy))
                     cv2.waitKey(0)
                     cv2.destroyAllWindows()
-                    print("Creating and displaying zones...")
                     ''' NOT PART OF park.py - End Demo 3 Display '''
+
+                    print("Creating and displaying zones...")
 
                     ''' NOT PART OF park.py - For Demo 4 & 5 Display '''
                     # Clone image instead of using original
@@ -262,8 +263,9 @@ else:
                     cv2.imshow('Video', resize_image(frame_copy))
                     cv2.waitKey(0)
                     cv2.destroyAllWindows()
-                    print("Counting vehicles in zones...")
                     ''' NOT PART OF park.py - End Demo 4 Display '''
+
+                    print("Counting vehicles in zones...")
 
                     for z in zone:
                         # Convert string representation of list to list
@@ -303,6 +305,8 @@ else:
                     cv2.waitKey(0)
                     cv2.destroyAllWindows()
                     ''' NOT PART OF park.py - End Part 2 Demo 5 display '''
+
+                    print("Database updated...")
 
                     # Clean up everything when finished
                     video_capture.release()

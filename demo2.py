@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to classify objects using MaskRCNN and the COCo Dataset '''
 import os

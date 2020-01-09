@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to capture and display images using OpenCV '''
 import os

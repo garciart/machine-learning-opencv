@@ -31,9 +31,9 @@ The use case was that finding parking is a problem for everyone. In 2016, driver
 
 We looked at various solutions, including sensors in each parking space; Light Detection and Ranging (LIDAR) to count cars entering and exiting parking areas; etc. Each approach had issues that made it impractical to implement with the resources we had; for example, most image recognition systems we looked at required a high, almost overhead, angle of view.
 
-Finally, we came across  [Adam Geitgey's awesome article on object detection](https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400 "Snagging parking spaces with Mask R-CNN and Python"), which introduced us to  [Matterport Mask R-CNN](https://github.com/matterport/Mask_RCNN "Matterport Mask R-CNN")  (Geitgey, 2019). We realized that his implementation of Mask R-CNN was something we could use with the resources available to us, especially the lower and more practical viewing angle. However, Adam’s solution, designed for a single system for a single user looking at a single parking lot, was too expensive in terms of processing power and time. The first time we implemented it, it sent our cooling fans into overdrive and hung our computers for several minutes; run another of our projects,  [Acronyms for Tina](http://acronymsfortina.rgprogramming.com/index.html "Acronyms for Tina"), on localhost for a similar, albeit less intense, experience.
+Finally, we came across  [Adam Geitgey's awesome article on object detection](https://medium.com/@ageitgey/snagging-parking-spaces-with-mask-r-cnnand-python-955f2231c400 "Snagging parking spaces with Mask R-CNN and Python"), which introduced us to  [Matterport Mask R-CNN](https://github.com/matterport/Mask_RCNN "Matterport Mask R-CNN")  (Geitgey, 2019). We realized that his implementation of Mask R-CNN was something we could use with the resources available to us, especially the lower and more practical viewing angle. However, Adam’s solution, designed for a single system for a single user looking at a single parking lot, was too expensive in terms of processing power and time. The first time we ran it, it sent our cooling fans into overdrive and hung our computers for several minutes; run another of our projects, [Acronyms for Tina](http://acronymsfortina.rgprogramming.com/index.html "Acronyms for Tina"), on localhost for a similar, albeit less intense, experience.
 
-Still, it worked, so using what we learned, we went back to the drawing board to develop a system that would rotate through multiple lots; analyze and collect parking data, and present this information to users in a timely manner. After much trial and error, we came up with a system that leveraged Linux scripting, Python, OpenCV, TensorFlow, SQL, and PHP to:
+Still, it worked, so using what we learned, we went back to the drawing board to develop a system that would rotate through multiple lots; analyze and collect parking data; and present this information to users in a timely manner. After much trial and error, we came up with a system that leveraged Linux scripting, Python, OpenCV, TensorFlow, SQL, and PHP to:
 
 1. Use a cron task scheduler to access the cameras overlooking each lot in turn.
 2. Capture a frame from each camera; divide it into zones (e.g., employee, handicap, etc.); and count the number of vehicles in each zone.
@@ -42,7 +42,7 @@ Still, it worked, so using what we learned, we went back to the drawing board to
 
 <p align="center"><img src="README_images/centos00.png" height="480"  alt="Park System Diagram" /></p>
 
-Due to architecture, security requirements, cross-lot tracking, etc., the NASA application was a bit complex, and for those same reasons, we will not recreate it here. However, here are a series of demos, written in Python, that breakdown the way the machine learning aspect works. Besides a practical application of TensorFlow, Mask R-CNN, and computer vision, this is also a very good introduction to the Common Objects in COntext (COCO) dataset. Have fun and good luck!
+Due to architecture, security requirements, cross-lot tracking, etc., the NASA application, LaRC Park, was a bit complex, and for that reason, along with others, we will not recreate it here. However, here are a series of demos, written in Python, that breakdown the way the machine learning aspect works. Besides a practical application of object detection and instance segmentation, this is also a very good example of integrating computer vision, machine learning, SQL, and Linux scripting. Have fun and good luck!
 
 ----------
 
@@ -454,16 +454,16 @@ Run demo6.py to create the database in the db folder and open the database using
 
 Once complete, test the new database with the some queries. Here are some examples; if they do not work, check for any errors that may have occurred when you created the database:
 
-    SELECT * FROM Lot ORDER BY Name ASC;
-    SELECT * FROM Lot WHERE LotID = 1;
-    SELECT * FROM Type ORDER BY TypeID ASC;
-    SELECT * FROM Source ORDER BY SourceID ASC;
-    SELECT Zone.ZoneID, Source.Location, Type.Description, Lot.Name, Zone.TotalSpaces, Zone.PolyCoords
-        FROM Zone
-        INNER JOIN Source ON Zone.SourceID = Source.SourceID
-        INNER JOIN Type ON Zone.TypeID = Type.TypeID
-        INNER JOIN Lot ON Zone.LotID = Lot.LotID
-        ORDER BY Lot.Name, Type.Description;
+    sqlite> SELECT * FROM Lot ORDER BY Name ASC;
+    sqlite> SELECT * FROM Lot WHERE LotID = 1;
+    sqlite> SELECT * FROM Type ORDER BY TypeID ASC;
+    sqlite> SELECT * FROM Source ORDER BY SourceID ASC;
+    sqlite> SELECT Zone.ZoneID, Source.Location, Type.Description, Lot.Name, Zone.TotalSpaces, Zone.PolyCoords
+                FROM Zone
+                INNER JOIN Source ON Zone.SourceID = Source.SourceID
+                INNER JOIN Type ON Zone.TypeID = Type.TypeID
+                INNER JOIN Lot ON Zone.LotID = Lot.LotID
+                ORDER BY Lot.Name, Type.Description;
 
 <p align="center"><img src="README_images/readme17.png" height="480" alt="Running test queries" /></p>
 
@@ -473,31 +473,43 @@ Once complete, test the new database with the some queries. Here are some exampl
 
 ![Putting it all together](README_images/park_demo.gif)
 
-Finally! demo7.py is a super demo. It incorporates all of the functionality of the previous demos, and actually connects to the database to get feed credentials and to update data.
+Finally! demo7.py is a super demo. It incorporates all of the functionality of the previous demos, but it actually connects to the database to get feed credentials and to update data.
 
-> ***By the way, demo7.py requires user interaction after displaying each frame. The above image is an animation of the demo7.py results, created using GIMP.***
+> *By the way, demo7.py requires user interaction after displaying each frame. The above image is an animation of the demo7.py results, created using GIMP.*
 
-The first statement gets the URI, credentials, and location of the source (you must have one active source for the demo to work):
+The first statement gets the URI, credentials, and location of the source. You must have one active source for the demo to work; the demo URL is from this repo's demo_image folder:
 
     source = query_database("SELECT * FROM Source").fetchall()
 
-The second query gets all the zones associated with the source, as well as the description (e.g., handicap, etc.) of the zones from Type:
+The second query gets all the zones associated with that source, as well as the description (e.g., handicap, etc.) of the zones from Type:
 
     sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
 
-The final statement updates the occupany log with the counts:
+The final statement updates the occupany log with the count of vehicles within a zone:
 
     sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
 
-Once you run the script, look for the latest entries in the OccupancyLog, which holds current and historical data. They should match the counts of the demo:
+Once you run the script, look for the latest entries in the OccupancyLog, which holds current and historical data. They should match the counts of the demo; double check using the following query:
+
+    sqlite> SELECT ZoneID, OccupiedSpaces, TotalSpaces, Timestamp FROM OccupancyLog;
 
 <p align="center"><img src="README_images/readme18.png" height="480" alt="Out of and into the database" /></p>
+
+Before you continue, we recommend you look over both the capture.py script, which is similar to demo4.py, but does not display images, and the park.py script, which is similar to demo7.py, but does not display images either. You should have a good understanding on how they work, since they will be used to automatically capture images and update the database.
 
 ----------
 
 ## Schedule the Scripts Using cron
 
-If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get feeds, the site would be SLOWWWWW! Instead, we use cron, the Linux task scheduler, to do all that work in the background, and use the database as the intermediary between the cron daemon and the front end. As stated before, cron will run park.py, which counts the vehicles in the lots, every five minutes, between 0400 and 1859, Monday thru Friday, and run capture.py, which captures the feed image, every day at 1000, Monday thru Friday:
+If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as get feeds, the site would be *SLOWWWWW!* Instead, we use cron, the Linux task scheduler, to do all that work in the background, and use the database as the intermediary between the cron daemon and the front end. As stated before, cron will run park.py, which counts the vehicles in the lots, every five minutes, between 0400 and 1859, Monday thru Friday, and run capture.py, which captures the feed image, every day at 1000, Monday thru Friday.
+
+Open the cron table for editing using the following command:
+
+    [park@localhost Park]$ crontab -e
+
+On our system, cron uses the Vim text editor by default. If you want to use a different editor, check out [Dave McCay's great article about setting the default editor.](https://www.howtogeek.com/410995/how-to-change-the-default-crontab-editor/ "How to Change the Default crontab Editor")
+
+Go into insert mode by pressing [i], then add the following lines. Please note that you only have to enter the last two lines; the cheat sheet in the comments (#) is not necessary, but we found that it makes life easier:
 
     # Minute of the Hour (0 - 59)
     # |      Hour of the Day (0 - 23)
@@ -509,11 +521,42 @@ If Park had to run Mask R-CNN and Tensorflow each time it was opened, as well as
       */5    04-18  *      *      1-5    /home/park/Park/park.py
       0      10     *      *      1-5    /home/park/Park/capture.py
 
+Press [ESC] to return to command mode, then enter ":wq" to write out and quit. Wait about 5 to 15 minutes and enter the following
+commands
+
+    [park@localhost Park]$ cron-tab -l
+    [park@localhost Park]$ mail
+
+crontab -l shows a listing of all active cron jobs, and mail brings up the results of the cron jobs:
+
+<p align="center"><img src="README_images/readme19.png" height="480" alt="Active cron jobs and mail" /></p>
+
+Type in the number of the message you want to read and it should open up:
+
+<p align="center"><img src="README_images/readme20.png" height="480" alt="cron mail part 1" /></p>
+
+<p align="center"><img src="README_images/readme21.png" height="480" alt="cron mail part 2" /></p>
+
+As you can see, cron job mail captures the verbose comments and results from running the scripts. In this case, the script
+successfully counted vehicles in zone, but you should monitor the database and the cron job mail for any errors due to system changes or patches, etc.
+
+<p align="center"><img src="README_images/readme22.png" height="480" alt="Checking the database" /></p>
+
+By the way, inputing exit once will exit mail and entering exit again will exit cron.
+
+If the mailbox gets too big, you can delete old mail by using the following command:
+
+    [park@localhost Park]$ cat /dev/null >/var/spool/mail/Park
+
+Congratulations! The system is now on autopilot. If you like, you can now add a back-end to view, add, edit, or delete data from the database, as well as a front-end for anonymous users to find parking lots with open spaces.
+
 ----------
+
+## <p align="center">And that is all for now from Team Sherpa! So long, and thank you, thank you very much!</p>
 
 <p align="center"><img src="sherpa_logo.png" height="240" alt="Sherpa Logo" /></p>
 
-The Sherpas are Jrei Dimanno, Justine Forrest, Rob Garcia, John Graham, Tanner Griffin, Ryan Hashi, Brandon Hutton, Gabriel Jacobs, Fernando Jauregui, Wesley Madden, and Doug Trent
+### <p align="center">The Sherpas are Jrei Dimanno, Justine Forrest, Rob Garcia, John Graham, Tanner Griffin, Ryan Hashi, Brandon Hutton, Gabriel Jacobs, Fernando Jauregui, Wesley Madden, and Doug Trent</p>
 
 ----------
 
