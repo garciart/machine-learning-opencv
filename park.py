@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to process images and update the database '''
 import datetime
@@ -13,10 +12,19 @@ from numpy import array
 from shapely.geometry import Polygon, asPoint
 
 import mrcnn.config
-import mrcnn.visualize
 from mrcnn.model import MaskRCNN
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'db/park.db')
+
+try:
+    # Open database connection
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    # prepare a cursor object using cursor() method
+    cursor = conn.cursor()
+except Error as ex:
+    print("Error in connection: {}".format(ex))
+    exit()
 
 # Configuration that will be used by the Mask-RCNN library
 class MaskRCNNConfig(mrcnn.config.Config):
@@ -39,6 +47,15 @@ def get_car_boxes(boxes, class_ids):
     return np.array(car_boxes)
 
 
+def query_database(sql):
+    with conn:
+        # execute SQL query using execute() method.
+        cursor.execute(sql)
+        # Commit on CREATE, INSERT, UPDATE, and DELETE
+        if sql.lower().startswith("select") == False:
+            conn.commit
+        return cursor
+
 # Root directory of the project
 ROOT_DIR = Path(__file__).resolve().parent
 
@@ -53,29 +70,11 @@ if not os.path.exists(COCO_MODEL_PATH):
     print("Missing the mask_rcnn_coco.h5 dataset! Downloading now...")
     mrcnn.utils.download_trained_weights(COCO_MODEL_PATH)
 
-# Directory of images or videos to run detection on
-# IMAGE_DIR = os.path.join(ROOT_DIR, "demo_images")
-# VIDEO_DIR = os.path.join(ROOT_DIR, "demo_videos") # Create to process videos
-
-try:
-    # Open database connection
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    # prepare a cursor object using cursor() method
-    cursor = conn.cursor()
-    # execute SQL query using execute() method.
-    cursor.execute("select sqlite_version();")
-    # Fetch a single row using fetchone() method.
-    db_vers = cursor.fetchone()
-    print("Connected. Database version: {}".format(db_vers[0]))
-
-    # Get source data
-    sql = "SELECT * FROM Source"
-    cursor.execute(sql)
-    source = cursor.fetchall()
-except Error as ex:
-    print("Error in connection: {}".format(ex))
-    exit()
+# Get database version
+db_vers = query_database("SELECT sqlite_version();").fetchone()
+print("Connected. Database version: {}".format(db_vers[0]))
+# Get source data
+source = query_database("SELECT * FROM Source").fetchall()
 
 if len(source) == 0:
     print("No feeds found! Exiting now...")
@@ -107,8 +106,12 @@ else:
                 success, frame = video_capture.read()
 
                 if success:
+                    # Clone image instead of using original
+                    frame_copy = frame.copy()
                     # Convert the image from BGR color (which OpenCV uses) to RGB color
-                    rgb_image = frame[:, :, ::-1]
+                    rgb_image = frame_copy[:, :, ::-1]
+
+                    print("Starting Mask R-CNN segmentation and detection...")
 
                     # Run the image through the Mask R-CNN model to get results.
                     results = model.detect([rgb_image], verbose=0)
@@ -123,26 +126,21 @@ else:
                     # - r['scores'] are the confidence scores for each detection
                     # - r['masks'] are the object masks for each detected object (which gives you the object outline)
 
+                    print("Starting vehicle localization...")
+
                     # Filter the results to only grab the car / truck bounding boxes
                     car_boxes = get_car_boxes(r['rois'], r['class_ids'])
 
-                    try:
-                        # Get source data
-                        conn = sqlite3.connect(DB_PATH)
-                        conn.row_factory = sqlite3.Row
-                        # prepare a cursor object using cursor() method
-                        cursor = conn.cursor()
-                        sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
-                        cursor.execute(sql)
-                        zone = cursor.fetchall()
-                        if len(zone) == 0:
-                            print("There are no zones defined for this source!")
-                            break
-                    except Error as ex:
-                        print("Error in connection: {}".format(ex))
-                        exit()
+                    # Get zone data
+                    sql = "SELECT Zone.*, Type.Description FROM Zone JOIN Type USING(TypeID) WHERE SourceID = {}".format(s['SourceID'])
+                    zone = query_database(sql).fetchall()
+                    if len(zone) == 0:
+                        print("There are no zones defined for this source!")
+                        break
 
                     print("Cars found in frame: {}".format(len(car_boxes)))
+
+                    print("Counting vehicles in zones...")
 
                     for z in zone:
                         # Convert string representation of list to list
@@ -167,17 +165,10 @@ else:
                         count = count if count <= z['TotalSpaces'] else z['TotalSpaces']
                         print("Total cars in zone {} ({}): {}.".format(z['ZoneID'], z['Description'], count))
                         # Insert count into database
-                        try:
-                            conn = sqlite3.connect(DB_PATH)
-                            conn.row_factory = sqlite3.Row
-                            # prepare a cursor object using cursor() method
-                            cursor = conn.cursor()
-                            sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
-                            cursor.execute(sql)
-                            conn.commit()
-                        except Error as ex:
-                            print("Error in connection: {}".format(ex))
-                            exit()
+                        sql = "INSERT INTO OccupancyLog (ZoneID, LotID, TypeID, Timestamp, OccupiedSpaces, TotalSpaces) VALUES ({}, {}, {}, {}, {}, {})".format(z['ZoneID'], z['LotID'], z['TypeID'], "'{}'".format(timestamp), count, z['TotalSpaces'])
+                        query_database(sql)
+
+                    print("Database updated...")
 
                     # Clean up everything when finished
                     video_capture.release()
@@ -186,10 +177,9 @@ else:
                 else:
                     print("Cannot access source {} vic {}!".format(s['SourceID'], s['Location']))
 
-        # Disconnect from the server
+        cursor.close()
         conn.close()
         print("Job complete. Have an excellent day.")
-
 
 if __name__ == '__main__':
     main()

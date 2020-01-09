@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to display zones using Shapely '''
 import datetime

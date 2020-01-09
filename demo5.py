@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to identify and count vehicles in zones '''
 import datetime

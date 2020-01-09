@@ -1,4 +1,3 @@
-#!python
 #!/usr/bin/python3
 ''' Summary: Script to detect and count cars, trucks, and buses '''
 import os
