@@ -3,9 +3,11 @@
 
 ![Welcome to Park!](README_images/park_demo.gif)
 
+> ***DISCLAIMER** - This repository and its contents are not endorsed by, sponsored by, affiliated with, nor associated with the National Aeronautics and Space Administration (NASA). This repository is only a demonstration of some of the concepts that I explored while I was an intern at NASA.*
+
 ## Table of Contents
 
-- [Introduction](introduction)
+- [Introduction](#introduction)
 - [Setting Up the Development Environment](#setting-up-the-development-environment)
 - [Adding the Machine Learning Packages](#adding-the-machine-learning-packages)
 - [Running the Scripts](#running-the-scripts)
@@ -552,7 +554,7 @@ Congratulations! The system is now on autopilot. If you like, you can now add a 
 
 ----------
 
-## <p align="center">And that is all for now from Team Sherpa! So long, and thank you, thank you very much!</p>
+## <p align="center">And that is all for now! So long, and thank you, thank you very much!</p>
 
 <p align="center"><img src="sherpa_logo.png" height="240" alt="Sherpa Logo" /></p>
 
