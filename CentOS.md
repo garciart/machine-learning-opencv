@@ -41,7 +41,15 @@ Once your VM is setup, and to start things off right, let's create a super user 
     [root@localhost ~]# su - park
     [park@localhost ~]#
 
-Next, update the system and add CentOS' development tools using the following commands:
+If you want to connect to the Internet using an existing WiFi access point, instead of an ethernet cable, use the Network Manager Text User Interface (nmtuui):
+
+    [park@localhost ~]# chkconfig NetworkManager on
+    [park@localhost ~]# service NetworkManager start
+    [park@localhost ~]# nmtui
+
+The TUI should appear. Select "Activate a Connection" and find your AP. Enter your password; you should then be connected.
+
+Next, update the system and add CentOS' development tools using the following commands in the CLI:
 
     [park@localhost ~]# sudo yum -y update
     [park@localhost ~]# sudo yum -y install yum-utils
