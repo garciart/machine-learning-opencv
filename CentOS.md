@@ -39,21 +39,21 @@ Once your VM is setup, and to start things off right, let's create a super user 
     [root@localhost ~]# gpasswd -a park wheel
     Adding user park to group wheel
     [root@localhost ~]# su - park
-    [park@localhost ~]#
+    [park@localhost ~]$
 
 If you want to connect to the Internet using an existing WiFi access point, instead of an ethernet cable, use the Network Manager Text User Interface (nmtuui):
 
-    [park@localhost ~]# chkconfig NetworkManager on
-    [park@localhost ~]# service NetworkManager start
-    [park@localhost ~]# nmtui
+    $ chkconfig NetworkManager on
+    $ service NetworkManager start
+    $ nmtui
 
 The TUI should appear. Select "Activate a Connection" and find your AP. Enter your password; you should then be connected.
 
 Next, update the system and add CentOS' development tools using the following commands in the CLI:
 
-    [park@localhost ~]# sudo yum -y update
-    [park@localhost ~]# sudo yum -y install yum-utils
-    [park@localhost ~]# sudo yum -y groupinstall development
+    [park@localhost ~]$ sudo yum -y update
+    [park@localhost ~]$ sudo yum -y install yum-utils
+    [park@localhost ~]$ sudo yum -y groupinstall development
 
 This may take a while, especially on a new system.
 
@@ -61,34 +61,34 @@ Once the system update is completed, make sure that we have everything we need:
 
 1. **cron Time-Based Job Scheduler**  - cron should be already installed, but check anyway:
 
-        [park@localhost ~]# whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
+        [park@localhost ~]$ whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
         cronie-1.4.11-19.e17.x86_64
 
     If cron is not installed, install it using the following command:
 
-        [park@localhost ~]# yum -y install cronie
+        [park@localhost ~]$ yum -y install cronie
 
 2. **SQLite RDBMS**  - SQLite should also be installed, but check anyway:
 
-        [park@localhost ~]# sqlite3 -version
+        [park@localhost ~]$ sqlite3 -version
         3.7.17 2013-05-20 00:56:22 118a3b35693b134d56ebd780123b7fd6f1497668
 
     If SQLite is not installed, install it using the following command:
 
-        [park@localhost ~]# sudo yum -y install sqlite
+        [park@localhost ~]$ sudo yum -y install sqlite
 
 3. **Nginx HTTP Web Server**  - To use Nginx, install the  [Extra Packages for Enterprise Linux (EPEL)](https://fedoraproject.org/wiki/EPEL "Extra Packages for Enterprise Linux (EPEL)")  first:
 
-        [park@localhost ~]# sudo yum -y install epel-release
+        [park@localhost ~]$ sudo yum -y install epel-release
 
     Once the installation is completed, install Nginx:
 
-        [park@localhost ~]# sudo yum -y install nginx
+        [park@localhost ~]$ sudo yum -y install nginx
 
     Once Nginx is installed, start the server. In addition, run the second command so that Nginx automatically starts when the system boots up:
 
-        [park@localhost ~]# sudo systemctl start nginx
-        [park@localhost ~]# sudo systemctl enable nginx
+        [park@localhost ~]$ sudo systemctl start nginx
+        [park@localhost ~]$ sudo systemctl enable nginx
         Created symlink from /etc/systemd/system/multi-user.target.wants/nginx.service to /usr/lib/systemd/system/nginx.service.
 
     Once the server is started, we have several ways to access the web server:
@@ -129,27 +129,27 @@ Once the system update is completed, make sure that we have everything we need:
 
 4. **PHP Hypertext Preprocessor**  - We'll be using PHP as the intermediary between the front and back ends. To install PHP, run the following command:
 
-        [park@localhost ~]# sudo yum -y install php php-fpm
+        [park@localhost ~]$ sudo yum -y install php php-fpm
 
-5. **Python 3 Programming Language Interpreter**  - While Python 2 is installed with CentOS by default, we will need Python 3 to run our computer vision and machine learning scripts, specically Python 3.6.x. There are a few ways of doing this, but we will use the IUS Community Repo; for an in-depth look at options, check out  [this link from James Hogarth](https://www.hogarthuk.com/?q=node/15 "Running newer applications on CentOS"). To install Python, run the following command:
+5. **Python 3 Programming Language Interpreter**  - While Python 2 is installed with CentOS by default, we will need Python 3 to run our computer vision and machine learning scripts, specifically Python 3.6.x. There are a few ways of doing this, but we will use the IUS Community Repo; for an in-depth look at options, check out  [this link from James Hogarth](https://www.hogarthuk.com/?q=node/15 "Running newer applications on CentOS"). To install Python, run the following command:
 
-        [park@localhost ~]# sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
-        [park@localhost ~]# sudo yum -y install python36u
-        [park@localhost ~]# sudo yum -y install python36u-pip
-        [park@localhost ~]# sudo yum -y install python36u-devel
+        [park@localhost ~]$ sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+        [park@localhost ~]$ sudo yum -y install python36u
+        [park@localhost ~]$ sudo yum -y install python36u-pip
+        [park@localhost ~]$ sudo yum -y install python36u-devel
 
 Alright! Before continuing, let's do another update of the system using the following command:
 
-    [park@localhost ~]# sudo yum -y update
+    [park@localhost ~]$ sudo yum -y update
 
 Just in case, we'll double check everything is installed and updated using the following commands:
 
-    [park@localhost ~]# whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
-    [park@localhost ~]# sqlite3 -version
-    [park@localhost ~]# nginx -v
-    [park@localhost ~]# php -v
-    [park@localhost ~]# python3 ––version
-    [park@localhost ~]# pip3 ––version
+    [park@localhost ~]$ whereis -b crontab | cut -d' ' -f2 | xargs rpm -qf
+    [park@localhost ~]$ sqlite3 -version
+    [park@localhost ~]$ nginx -v
+    [park@localhost ~]$ php -v
+    [park@localhost ~]$ python3 ––version
+    [park@localhost ~]$ pip3 ––version
 
 <p align="center"><img  src="README_images/centos06.png" height="480"  alt="Verifying initial setup" /></p>
 
@@ -162,12 +162,12 @@ With the VM running...
 
 In the terminal, enter the following commands (comments following [#] are not required):
 
-    [park@localhost ~]# sudo yum -y install make gcc kernel-headers kernel-devel perl dkms bzip2 # Installs all requirements
-    [park@localhost ~]# sudo export KERN_DIR=/usr/src/kernels/$(uname -r) # set and export the location of the kernel source code
-    [park@localhost ~]# sudo mount -r /dev/cdrom /media
-    [park@localhost ~]# cd /media/
-    [park@localhost ~]# sudo ./VBoxLinuxAdditions.run
-    [park@localhost ~]# sudo usermod -aG vboxsf $(whoami)
+    [park@localhost ~]$ sudo yum -y install make gcc kernel-headers kernel-devel perl dkms bzip2 # Installs all requirements
+    [park@localhost ~]$ sudo export KERN_DIR=/usr/src/kernels/$(uname -r) # set and export the location of the kernel source code
+    [park@localhost ~]$ sudo mount -r /dev/cdrom /media
+    [park@localhost ~]$ cd /media/
+    [park@localhost ~]$ sudo ./VBoxLinuxAdditions.run
+    [park@localhost ~]$ sudo usermod -aG vboxsf $(whoami)
 
 We also recommend enabling shared folders. How to do so is out of our scope (our host machine is Windows, while you may be using something else). For Windows, we recommend  [this walkthrough from Geeks for Geeks.](https://www.geeksforgeeks.org/create-shared-folder-host-os-guest-os-virtual-box/ "Create a Shared Folder between Host OS and Guest OS (Virtual Box)"). Even though the directions are for Ubuntu, they will work for CentOS as well.
 
@@ -177,7 +177,7 @@ Finally, if you like, you can clone this repository into your folder with the fo
 
 This will create a folder "Park" with all the code in the right place, with the exception of the files in "parkweb"; they will go in a Nginx webroot folder named "Park". If you are using a shared folder, fetch into your shared folder instead of cloning:
 
-    [park@localhost ~]# cd Park # replace Park with the name of your shared folder
+    [park@localhost ~]$ cd Park # replace Park with the name of your shared folder
     [park@localhost Park~]$ git init
     [park@localhost Park~]$ git remote add origin https://github.com/garciart/Park.git
     [park@localhost Park~]$ git fetch
