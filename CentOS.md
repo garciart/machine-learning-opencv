@@ -79,7 +79,7 @@ Once the system update is completed, make sure that we have everything we need:
 
 3. **Nginx HTTP Web Server**  - To use Nginx, install the  [Extra Packages for Enterprise Linux (EPEL)](https://fedoraproject.org/wiki/EPEL "Extra Packages for Enterprise Linux (EPEL)")  first:
 
-        [park@localhost ~]$ sudo yum -y install epel-release
+        [park@localhost ~]$ sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
     Once the installation is completed, install Nginx:
 
